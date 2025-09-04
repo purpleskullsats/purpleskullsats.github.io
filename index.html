@@ -4,47 +4,134 @@
   <meta charset="UTF-8">
   <title>Purple Skull – Digital Artist</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #111; color: #eee; text-align: center; margin: 0; }
-    header { padding: 2rem; background: #222; }
-    h1 { font-size: 2.5rem; margin: 0; }
-    p { font-size: 1.2rem; }
-    .gallery { display: flex; flex-wrap: wrap; justify-content: center; margin: 2rem; }
-    .gallery img { width: 250px; height: auto; margin: 10px; border: 3px solid #555; border-radius: 10px; }
-    footer { padding: 1rem; background: #222; margin-top: 2rem; }
-    a { color: #00bfff; text-decoration: none; }
+    @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=Roboto+Mono&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Roboto Mono', monospace;
+      background: #0a0a0a;
+      color: #e0caff; /* neon purple text */
+    }
+
+    header {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: linear-gradient(to right, #0a0a0a, #111);
+      border-bottom: 2px solid #9b30ff; /* neon purple line */
+    }
+
+    header h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 3rem;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #9b30ff; /* neon purple */
+    }
+
+    header p {
+      margin-top: 0.5rem;
+      font-size: 1.2rem;
+      color: #cda3ff; /* lighter neon */
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 2rem;
+    }
+
+    .gallery img {
+      width: 100%;
+      border: 3px solid #4b0082; /* dark purple border */
+      border-radius: 10px;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+      background: #111;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+      border-color: #9b30ff;
+      box-shadow: 0 0 20px #9b30ff;
+    }
+
+    section {
+      padding: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    section h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2rem;
+      border-left: 5px solid #9b30ff;
+      padding-left: 10px;
+      margin-bottom: 1rem;
+      color: #cda3ff;
+    }
+
+    section p {
+      line-height: 1.6;
+      color: #d8b3ff;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      background: #0a0a0a;
+      border-top: 2px solid #4b0082;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    a {
+      color: #9b30ff;
+      text-decoration: none;
+      transition: text-shadow 0.3s;
+    }
+
+    a:hover {
+      text-decoration: none;
+      text-shadow: 0 0 8px #9b30ff;
+    }
   </style>
 </head>
 <body>
   <header>
     <h1>Purple Skull</h1>
-    <p>Pixel Artist · Bitcoin Ordinals · Digital Experiments</p>
+    <p>Digital Artist · Underground Neon Aesthetic</p>
   </header>
 
   <section>
-    <h2>My Art</h2>
+    <h2>Featured Art</h2>
     <div class="gallery">
-      <img src="https://via.placeholder.com/250x250.png?text=Artwork+1" alt="Artwork 1">
-      <img src="https://via.placeholder.com/250x250.png?text=Artwork+2" alt="Artwork 2">
-      <img src="https://via.placeholder.com/250x250.png?text=Artwork+3" alt="Artwork 3">
+      <img src="https://via.placeholder.com/400x400.png?text=Artwork+1" alt="Artwork 1">
+      <img src="https://via.placeholder.com/400x400.png?text=Artwork+2" alt="Artwork 2">
+      <img src="https://via.placeholder.com/400x400.png?text=Artwork+3" alt="Artwork 3">
+      <img src="https://via.placeholder.com/400x400.png?text=Artwork+4" alt="Artwork 4">
     </div>
   </section>
 
   <section>
     <h2>About Me</h2>
-    <p>I’m Purple Skull, a UK-based digital artist exploring neon pixel art, Ordinals, and the weird beauty of cryptic storytelling.</p>
+    <p>
+      I am <strong>Purple Skull</strong>, a UK-based digital artist.  
+      My work blends neon pixel art, underground culture, and cryptic storytelling.  
+      Inspired by street art and the hidden corners of the digital world, I craft collections that feel alive, mysterious, and raw.
+    </p>
   </section>
 
   <section>
-    <h2>Find Me</h2>
+    <h2>Connect</h2>
     <p>
-      <a href="https://twitter.com/yourhandle" target="_blank">Twitter</a> · 
-      <a href="https://ordinals.market/" target="_blank">Ordinals Market</a> · 
+      <a href="https://twitter.com/yourhandle" target="_blank">Twitter</a> ·
       <a href="mailto:your@email.com">Email</a>
     </p>
   </section>
 
   <footer>
-    <p>© 2025 Purple Skull</p>
+    <p>© 2025 Purple Skull – All rights reserved</p>
   </footer>
 </body>
 </html>
