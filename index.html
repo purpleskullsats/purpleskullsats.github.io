@@ -150,15 +150,14 @@
       margin-top: 1rem;
     }
 
-    footer a {
-      color: #6401e1;
-      text-decoration: none;
-      font-weight: bold;
-      transition: 0.3s;
+    footer img {
+      transition: transform 0.3s, filter 0.3s;
+      cursor: pointer;
     }
 
-    footer a:hover {
-      text-shadow: 0 0 8px #6401e1;
+    footer img:hover {
+      transform: scale(1.1);
+      filter: drop-shadow(0 0 12px #6401e1);
     }
   </style>
 </head>
@@ -200,7 +199,9 @@
 
   <!-- Footer -->
   <footer>
-    <p>Follow me on <a href="https://x.com/purpleskullsats?t=JkKrPRwa1llyPSoJu0WUww&s=09" target="_blank">X</a></p>
+    <a href="https://x.com/purpleskullsats?t=JkKrPRwa1llyPSoJu0WUww&s=09" target="_blank">
+      <img src="x-logo.png" alt="Follow me on X" style="height:30px; filter: drop-shadow(0 0 6px #6401e1);">
+    </a>
   </footer>
 
   <script>
