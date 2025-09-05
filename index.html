@@ -1,4 +1,4 @@
-          <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -7,9 +7,14 @@
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: 'Arial', sans-serif;
       background-color: #000;
       color: #fff;
+    }
+
+    /* Neon glow helper */
+    .glow {
+      text-shadow: 0 0 8px #6401e1, 0 0 16px #6401e1;
     }
 
     /* Header */
@@ -18,8 +23,11 @@
       justify-content: space-between;
       align-items: center;
       padding: 1rem 2rem;
-      background-color: #111;
+      background-color: #0a0a0a;
       border-bottom: 2px solid #6401e1;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
     header .logo {
@@ -30,11 +38,15 @@
     header img {
       height: 40px;
       margin-right: 10px;
+      filter: drop-shadow(0 0 6px #6401e1);
     }
 
     header h1 {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       color: #6401e1;
+      font-weight: bold;
+      letter-spacing: 1px;
+      text-transform: uppercase;
     }
 
     /* Burger menu */
@@ -43,13 +55,15 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      width: 25px;
-      height: 18px;
+      width: 28px;
+      height: 20px;
     }
 
     .menu-toggle div {
       height: 3px;
       background: #6401e1;
+      border-radius: 2px;
+      transition: 0.3s;
     }
 
     nav {
@@ -60,45 +74,66 @@
       background: #111;
       padding: 1rem;
       border: 1px solid #6401e1;
+      border-radius: 6px;
     }
 
     nav a {
       display: block;
       margin: 0.5rem 0;
-      color: #6401e1;
+      color: #fff;
       text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #6401e1;
+      text-shadow: 0 0 6px #6401e1;
     }
 
     /* Featured Collection */
     section {
-      padding: 2rem;
+      padding: 3rem 2rem;
       text-align: center;
     }
 
     section h2 {
-      display: inline-block;
-      border-top: 2px solid #6401e1;
-      padding-top: 0.5rem;
+      font-size: 2rem;
       margin-bottom: 2rem;
-      font-size: 1.8rem;
       color: #6401e1;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      border-top: 2px solid #6401e1;
+      display: inline-block;
+      padding-top: 0.5rem;
     }
 
-    .collection {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-    }
-
-    .collection img {
-      height: 100px;
+    .collection-card {
+      display: inline-block;
+      background: #111;
       border: 2px solid #6401e1;
-      border-radius: 8px;
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 0 12px #6401e1;
+      transition: transform 0.3s, box-shadow 0.3s;
     }
 
-    .collection h3 {
-      font-size: 1.2rem;
+    .collection-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 20px #6401e1;
+    }
+
+    .collection-card img {
+      height: 120px;
+      border-radius: 8px;
+      border: 2px solid #6401e1;
+      margin-bottom: 1rem;
+    }
+
+    .collection-card h3 {
+      margin: 0;
+      font-size: 1.3rem;
       color: #fff;
     }
 
@@ -107,13 +142,23 @@
       text-align: center;
       padding: 1rem;
       border-top: 2px solid #6401e1;
+      background: #0a0a0a;
       margin-top: 3rem;
+    }
+
+    footer p {
+      margin: 0.5rem 0;
     }
 
     footer a {
       color: #6401e1;
       text-decoration: none;
       font-weight: bold;
+      transition: 0.3s;
+    }
+
+    footer a:hover {
+      text-shadow: 0 0 8px #6401e1;
     }
   </style>
 </head>
@@ -122,7 +167,7 @@
   <header>
     <div class="logo">
       <img src="logo.png" alt="PurpleSkull Logo">
-      <h1>PurpleSkull</h1>
+      <h1 class="glow">PurpleSkull</h1>
     </div>
     <div class="menu-toggle" onclick="toggleMenu()">
       <div></div>
@@ -137,7 +182,7 @@
   <!-- Featured Collection -->
   <section>
     <h2>Featured Collection</h2>
-    <div class="collection">
+    <div class="collection-card">
       <img src="collection-icon.png" alt="Collection Icon">
       <h3>Skulls of Hold</h3>
     </div>
