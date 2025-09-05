@@ -14,21 +14,21 @@
       padding: 0;
     }
 
+    /* Top number text */
+    .top-number {
+      font-size: 1rem;
+      color: #6401e1;
+      text-shadow: 0 0 4px #6401e1;
+      margin: 1rem 0 0 0;
+    }
+
     /* Title Image with yellow glow */
     .title-img {
-      margin: 2rem 0 0.2rem 0;
+      margin: 1rem auto 0.2rem auto;
       max-width: 600px;
       width: 90%;
       height: auto;
       filter: drop-shadow(0 0 8px #FFD700) drop-shadow(0 0 16px #FFD700);
-    }
-
-    /* Small text under title */
-    .subtitle {
-      font-size: 0.9rem;
-      color: #6401e1; /* purple */
-      text-shadow: 0 0 4px #6401e1;
-      margin-bottom: 1rem;
     }
 
     /* Magic Eden button on top */
@@ -37,7 +37,7 @@
       margin: 1rem 0 2rem 0;
       padding: 0.8rem 1.5rem;
       background-color: #6401e1;
-      color: #fff;
+      color: #000; /* Black text */
       font-weight: bold;
       text-decoration: none;
       border-radius: 8px;
@@ -135,8 +135,8 @@
         width: 80px;
         height: 80px;
       }
-      .subtitle {
-        font-size: 0.8rem;
+      .top-number {
+        font-size: 0.85rem;
       }
       .me-button {
         padding: 0.6rem 1.2rem;
@@ -149,10 +149,13 @@
   </style>
 </head>
 <body>
+  <!-- Top number -->
+  <div class="top-number">70297818 - 70560722</div>
+
   <!-- Title Image -->
   <img src="soh-title.png" alt="Skulls of Hold Title" class="title-img">
-  <div class="subtitle">70297818 - 70560722</div>
 
+  <!-- Magic Eden Button -->
   <a class="me-button" href="https://share.google/1IdiIGFyxKVDgnyXK" target="_blank">
    - Collection on Magic Eden -
   </a>
