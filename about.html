@@ -12,11 +12,13 @@
       color: #fff;
     }
 
+    /* Glow effect */
     .glow {
       text-shadow: 0 0 8px #6401e1, 0 0 16px #6401e1;
       color: #6401e1;
     }
 
+    /* Header */
     header {
       display: flex;
       justify-content: space-between;
@@ -45,6 +47,7 @@
       text-transform: uppercase;
     }
 
+    /* Burger menu */
     .menu-toggle {
       cursor: pointer;
       display: flex;
@@ -86,6 +89,7 @@
       text-shadow: 0 0 6px #6401e1;
     }
 
+    /* About content */
     main {
       text-align: center;
       padding: 3rem 2rem;
@@ -99,6 +103,7 @@
       color: #6401e1;
     }
 
+    /* Display images (thumbnails) */
     .display-images {
       display: flex;
       justify-content: center;
@@ -121,6 +126,7 @@
       box-shadow: 0 0 24px #6401e1;
     }
 
+    /* Back link */
     .back-link {
       display: inline-block;
       margin-top: 2rem;
@@ -139,6 +145,7 @@
       text-shadow: none;
     }
 
+    /* Footer */
     footer {
       text-align: center;
       padding: 1rem;
@@ -147,19 +154,26 @@
       margin-top: 2rem;
     }
 
-    footer a img {
-      height: 30px;
+    footer a {
+      text-decoration: none; /* remove underline */
       margin: 0 5px;
-      filter: drop-shadow(0 0 6px #6401e1);
-      transition: transform 0.3s;
     }
 
-    footer a img:hover {
+    footer img {
+      height: 30px;
+      filter: drop-shadow(0 0 6px #6401e1);
+      transition: transform 0.3s, filter 0.3s;
+      cursor: pointer;
+    }
+
+    footer img:hover {
       transform: scale(1.1);
+      filter: drop-shadow(0 0 12px #6401e1);
     }
   </style>
 </head>
 <body>
+  <!-- Header -->
   <header>
     <div class="logo">
       <h2 class="glow">About</h2>
@@ -176,6 +190,7 @@
     </nav>
   </header>
 
+  <!-- About Content -->
   <main>
     <p>
       PurpleSkull began their artistic journey exploring digital art on <strong>Bitcoin</strong>, starting with <strong>Ordinals</strong> and the <strong>Bitcoin Stampchain</strong>. Previously a collector of digital art, PurpleSkull transitioned into creating their own pieces, combining a deep appreciation for crypto art with a background in formal art education.  
@@ -191,12 +206,13 @@
     <a href="index.html" class="back-link">⬅ Back to Home</a>
   </main>
 
+  <!-- Footer -->
   <footer>
     <a href="https://x.com/purpleskullsats?t=JkKrPRwa1llyPSoJu0WUww&s=09" target="_blank">
-      <img src="x-logo.png" alt="Follow me on X">
+      <img src="x-logo.png" alt="X">
     </a>
     <a href="https://www.instagram.com/purpleskullnft?igsh=aTgybnVrbXdjYjFl" target="_blank">
-      <img src="instagram-logo.png" alt="Follow me on Instagram">
+      <img src="instagram-logo.png" alt="Instagram">
     </a>
   </footer>
 
