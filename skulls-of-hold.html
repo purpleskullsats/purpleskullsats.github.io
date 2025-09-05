@@ -17,9 +17,17 @@
     h1 {
       color: #FFD700; /* yellow */
       text-shadow: 0 0 8px #FFD700, 0 0 16px #FFD700;
-      margin: 2rem 0;
+      margin: 2rem 0 0.2rem 0;
       text-transform: uppercase;
       letter-spacing: 2px;
+    }
+
+    /* Small text under title */
+    .subtitle {
+      font-size: 0.9rem;
+      color: #6401e1; /* purple */
+      text-shadow: 0 0 4px #6401e1;
+      margin-bottom: 1rem;
     }
 
     /* Magic Eden button on top */
@@ -105,13 +113,46 @@
     .close:hover {
       color: #FFD700;
     }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .grid img {
+        width: 120px;
+        height: 120px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .grid img {
+        width: 100px;
+        height: 100px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .grid img {
+        width: 80px;
+        height: 80px;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+      .subtitle {
+        font-size: 0.8rem;
+      }
+      .me-button {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+      }
+    }
   </style>
 </head>
 <body>
   <h1>Skulls of Hold</h1>
+  <div class="subtitle">70297818 - 70560722</div>
 
   <a class="me-button" href="https://share.google/1IdiIGFyxKVDgnyXK" target="_blank">
-    See Collection on ME
+   - Collection on Magic Eden -
   </a>
 
   <div class="grid">
