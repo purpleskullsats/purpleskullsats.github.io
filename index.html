@@ -14,7 +14,7 @@
 
     /* Glow effect */
     .glow-img {
-      filter: drop-shadow(0 0 8px #6401e1) drop-shadow(0 0 16px #6401e1);
+      filter: drop-shadow(0 0 8px #f2d600) drop-shadow(0 0 16px #f2d600); /* yellow glow */
     }
 
     /* Header */
@@ -24,7 +24,7 @@
       align-items: center;
       padding: 1rem 2rem;
       background-color: #0a0a0a;
-      border-bottom: 2px solid #6401e1;
+      border-bottom: 2px solid #f2d600;
       position: sticky;
       top: 0;
       z-index: 10;
@@ -52,7 +52,7 @@
 
     .menu-toggle div {
       height: 3px;
-      background: #6401e1;
+      background: #f2d600;
       border-radius: 2px;
       transition: 0.3s;
     }
@@ -64,7 +64,7 @@
       right: 20px;
       background: #111;
       padding: 1rem;
-      border: 1px solid #6401e1;
+      border: 1px solid #f2d600;
       border-radius: 6px;
     }
 
@@ -78,8 +78,8 @@
     }
 
     nav a:hover {
-      color: #6401e1;
-      text-shadow: 0 0 6px #6401e1;
+      color: #f2d600;
+      text-shadow: 0 0 6px #f2d600;
     }
 
     /* Featured Collection */
@@ -91,35 +91,35 @@
     section h2 {
       font-size: 2rem;
       margin-bottom: 2rem;
-      color: #6401e1;
+      color: #f2d600;
       text-transform: uppercase;
       letter-spacing: 2px;
-      border-top: 2px solid #6401e1;
+      border-top: 2px solid #f2d600;
       display: inline-block;
       padding-top: 0.5rem;
-      text-shadow: 0 0 8px #6401e1, 0 0 16px #6401e1;
+      text-shadow: 0 0 8px #f2d600, 0 0 16px #f2d600;
     }
 
     .collection-card {
       display: inline-block;
       background: #111;
-      border: 2px solid #6401e1;
+      border: 2px solid #f2d600;
       border-radius: 12px;
       padding: 2rem;
       text-align: center;
-      box-shadow: 0 0 12px #6401e1;
+      box-shadow: 0 0 12px #f2d600;
       transition: transform 0.3s, box-shadow 0.3s;
     }
 
     .collection-card:hover {
       transform: translateY(-6px);
-      box-shadow: 0 0 20px #6401e1;
+      box-shadow: 0 0 20px #f2d600;
     }
 
     .collection-card img {
       height: 120px;
       border-radius: 8px;
-      border: 2px solid #6401e1;
+      border: 2px solid #f2d600;
       margin-bottom: 1rem;
       cursor: pointer;
     }
@@ -127,16 +127,16 @@
     .collection-card h3 {
       margin: 0;
       font-size: 1.3rem;
-      color: #6401e1;
-      text-shadow: 0 0 6px #6401e1;
+      color: #000; /* black text */
+      text-shadow: 0 0 6px #f2d600;
     }
 
     /* Quote */
     .quote {
       text-align: center;
       font-style: italic;
-      color: #6401e1;
-      text-shadow: 0 0 6px #6401e1;
+      color: #f2d600;
+      text-shadow: 0 0 6px #f2d600;
       margin: 2rem 0 1rem 0;
       font-size: 1.2rem;
     }
@@ -145,20 +145,20 @@
     footer {
       text-align: center;
       padding: 1rem;
-      border-top: 2px solid #6401e1;
+      border-top: 2px solid #f2d600;
       background: #0a0a0a;
       margin-top: 1rem;
     }
 
     footer a {
-      color: #6401e1;
+      color: #f2d600;
       text-decoration: none;
       font-weight: bold;
       transition: 0.3s;
     }
 
     footer a:hover {
-      text-shadow: 0 0 8px #6401e1;
+      text-shadow: 0 0 8px #f2d600;
     }
   </style>
 </head>
@@ -168,8 +168,8 @@
     <div class="logo">
       <!-- Skull icon -->
       <img src="logo.png" alt="PurpleSkull Logo">
-      <!-- Custom glowing name logo (shrunk to half size) -->
-      <img src="name-logo.png" alt="PurpleSkull Name" class="glow-img" style="height: 20px;">
+      <!-- Custom glowing name logo -->
+      <img src="name-logo.png" alt="PurpleSkull Name" class="glow-img" style="height: 18px;">
     </div>
     <div class="menu-toggle" onclick="toggleMenu()">
       <div></div>
@@ -189,7 +189,8 @@
       <a href="skulls-of-hold.html">
         <img src="collection-icon.png" alt="Collection Icon">
       </a>
-      <h3>Skulls of Hold</h3>
+      <h3>70297818 - 70560722</h3>
+      <p>collection on ME</p>
     </div>
   </section>
 
