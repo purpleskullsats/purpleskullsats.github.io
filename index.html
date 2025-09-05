@@ -150,16 +150,21 @@
       margin-top: 1rem;
     }
 
-    footer a img {
+    footer a {
+      text-decoration: none; /* Remove underline */
+      display: inline-block; /* Keep icons inline */
+      margin: 0 5px; /* Space between icons */
+    }
+
+    footer img {
       transition: transform 0.3s, filter 0.3s;
       cursor: pointer;
       height: 30px;
-      margin: 0 10px;
       filter: drop-shadow(0 0 6px #6401e1);
     }
 
-    footer a img:hover {
-      transform: scale(1.2);
+    footer img:hover {
+      transform: scale(1.1);
       filter: drop-shadow(0 0 12px #6401e1);
     }
   </style>
