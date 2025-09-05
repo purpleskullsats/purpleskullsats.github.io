@@ -3,135 +3,154 @@
 <head>
   <meta charset="UTF-8">
   <title>Purple Skull – Digital Artist</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=Roboto+Mono&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500&family=Roboto+Mono&display=swap');
+
+    :root {
+      --purple: #6401e1;
+      --black: #0a0a0a;
+    }
 
     body {
       margin: 0;
       font-family: 'Roboto Mono', monospace;
-      background: #0a0a0a;
-      color: #e0caff; /* neon purple text */
+      background: var(--black);
+      color: #ddd;
     }
 
-    header {
-      text-align: center;
-      padding: 4rem 2rem;
-      background: linear-gradient(to right, #0a0a0a, #111);
-      border-bottom: 2px solid #9b30ff; /* neon purple line */
+    /* --- Navbar --- */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: var(--black);
+      border-bottom: 2px solid var(--purple);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
 
-    header h1 {
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo img {
+      width: 40px;
+      height: 40px;
+    }
+
+    .logo h1 {
       font-family: 'Oswald', sans-serif;
-      font-size: 3rem;
+      font-size: 1.5rem;
       margin: 0;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      color: #9b30ff; /* neon purple */
+      color: var(--purple);
     }
 
-    header p {
-      margin-top: 0.5rem;
-      font-size: 1.2rem;
-      color: #cda3ff; /* lighter neon */
+    /* Burger menu button */
+    .menu-btn {
+      font-size: 1.8rem;
+      background: none;
+      border: none;
+      color: var(--purple);
+      cursor: pointer;
     }
 
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      padding: 2rem;
-    }
-
-    .gallery img {
-      width: 100%;
-      border: 3px solid #4b0082; /* dark purple border */
-      border-radius: 10px;
-      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    /* Hidden menu */
+    .menu {
+      position: fixed;
+      top: 0;
+      right: -250px;
+      width: 200px;
+      height: 100%;
       background: #111;
-    }
-
-    .gallery img:hover {
-      transform: scale(1.05);
-      border-color: #9b30ff;
-      box-shadow: 0 0 20px #9b30ff;
-    }
-
-    section {
+      box-shadow: -2px 0 10px rgba(0,0,0,0.6);
       padding: 2rem;
-      max-width: 900px;
-      margin: 0 auto;
+      transition: right 0.3s ease;
     }
 
-    section h2 {
+    .menu.active {
+      right: 0;
+    }
+
+    .menu a {
+      display: block;
+      margin: 1rem 0;
+      color: var(--purple);
+      text-decoration: none;
+      font-size: 1.2rem;
+    }
+
+    .menu a:hover {
+      text-shadow: 0 0 8px var(--purple);
+    }
+
+    /* --- Collections --- */
+    .collections {
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .collections h2 {
       font-family: 'Oswald', sans-serif;
       font-size: 2rem;
-      border-left: 5px solid #9b30ff;
-      padding-left: 10px;
-      margin-bottom: 1rem;
-      color: #cda3ff;
+      color: var(--purple);
+      margin-bottom: 2rem;
     }
 
-    section p {
-      line-height: 1.6;
-      color: #d8b3ff;
+    .collection-item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 1.5rem;
     }
 
-    footer {
-      text-align: center;
-      padding: 1.5rem;
-      background: #0a0a0a;
-      border-top: 2px solid #4b0082;
-      font-size: 0.9rem;
-      color: #666;
+    .collection-item img {
+      width: 60px;
+      height: 60px;
+      border: 2px solid var(--purple);
+      border-radius: 10px;
     }
 
-    a {
-      color: #9b30ff;
-      text-decoration: none;
-      transition: text-shadow 0.3s;
-    }
-
-    a:hover {
-      text-decoration: none;
-      text-shadow: 0 0 8px #9b30ff;
+    .collection-item h3 {
+      font-size: 1.3rem;
+      color: #fff;
+      margin: 0;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Purple Skull</h1>
-    <p>Digital Artist · Underground Neon Aesthetic</p>
-  </header>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <img src="https://via.placeholder.com/40" alt="Skull Logo">
+      <h1>PurpleSkull</h1>
+    </div>
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+  </nav>
 
-  <section>
-    <h2>Featured Art</h2>
-    <div class="gallery">
-      <img src="https://via.placeholder.com/400x400.png?text=Artwork+1" alt="Artwork 1">
-      <img src="https://via.placeholder.com/400x400.png?text=Artwork+2" alt="Artwork 2">
-      <img src="https://via.placeholder.com/400x400.png?text=Artwork+3" alt="Artwork 3">
-      <img src="https://via.placeholder.com/400x400.png?text=Artwork+4" alt="Artwork 4">
+  <!-- Slide-out menu -->
+  <div class="menu" id="menu">
+    <a href="#">About</a>
+  </div>
+
+  <!-- Collections -->
+  <section class="collections">
+    <h2>Collections</h2>
+    <div class="collection-item">
+      <img src="https://via.placeholder.com/60" alt="Collection Icon">
+      <h3>Skulls of Hold</h3>
     </div>
   </section>
 
-  <section>
-    <h2>About Me</h2>
-    <p>
-      I am <strong>Purple Skull</strong>, a UK-based digital artist.  
-      My work blends neon pixel art, underground culture, and cryptic storytelling.  
-      Inspired by street art and the hidden corners of the digital world, I craft collections that feel alive, mysterious, and raw.
-    </p>
-  </section>
-
-  <section>
-    <h2>Connect</h2>
-    <p>
-      <a href="https://twitter.com/yourhandle" target="_blank">Twitter</a> ·
-      <a href="mailto:your@email.com">Email</a>
-    </p>
-  </section>
-
-  <footer>
-    <p>© 2025 Purple Skull – All rights reserved</p>
-  </footer>
+  <script>
+    function toggleMenu() {
+      document.getElementById('menu').classList.toggle('active');
+    }
+  </script>
 </body>
 </html>
