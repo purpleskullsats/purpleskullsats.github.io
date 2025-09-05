@@ -109,10 +109,12 @@
       text-align: center;
       box-shadow: 0 0 12px #6401e1;
       transition: transform 0.3s, box-shadow 0.3s;
+      /* Pulsate animation */
+      animation: pulsate 4s ease-in-out infinite;
     }
 
     .collection-card:hover {
-      transform: translateY(-6px);
+      transform: translateY(-6px) scale(1.05); /* Slight hover boost */
       box-shadow: 0 0 20px #6401e1;
     }
 
@@ -129,6 +131,12 @@
       font-size: 1.3rem;
       color: #6401e1;
       text-shadow: 0 0 6px #6401e1;
+    }
+
+    /* Pulsate keyframes */
+    @keyframes pulsate {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
     }
 
     /* Quote */
