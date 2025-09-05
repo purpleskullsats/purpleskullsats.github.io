@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collections - PurpleSkull</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #000;
+      color: #fff;
+    }
+
+    .glow {
+      text-shadow: 0 0 8px #6401e1, 0 0 16px #6401e1;
+      color: #6401e1;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: #0a0a0a;
+      border-bottom: 2px solid #6401e1;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    header .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    header img {
+      height: 40px;
+      filter: drop-shadow(0 0 6px #6401e1);
+    }
+
+    header h2 {
+      font-size: 1.6rem;
+      text-transform: uppercase;
+    }
+
+    .menu-toggle {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 28px;
+      height: 20px;
+    }
+
+    .menu-toggle div {
+      height: 3px;
+      background: #6401e1;
+      border-radius: 2px;
+    }
+
+    nav {
+      display: none;
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      background: #111;
+      padding: 1rem;
+      border: 1px solid #6401e1;
+      border-radius: 6px;
+    }
+
+    nav a {
+      display: block;
+      margin: 0.5rem 0;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #6401e1;
+      text-shadow: 0 0 6px #6401e1;
+    }
+
+    main {
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .collection-card {
+      display: inline-block;
+      background: #111;
+      border: 2px solid #6401e1;
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 1rem;
+      text-align: center;
+      box-shadow: 0 0 12px #6401e1;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .collection-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 20px #6401e1;
+    }
+
+    .collection-card img {
+      height: 120px;
+      border-radius: 8px;
+      border: 2px solid #6401e1;
+      margin-bottom: 1rem;
+      cursor: pointer;
+    }
+
+    .collection-card h3 {
+      margin: 0.5rem 0 0 0;
+      font-size: 1.3rem;
+      color: #6401e1;
+      text-shadow: 0 0 6px #6401e1;
+    }
+
+    .collection-card p {
+      color: #6401e1;
+      margin-top: 0.3rem;
+      font-size: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      border-top: 2px solid #6401e1;
+      background: #0a0a0a;
+      margin-top: 2rem;
+    }
+
+    footer a {
+      color: #6401e1;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer a:hover {
+      text-shadow: 0 0 8px #6401e1;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <h2 class="glow">Collections</h2>
+      <img src="logo.png" alt="PurpleSkull Logo" class="glow">
+    </div>
+    <div class="menu-toggle" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <nav id="menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Skulls of Hold -->
+    <div class="collection-card">
+      <a href="skulls-of-hold.html">
+        <img src="collection-icon.png" alt="Skulls of Hold">
+      </a>
+      <h3>Skulls of Hold</h3>
+    </div>
+
+    <!-- Coming Soon Collection -->
+    <div class="collection-card">
+      <img src="coming-soon-icon.png" alt="Coming Soon">
+      <h3>New Collection</h3>
+      <p>Coming Soon</p>
+    </div>
+  </main>
+
+  <footer>
+    <p>Follow me on <a href="https://x.com/purpleskullsats?t=JkKrPRwa1llyPSoJu0WUww&s=09" target="_blank">X</a></p>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("menu");
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
+    }
+  </script>
+</body>
+</html>
