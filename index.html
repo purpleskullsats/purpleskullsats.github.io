@@ -109,12 +109,11 @@
       text-align: center;
       box-shadow: 0 0 12px #6401e1;
       transition: transform 0.3s, box-shadow 0.3s;
-      /* Pulsate animation */
       animation: pulsate 4s ease-in-out infinite;
     }
 
     .collection-card:hover {
-      transform: translateY(-6px) scale(1.05); /* Slight hover boost */
+      transform: translateY(-6px) scale(1.05);
       box-shadow: 0 0 20px #6401e1;
     }
 
@@ -133,20 +132,19 @@
       text-shadow: 0 0 6px #6401e1;
     }
 
-    /* Pulsate keyframes */
     @keyframes pulsate {
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.03); }
     }
 
-    /* Quote */
+    /* Quote – made very small */
     .quote {
       text-align: center;
       font-style: italic;
       color: #6401e1;
       text-shadow: 0 0 6px #6401e1;
       margin: 2rem 0 1rem 0;
-      font-size: 1.2rem;
+      font-size: 0.7rem; /* very small */
     }
 
     /* Footer */
@@ -159,9 +157,9 @@
     }
 
     footer a {
-      text-decoration: none; /* Remove underline */
-      display: inline-block; /* Keep icons inline */
-      margin: 0 5px; /* Space between icons */
+      text-decoration: none;
+      display: inline-block;
+      margin: 0 5px;
     }
 
     footer img {
@@ -181,9 +179,7 @@
   <!-- Header -->
   <header>
     <div class="logo">
-      <!-- Skull icon -->
       <img src="logo.png" alt="PurpleSkull Logo">
-      <!-- Custom glowing name logo (10% smaller) -->
       <img src="name-logo.png" alt="PurpleSkull Name" class="glow-img" style="height: 18px;">
     </div>
     <div class="menu-toggle" onclick="toggleMenu()">
