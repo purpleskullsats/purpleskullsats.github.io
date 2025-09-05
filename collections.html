@@ -135,9 +135,9 @@
     }
 
     footer p {
-      color: #000000; /* black */
       font-size: 0.6rem; /* very small */
       margin: 0;
+      color: #000; /* will appear in black */
     }
 
     @keyframes shake {
@@ -172,6 +172,7 @@
   </header>
 
   <main>
+    <!-- Skulls of Hold -->
     <div class="collection-card">
       <a href="skulls-of-hold.html">
         <img src="collection-icon.png" alt="Skulls of Hold">
@@ -179,7 +180,8 @@
       <h3>Skulls of Hold</h3>
     </div>
 
-    <div class="collection-card" onclick="shakeCard(this)">
+    <!-- Coming Soon Collection -->
+    <div class="collection-card" onclick="showBinaryText(this)">
       <img src="coming-soon-icon.jpg" alt="Coming Soon">
       <h3>New Collection</h3>
       <p>Coming Soon</p>
@@ -187,7 +189,7 @@
   </main>
 
   <footer>
-    <p>01001001 00100000 01101000 01100001 01110110 01100101 00100000 01101110 01101111 00100000 01101001 01100100 01100101 01100001 00100000 01110111 01101000 01100001 01110100 00100000 01001001 00100111 01101101 00100000 01100100 01101111 01101001 01101110 01100111</p>
+    <!-- Binary text will be injected here -->
   </footer>
 
   <script>
@@ -201,6 +203,22 @@
       setTimeout(() => {
         card.classList.remove('shake');
       }, 500);
+    }
+
+    // Inject binary text when Coming Soon is clicked
+    function showBinaryText(card) {
+      shakeCard(card);
+      const footer = document.querySelector('footer');
+
+      // Check if text is already there
+      if (!document.getElementById('binaryText')) {
+        const p = document.createElement('p');
+        p.id = 'binaryText';
+        p.textContent = "01001001 00100000 01101000 01100001 01110110 01100101 00100000 01101110 01101111 00100000 01101001 01100100 01100101 01100001 00100000 01110111 01101000 01100001 01110100 00100000 01001001 00100111 01101101 00100000 01100100 01101111 01101001 01101110 01100111";
+        p.style.color = "#000"; // black
+        p.style.fontSize = "0.6rem";
+        footer.appendChild(p);
+      }
     }
   </script>
 </body>
