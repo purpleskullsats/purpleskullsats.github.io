@@ -5,39 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Collections - PurpleSkull</title>
   <style>
-  body {
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #000;
-    color: #fff;
-  }
-  /* ... more CSS ... */
-    .collection-card {
-  display: inline-block;
-  background: #111;
-  border: 2px solid #6401e1;
-  border-radius: 12px;
-  padding: 2rem;
-  margin: 1rem;
-  text-align: center;
-  box-shadow: 0 0 12px #6401e1;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-/* Shake animation */
-@keyframes shake {
-  0% { transform: translateX(0); }
-  20% { transform: translateX(-5px); }
-  40% { transform: translateX(5px); }
-  60% { transform: translateX(-5px); }
-  80% { transform: translateX(5px); }
-  100% { transform: translateX(0); }
-}
-
-.shake {
-  animation: shake 0.5s;
-}
-</style>
     body {
       margin: 0;
       font-family: 'Arial', sans-serif;
@@ -132,6 +99,7 @@
       text-align: center;
       box-shadow: 0 0 12px #6401e1;
       transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
     }
 
     .collection-card:hover {
@@ -144,14 +112,12 @@
       border-radius: 8px;
       border: 2px solid #6401e1;
       margin-bottom: 1rem;
-      cursor: pointer;
     }
 
     .collection-card h3 {
       margin: 0.5rem 0 0 0;
       font-size: 1.3rem;
       color: #6401e1;
-      text-shadow: 0 0 6px #6401e1;
     }
 
     .collection-card p {
@@ -176,6 +142,20 @@
 
     footer a:hover {
       text-shadow: 0 0 8px #6401e1;
+    }
+
+    /* Shake animation */
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      20% { transform: translateX(-5px); }
+      40% { transform: translateX(5px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+      100% { transform: translateX(0); }
+    }
+
+    .shake {
+      animation: shake 0.5s;
     }
   </style>
 </head>
@@ -205,12 +185,12 @@
       <h3>Skulls of Hold</h3>
     </div>
 
-<!-- Coming Soon Collection -->
-<div class="collection-card" onclick="shakeCard(this)">
-  <img src="coming-soon-icon.png" alt="Coming Soon">
-  <h3>New Collection</h3>
-  <p>Coming Soon</p>
-</div>
+    <!-- Coming Soon Collection -->
+    <div class="collection-card" onclick="shakeCard(this)">
+      <img src="coming-soon-icon.png" alt="Coming Soon">
+      <h3>New Collection</h3>
+      <p>Coming Soon</p>
+    </div>
   </main>
 
   <footer>
@@ -222,19 +202,13 @@
       const menu = document.getElementById("menu");
       menu.style.display = menu.style.display === "block" ? "none" : "block";
     }
-  </script>
-  <script>
-  function shakeCard(card) {
-    card.classList.add('shake');
-    setTimeout(() => {
-      card.classList.remove('shake');
-    }, 500); // matches animation duration
-  }
 
-  function toggleMenu() {
-    const menu = document.getElementById("menu");
-    menu.style.display = menu.style.display === "block" ? "none" : "block";
-  }
+    function shakeCard(card) {
+      card.classList.add('shake');
+      setTimeout(() => {
+        card.classList.remove('shake');
+      }, 500); // matches animation duration
+    }
   </script>
 </body>
 </html>
