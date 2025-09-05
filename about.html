@@ -34,18 +34,16 @@
     header .logo {
       display: flex;
       align-items: center;
+      gap: 10px;
     }
 
     header img {
       height: 40px;
-      margin-right: 10px;
       filter: drop-shadow(0 0 6px #6401e1);
     }
 
-    header h1 {
+    header h2 {
       font-size: 1.6rem;
-      font-weight: bold;
-      letter-spacing: 1px;
       text-transform: uppercase;
     }
 
@@ -97,18 +95,35 @@
       padding: 3rem 2rem;
     }
 
-    main h2 {
-      color: #6401e1;
-      text-shadow: 0 0 8px #6401e1, 0 0 16px #6401e1;
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
-    }
-
     main p {
-      max-width: 650px;
+      max-width: 700px;
       margin: 1rem auto;
       line-height: 1.6;
       font-size: 1.1rem;
+      color: #6401e1;
+    }
+
+    /* Display images (thumbnails) */
+    .display-images {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .display-images img {
+      width: 150px;
+      border: 2px solid #6401e1;
+      border-radius: 8px;
+      box-shadow: 0 0 12px #6401e1;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .display-images img:hover {
+      transform: scale(1.2);
+      box-shadow: 0 0 24px #6401e1;
     }
 
     /* Back link */
@@ -155,8 +170,8 @@
   <!-- Header -->
   <header>
     <div class="logo">
-      <img src="logo.png" alt="PurpleSkull Logo">
-      <h1 class="glow">PurpleSkull</h1>
+      <h2 class="glow">About</h2>
+      <img src="logo.png" alt="PurpleSkull Logo" class="glow">
     </div>
     <div class="menu-toggle" onclick="toggleMenu()">
       <div></div>
@@ -165,16 +180,22 @@
     </div>
     <nav id="menu">
       <a href="index.html">Home</a>
+      <a href="skulls-of-hold.html">Collections</a>
     </nav>
   </header>
 
   <!-- About Content -->
   <main>
-    <h2>About PurpleSkull</h2>
     <p>
-      PurpleSkull is a digital artist creating unique collections that mix pixel art, symbolism, and storytelling.  
-      Each piece is designed to capture something deeper — <em>art that hides teeth behind a smile</em>.
+      I’ve had my work shown @ <strong>Beeple Studios</strong> for the <strong>ELECTION NIGHT</strong> event, at the <strong>1st PUNKS MEETUP</strong>, and my work has also been displayed @ <strong>NFT NYC</strong>.  
+      And that’s just the beginning…
     </p>
+
+    <div class="display-images">
+      <img src="display1.jpg" alt="Artwork on Display 1">
+      <img src="display2.jpg" alt="Artwork on Display 2">
+    </div>
+
     <a href="index.html" class="back-link">⬅ Back to Home</a>
   </main>
 
