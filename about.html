@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About - PurpleSkull</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #000;
+      color: #fff;
+    }
+
+    /* Glow effect */
+    .glow {
+      text-shadow: 0 0 8px #6401e1, 0 0 16px #6401e1;
+      color: #6401e1;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: #0a0a0a;
+      border-bottom: 2px solid #6401e1;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    header .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    header img {
+      height: 40px;
+      margin-right: 10px;
+      filter: drop-shadow(0 0 6px #6401e1);
+    }
+
+    header h1 {
+      font-size: 1.6rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* Burger menu */
+    .menu-toggle {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 28px;
+      height: 20px;
+    }
+
+    .menu-toggle div {
+      height: 3px;
+      background: #6401e1;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    nav {
+      display: none;
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      background: #111;
+      padding: 1rem;
+      border: 1px solid #6401e1;
+      border-radius: 6px;
+    }
+
+    nav a {
+      display: block;
+      margin: 0.5rem 0;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #6401e1;
+      text-shadow: 0 0 6px #6401e1;
+    }
+
+    /* About content */
+    main {
+      text-align: center;
+      padding: 3rem 2rem;
+    }
+
+    main h2 {
+      color: #6401e1;
+      text-shadow: 0 0 8px #6401e1, 0 0 16px #6401e1;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    main p {
+      max-width: 650px;
+      margin: 1rem auto;
+      line-height: 1.6;
+      font-size: 1.1rem;
+    }
+
+    /* Back link */
+    .back-link {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.5rem 1rem;
+      color: #6401e1;
+      text-decoration: none;
+      font-weight: bold;
+      border: 2px solid #6401e1;
+      border-radius: 6px;
+      transition: 0.3s;
+    }
+
+    .back-link:hover {
+      background: #6401e1;
+      color: #000;
+      text-shadow: none;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 1rem;
+      border-top: 2px solid #6401e1;
+      background: #0a0a0a;
+      margin-top: 2rem;
+    }
+
+    footer a {
+      color: #6401e1;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    footer a:hover {
+      text-shadow: 0 0 8px #6401e1;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <img src="logo.png" alt="PurpleSkull Logo">
+      <h1 class="glow">PurpleSkull</h1>
+    </div>
+    <div class="menu-toggle" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <nav id="menu">
+      <a href="index.html">Home</a>
+    </nav>
+  </header>
+
+  <!-- About Content -->
+  <main>
+    <h2>About PurpleSkull</h2>
+    <p>
+      PurpleSkull is a digital artist creating unique collections that mix pixel art, symbolism, and storytelling.  
+      Each piece is designed to capture something deeper — <em>art that hides teeth behind a smile</em>.
+    </p>
+    <a href="index.html" class="back-link">⬅ Back to Home</a>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>Follow me on <a href="https://x.com/purpleskullsats?t=JkKrPRwa1llyPSoJu0WUww&s=09" target="_blank">X</a></p>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("menu");
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
+    }
+  </script>
+</body>
+</html>
