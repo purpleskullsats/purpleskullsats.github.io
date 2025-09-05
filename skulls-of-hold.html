@@ -14,12 +14,13 @@
       padding: 0;
     }
 
-    h1 {
-      color: #FFD700; /* yellow */
-      text-shadow: 0 0 8px #FFD700, 0 0 16px #FFD700;
+    /* Title Image with yellow glow */
+    .title-img {
       margin: 2rem 0 0.2rem 0;
-      text-transform: uppercase;
-      letter-spacing: 2px;
+      max-width: 600px;
+      width: 90%;
+      height: auto;
+      filter: drop-shadow(0 0 8px #FFD700) drop-shadow(0 0 16px #FFD700);
     }
 
     /* Small text under title */
@@ -60,7 +61,7 @@
     }
 
     .grid img {
-      width: 150px; /* smaller by default */
+      width: 150px;
       height: 150px;
       object-fit: cover;
       border: 2px solid #6401e1;
@@ -134,9 +135,6 @@
         width: 80px;
         height: 80px;
       }
-      h1 {
-        font-size: 1.5rem;
-      }
       .subtitle {
         font-size: 0.8rem;
       }
@@ -144,11 +142,15 @@
         padding: 0.6rem 1.2rem;
         font-size: 0.9rem;
       }
+      .title-img {
+        width: 95%;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Skulls of Hold</h1>
+  <!-- Title Image -->
+  <img src="soh-title.png" alt="Skulls of Hold Title" class="title-img">
   <div class="subtitle">70297818 - 70560722</div>
 
   <a class="me-button" href="https://share.google/1IdiIGFyxKVDgnyXK" target="_blank">
