@@ -15,8 +15,8 @@
     }
 
     h1 {
-      color: #6401e1;
-      text-shadow: 0 0 8px #6401e1, 0 0 16px #6401e1;
+      color: #FFD700; /* yellow */
+      text-shadow: 0 0 8px #FFD700, 0 0 16px #FFD700;
       margin: 2rem 0;
       text-transform: uppercase;
       letter-spacing: 2px;
@@ -44,10 +44,31 @@
       transform: scale(1.05);
       box-shadow: 0 0 12px #6401e1;
     }
+
+    /* Magic Eden button */
+    .me-button {
+      display: inline-block;
+      margin: 2rem 0 4rem 0;
+      padding: 0.8rem 1.5rem;
+      background-color: #6401e1;
+      color: #fff;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 8px;
+      box-shadow: 0 0 12px #6401e1;
+      transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+    }
+
+    .me-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 20px #6401e1;
+      background-color: #7a2aff;
+    }
   </style>
 </head>
 <body>
   <h1>Skulls of Hold</h1>
+
   <div class="grid">
     <img src="skull1.png" alt="Skull 1">
     <img src="skull2.png" alt="Skull 2">
@@ -83,5 +104,9 @@
     <img src="skull32.png" alt="Skull 32">
     <img src="skull33.png" alt="Skull 33">
   </div>
+
+  <a class="me-button" href="https://share.google/1IdiIGFyxKVDgnyXK" target="_blank">
+    See Collection on ME
+  </a>
 </body>
 </html>
