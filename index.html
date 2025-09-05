@@ -12,7 +12,7 @@
       color: #fff;
     }
 
-    /* Neon glow helper */
+    /* Glow effect */
     .glow {
       text-shadow: 0 0 8px #6401e1, 0 0 16px #6401e1;
     }
@@ -106,6 +106,7 @@
       border-top: 2px solid #6401e1;
       display: inline-block;
       padding-top: 0.5rem;
+      text-shadow: 0 0 8px #6401e1, 0 0 16px #6401e1;
     }
 
     .collection-card {
@@ -129,12 +130,14 @@
       border-radius: 8px;
       border: 2px solid #6401e1;
       margin-bottom: 1rem;
+      cursor: pointer;
     }
 
     .collection-card h3 {
       margin: 0;
       font-size: 1.3rem;
-      color: #fff;
+      color: #6401e1;
+      text-shadow: 0 0 6px #6401e1;
     }
 
     /* Footer */
@@ -167,7 +170,7 @@
   <header>
     <div class="logo">
       <img src="logo.png" alt="PurpleSkull Logo">
-      <h1 class="glow">PurpleSkull</h1>
+      <h1>PurpleSkull</h1>
     </div>
     <div class="menu-toggle" onclick="toggleMenu()">
       <div></div>
@@ -183,7 +186,9 @@
   <section>
     <h2>Featured Collection</h2>
     <div class="collection-card">
-      <img src="collection-icon.png" alt="Collection Icon">
+      <a href="skulls-of-hold.html">
+        <img src="collection-icon.png" alt="Collection Icon">
+      </a>
       <h3>Skulls of Hold</h3>
     </div>
   </section>
