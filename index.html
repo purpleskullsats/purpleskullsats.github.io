@@ -46,10 +46,12 @@
     }
 
     .scroll-wrapper img {
-      width: clamp(14px, 3vw, 28px); /* responsive: shrinks/grows based on screen size */
-      margin: 6px 0; /* closer spacing */
+      width: clamp(14px, 3vw, 28px);
+      margin: 6px 0;
       filter: drop-shadow(0 0 3px #6401e1) drop-shadow(0 0 6px #6401e1);
       opacity: 0.45;
+      cursor: pointer;
+      pointer-events: auto;
     }
 
     @keyframes scrollDown {
@@ -280,8 +282,11 @@
 
     // === Generate seamless scrolling background ===
     const background = document.getElementById("background");
-    const numCols = 12;  // more columns
-    const numImgs = 25;  // more images per column for density
+    const numCols = 12;
+    const numImgs = 25;
+
+    const baseImg = "background.png";     // your base background image
+    const skullImg = "logo.png";          // PurpleSkull icon image
 
     for (let c = 0; c < numCols; c++) {
       const col = document.createElement("div");
@@ -294,7 +299,21 @@
       for (let repeat = 0; repeat < 2; repeat++) {
         for (let i = 0; i < numImgs; i++) {
           const img = document.createElement("img");
-          img.src = "background.png";
+          img.src = baseImg;
+
+          img.addEventListener("click", () => {
+            img.src = skullImg;
+            img.dataset.clicked = "true";
+          });
+
+          // When animation loops, reset if it was changed
+          wrapper.addEventListener("animationiteration", () => {
+            if (img.dataset.clicked === "true") {
+              img.src = baseImg;
+              delete img.dataset.clicked;
+            }
+          });
+
           wrapper.appendChild(img);
         }
       }
