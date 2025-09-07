@@ -175,7 +175,6 @@
     align-items: center;
     position: absolute;
     width: 200%;
-    height: calc(100% / 8); /* evenly divide all rows */
   }
 
   .row img {
@@ -194,7 +193,6 @@
 </style>
 </head>
 <body>
-  <!-- Background -->
   <div class="background" id="background"></div>
 
   <header>
@@ -254,29 +252,42 @@ function showBinaryText(card) {
   }
 }
 
-// Horizontal moving skulls background
-const background = document.getElementById('background');
-const numRows = 8;
-const baseImg = "background.png";
-const skullImg = "logo.png";
+// Responsive horizontal skull background
+function createBackground() {
+  const background = document.getElementById('background');
+  background.innerHTML = '';
 
-for (let r = 0; r < numRows; r++) {
-  const row = document.createElement('div');
-  row.className = 'row';
-  row.style.top = `${(r / numRows) * 100}%`;
-  row.style.height = `${100 / numRows}%`;
-  row.style.animation = (r % 2 === 0 ? "scrollRight" : "scrollLeft") + ` ${Math.floor(Math.random() * 30) + 40}s linear infinite`;
+  const baseImg = "background.png";
+  const skullImg = "logo.png";
 
-  const numImgs = Math.ceil(window.innerWidth / 40) + 10; // enough images for no gaps
-  for (let repeat = 0; repeat < 2; repeat++) {
-    for (let i = 0; i < numImgs; i++) {
-      const img = document.createElement('img');
-      img.src = baseImg;
-      row.appendChild(img);
+  const rowHeight = 50; // px
+  const numRows = Math.ceil(window.innerHeight / rowHeight);
+
+  for (let r = 0; r < numRows; r++) {
+    const row = document.createElement('div');
+    row.className = 'row';
+    row.style.top = `${r * rowHeight}px`;
+    row.style.height = `${rowHeight}px`;
+    const speed = Math.floor(Math.random() * 30) + 30;
+    row.style.animation = (r % 2 === 0 ? "scrollRight" : "scrollLeft") + ` ${speed}s linear infinite`;
+
+    const numImgs = Math.ceil(window.innerWidth / 40) + 10;
+    for (let repeat = 0; repeat < 2; repeat++) {
+      for (let i = 0; i < numImgs; i++) {
+        const img = document.createElement('img');
+        img.src = baseImg;
+        row.appendChild(img);
+      }
     }
+
+    background.appendChild(row);
   }
-  background.appendChild(row);
 }
+
+createBackground();
+
+// Update background on resize
+window.addEventListener('resize', createBackground);
 
 // Click detection for skulls
 document.addEventListener('click', (e) => {
@@ -286,7 +297,7 @@ document.addEventListener('click', (e) => {
     row.querySelectorAll('img').forEach(img => {
       const rect = img.getBoundingClientRect();
       if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
-        img.src = skullImg;
+        img.src = "logo.png";
         img.style.transform = "scale(1.15)";
         img.dataset.clicked = "true";
       }
@@ -298,7 +309,7 @@ document.querySelectorAll('.row').forEach(row => {
   row.addEventListener("animationiteration", () => {
     row.querySelectorAll("img").forEach(img => {
       if (img.dataset.clicked === "true") {
-        img.src = baseImg;
+        img.src = "background.png";
         img.style.transform = "scale(1)";
         delete img.dataset.clicked;
       }
