@@ -38,7 +38,7 @@
   .row img {
     width: clamp(14px, 3vw, 28px);
     margin: 0 6px;
-    filter: drop-shadow(0 0 6px #6401e1) drop-shadow(0 0 12px #6401e1);
+    filter: drop-shadow(0 0 8px #6401e1) drop-shadow(0 0 16px #6401e1);
     opacity: 0.45;
     cursor: pointer;
     pointer-events: auto;
@@ -66,7 +66,7 @@
     gap: 10px;
   }
 
-  header img { height: 40px; filter: drop-shadow(0 0 6px #6401e1); }
+  header img { height: 40px; filter: drop-shadow(0 0 8px #6401e1) drop-shadow(0 0 16px #6401e1); }
 
   header h2 { font-size: 1.6rem; text-transform: uppercase; color: #6401e1; text-shadow: 0 0 8px #6401e1, 0 0 16px #6401e1; }
 
@@ -157,10 +157,14 @@
     z-index: 20;
   }
 
+  footer a {
+    display: inline-block;
+    margin: 0 5px;
+  }
+
   footer a img {
     height: 27px; /* 10% smaller */
-    margin: 0 5px;
-    filter: drop-shadow(0 0 6px #6401e1) drop-shadow(0 0 12px #6401e1);
+    filter: drop-shadow(0 0 8px #6401e1) drop-shadow(0 0 16px #6401e1);
     transition: transform 0.3s, filter 0.3s;
     cursor: pointer;
   }
@@ -241,7 +245,7 @@ function showBinaryText(card) {
 
 // Horizontal scrolling skulls
 const background = document.getElementById('background');
-const rows = 12; // number of rows
+const rows = 12;
 const skullSrc = "logo.png";
 const baseSrc = "background.png";
 const imgWidth = 34;
