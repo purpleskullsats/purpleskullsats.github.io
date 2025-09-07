@@ -12,10 +12,13 @@
     color: #fff;
     overflow-x: hidden;
     position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
 
   .glow {
-    text-shadow: 0 0 8px #6401e1, 0 0 16px #6401e1;
+    text-shadow: 0 0 8px #6401e1, 0 0 16px #6401e1, 0 0 24px #6401e1, 0 0 32px #6401e1;
     color: #6401e1;
   }
 
@@ -39,7 +42,7 @@
 
   header img {
     height: 40px;
-    filter: drop-shadow(0 0 6px #6401e1);
+    filter: drop-shadow(0 0 12px #6401e1) drop-shadow(0 0 24px #6401e1);
   }
 
   header h2 {
@@ -91,6 +94,7 @@
     text-align: center;
     position: relative;
     z-index: 2;
+    flex: 1;
   }
 
   .collection-card {
@@ -101,7 +105,7 @@
     padding: 2rem;
     margin: 1rem;
     text-align: center;
-    box-shadow: 0 0 12px #6401e1;
+    box-shadow: 0 0 16px #6401e1, 0 0 32px #6401e1;
     transition: transform 0.3s, box-shadow 0.3s;
     cursor: pointer;
     position: relative;
@@ -110,7 +114,7 @@
 
   .collection-card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 0 20px #6401e1;
+    box-shadow: 0 0 24px #6401e1, 0 0 48px #6401e1;
   }
 
   .collection-card img {
@@ -120,16 +124,8 @@
     margin-bottom: 1rem;
   }
 
-  .collection-card h3 {
-    margin: 0.5rem 0 0 0;
-    font-size: 1.3rem;
+  .collection-card h3, .collection-card p {
     color: #6401e1;
-  }
-
-  .collection-card p {
-    color: #6401e1;
-    margin-top: 0.3rem;
-    font-size: 1rem;
   }
 
   footer {
@@ -137,15 +133,24 @@
     padding: 1rem;
     border-top: 2px solid #6401e1;
     background: #0a0a0a;
-    margin-top: 2rem;
-    position: relative;
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
     z-index: 2;
   }
 
-  footer p {
-    font-size: 0.6rem;
-    margin: 0;
-    color: #000;
+  footer a img {
+    height: 27px;
+    filter: drop-shadow(0 0 8px #6401e1) drop-shadow(0 0 16px #6401e1) drop-shadow(0 0 24px #6401e1);
+    transition: transform 0.3s, filter 0.3s;
+    cursor: pointer;
+  }
+
+  footer a img:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 12px #6401e1) drop-shadow(0 0 24px #6401e1) drop-shadow(0 0 36px #6401e1);
   }
 
   /* Horizontal scrolling background */
@@ -166,14 +171,14 @@
     flex-direction: row;
     align-items: center;
     position: absolute;
-    width: 200%; /* allow smooth repeating scroll */
+    width: 200%;
   }
 
   .row img {
     width: clamp(14px, 3vw, 28px);
     margin: 0 6px;
-    filter: drop-shadow(0 0 6px #6401e1) drop-shadow(0 0 12px #6401e1);
-    opacity: 0.6;
+    filter: drop-shadow(0 0 12px #6401e1) drop-shadow(0 0 24px #6401e1) drop-shadow(0 0 36px #6401e1);
+    opacity: 0.7;
     cursor: pointer;
     pointer-events: auto;
     transition: transform 0.2s;
@@ -185,41 +190,47 @@
 </style>
 </head>
 <body>
-  <!-- Background -->
-  <div class="background" id="background"></div>
+<div class="background" id="background"></div>
 
-  <header>
-    <div class="logo">
-      <h2 class="glow">Collections</h2>
-      <img src="logo.png" alt="PurpleSkull Logo" class="glow">
-    </div>
-    <div class="menu-toggle" onclick="toggleMenu()">
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-    <nav id="menu">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-    </nav>
-  </header>
+<header>
+  <div class="logo">
+    <h2 class="glow">Collections</h2>
+    <img src="logo.png" alt="PurpleSkull Logo" class="glow">
+  </div>
+  <div class="menu-toggle" onclick="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <nav id="menu">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
 
-  <main>
-    <div class="collection-card">
-      <a href="skulls-of-hold.html">
-        <img src="collection-icon.png" alt="Skulls of Hold">
-      </a>
-      <h3>Skulls of Hold</h3>
-    </div>
+<main>
+  <div class="collection-card">
+    <a href="skulls-of-hold.html">
+      <img src="collection-icon.png" alt="Skulls of Hold">
+    </a>
+    <h3>Skulls of Hold</h3>
+  </div>
 
-    <div class="collection-card" onclick="showBinaryText(this)">
-      <img src="coming-soon-icon.gif" alt="Coming Soon">
-      <h3>New Collection</h3>
-      <p>Coming Soon</p>
-    </div>
-  </main>
+  <div class="collection-card" onclick="showBinaryText(this)">
+    <img src="coming-soon-icon.gif" alt="Coming Soon">
+    <h3>New Collection</h3>
+    <p>Coming Soon</p>
+  </div>
+</main>
 
-  <footer></footer>
+<footer>
+  <a href="https://x.com/purpleskullsats?t=JkKrPRwa1llyPSoJu0WUww&s=09" target="_blank">
+    <img src="x-logo.png" alt="Follow me on X">
+  </a>
+  <a href="https://www.instagram.com/purpleskullnft?igsh=aTgybnVrbXdjYjFl" target="_blank">
+    <img src="instagram-logo.png" alt="Follow me on Instagram">
+  </a>
+</footer>
 
 <script>
 function toggleMenu() {
