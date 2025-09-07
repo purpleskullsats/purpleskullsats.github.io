@@ -22,7 +22,6 @@
       height: 100%;
       display: flex;
       z-index: -1;
-      pointer-events: none;
       overflow: hidden;
     }
 
@@ -52,6 +51,7 @@
       opacity: 0.45;
       cursor: pointer;
       pointer-events: auto;
+      transition: transform 0.2s;
     }
 
     @keyframes scrollDown {
@@ -64,12 +64,10 @@
       100% { transform: translateY(0); }
     }
 
-    /* Glow effect for logos */
     .glow-img {
       filter: drop-shadow(0 0 8px #6401e1) drop-shadow(0 0 16px #6401e1);
     }
 
-    /* Header */
     header {
       display: flex;
       justify-content: space-between;
@@ -82,17 +80,9 @@
       z-index: 10;
     }
 
-    header .logo {
-      display: flex;
-      align-items: center;
-    }
+    header .logo { display: flex; align-items: center; }
+    header img { height: 40px; margin-right: 10px; }
 
-    header img {
-      height: 40px;
-      margin-right: 10px;
-    }
-
-    /* Burger menu */
     .menu-toggle {
       cursor: pointer;
       display: flex;
@@ -134,7 +124,6 @@
       text-shadow: 0 0 6px #6401e1;
     }
 
-    /* Featured Collection */
     section {
       padding: 3rem 2rem;
       text-align: center;
@@ -189,7 +178,6 @@
       50% { transform: scale(1.03); }
     }
 
-    /* Quote – very small */
     .quote {
       text-align: center;
       font-style: italic;
@@ -199,7 +187,6 @@
       font-size: 0.7rem;
     }
 
-    /* Footer */
     footer {
       text-align: center;
       padding: 1rem;
@@ -208,19 +195,13 @@
       margin-top: 1rem;
     }
 
-    footer a {
-      text-decoration: none;
-      display: inline-block;
-      margin: 0 5px;
-    }
-
+    footer a { text-decoration: none; display: inline-block; margin: 0 5px; }
     footer img {
       transition: transform 0.3s, filter 0.3s;
       cursor: pointer;
       height: 30px;
       filter: drop-shadow(0 0 6px #6401e1);
     }
-
     footer img:hover {
       transform: scale(1.1);
       filter: drop-shadow(0 0 12px #6401e1);
@@ -280,13 +261,12 @@
       menu.style.display = menu.style.display === "block" ? "none" : "block";
     }
 
-    // === Generate seamless scrolling background ===
+    // === Scrolling background setup ===
     const background = document.getElementById("background");
     const numCols = 12;
     const numImgs = 25;
-
-    const baseImg = "background.png";     // your base background image
-    const skullImg = "logo.png";          // PurpleSkull icon image
+    const baseImg = "background.png"; 
+    const skullImg = "logo.png"; 
 
     for (let c = 0; c < numCols; c++) {
       const col = document.createElement("div");
@@ -295,7 +275,6 @@
       const wrapper = document.createElement("div");
       wrapper.className = "scroll-wrapper";
 
-      // Fill wrapper twice for seamless loop
       for (let repeat = 0; repeat < 2; repeat++) {
         for (let i = 0; i < numImgs; i++) {
           const img = document.createElement("img");
@@ -303,13 +282,14 @@
 
           img.addEventListener("click", () => {
             img.src = skullImg;
+            img.style.transform = "scale(1.05)";
             img.dataset.clicked = "true";
           });
 
-          // When animation loops, reset if it was changed
           wrapper.addEventListener("animationiteration", () => {
             if (img.dataset.clicked === "true") {
               img.src = baseImg;
+              img.style.transform = "scale(1)";
               delete img.dataset.clicked;
             }
           });
@@ -318,7 +298,6 @@
         }
       }
 
-      // Random speed + alternating directions
       const speed = Math.floor(Math.random() * 20) + 30;
       wrapper.style.animation = (c % 2 === 0 ? "scrollDown" : "scrollUp") + ` ${speed}s linear infinite`;
 
