@@ -12,14 +12,8 @@
       text-align: center;
       margin: 0;
       padding: 0;
-    }
-
-    /* Top number text */
-    .top-number {
-      font-size: 1rem;
-      color: #6401e1;
-      text-shadow: 0 0 4px #6401e1;
-      margin: 0.3rem 0 0 0;
+      position: relative;
+      min-height: 100vh;
     }
 
     /* Fixed title container with fade transition */
@@ -42,6 +36,7 @@
       height: auto;
       filter: drop-shadow(0 0 8px #FFD700) drop-shadow(0 0 16px #FFD700);
       pointer-events: none;
+      margin-top: 0.2rem;
     }
 
     /* Magic Eden button */
@@ -163,6 +158,17 @@
       right: 20px;
     }
 
+    /* Bottom number text */
+    .bottom-number {
+      font-size: 1rem;
+      color: #6401e1;
+      text-shadow: 0 0 4px #6401e1;
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+    }
+
     /* Responsive */
     @media (max-width: 1024px) {
       .grid img {
@@ -183,9 +189,6 @@
         width: 80px;
         height: 80px;
       }
-      .top-number {
-        font-size: 0.85rem;
-      }
       .me-button {
         padding: 0.5rem 1rem;
         font-size: 0.8rem;
@@ -193,18 +196,19 @@
       .title-img {
         width: 95%;
       }
+      .bottom-number {
+        font-size: 0.85rem;
+      }
     }
   </style>
 </head>
 <body>
   <!-- Fixed Title Section -->
   <div class="title-container">
-    <div class="top-number">70297818 - 70560722</div>
-    <img src="soh-title.png" alt="Skulls of Hold Title" class="title-img">
-    <br>
     <a class="me-button" href="https://share.google/1IdiIGFyxKVDgnyXK" target="_blank">
       - Collection on Magic Eden -
     </a>
+    <img src="soh-title.png" alt="Skulls of Hold Title" class="title-img">
   </div>
 
   <!-- Main Content -->
@@ -246,6 +250,9 @@
       <img src="skull33.png" alt="Skull 33">
     </div>
   </div>
+
+  <!-- Bottom Number -->
+  <div class="bottom-number">70297818 - 70560722</div>
 
   <!-- Modal -->
   <div id="modal" class="modal">
@@ -303,8 +310,8 @@
     // Scroll fade effect for title
     window.addEventListener('scroll', () => {
       const scrollY = window.scrollY;
-      const fadeStart = 50;  // start fading after 50px
-      const fadeEnd = 300;   // fully faded by 300px
+      const fadeStart = 50;  
+      const fadeEnd = 300;   
       let opacity = 1 - (scrollY - fadeStart) / (fadeEnd - fadeStart);
       if (opacity > 1) opacity = 1;
       if (opacity < 0) opacity = 0;
