@@ -45,7 +45,7 @@
     }
 
     header h2 {
-      font-size: 1.6rem;
+theory      font-size: 1.6rem;
       text-transform: uppercase;
     }
 
@@ -183,7 +183,7 @@
       top: 0;
       left: 0;
       z-index: -1;
-      width: 200px; /* Adjust size as needed for your dvd.png */
+      width: 150px; /* Reduced by 25% from 200px */
       height: auto;
       pointer-events: none;
     }
@@ -252,6 +252,8 @@
       let dx = 0.5; // Initial velocity X (slow)
       let dy = 0.5; // Initial velocity Y (slow)
       const speed = 0.3; // Adjust for slower/faster movement
+      const header = document.querySelector('header');
+      const headerHeight = header.getBoundingClientRect().height; // Get header height
 
       function animate() {
         x += dx;
@@ -271,11 +273,11 @@
           if (x + logoWidth >= screenWidth) x = screenWidth - logoWidth;
         }
 
-        // Bounce off top/bottom edges
-        if (y <= 0 || y + logoHeight >= screenHeight) {
+        // Bounce off top/bottom edges, prevent going under header
+        if (y <= headerHeight || y + logoHeight >= screenHeight) {
           dy = -dy;
-          // Ensure it doesn't go off-screen
-          if (y <= 0) y = 0;
+          // Ensure it doesn't go under header or off-screen
+          if (y <= headerHeight) y = headerHeight;
           if (y + logoHeight >= screenHeight) y = screenHeight - logoHeight;
         }
 
