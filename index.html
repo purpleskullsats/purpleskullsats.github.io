@@ -136,17 +136,17 @@
     background: #0a0a0a;
     z-index: 20;
   }
-  footer a { text-decoration: none; display: inline-block; margin: 0 20px; }
-  footer img { transition: transform 0.3s, filter 0.3s; cursor: pointer; height: 30px; filter: drop-shadow(0 0 6px #6401e1); }
+  footer a { text-decoration: none; display: inline-block; margin: 0 18px; } /* slightly reduced margin for space */
+  footer img { transition: transform 0.3s, filter 0.3s; cursor: pointer; height: 27px; filter: drop-shadow(0 0 6px #6401e1); } /* 10% smaller */
   footer img:hover { transform: scale(1.1); filter: drop-shadow(0 0 12px #6401e1); }
 
   /* Smile Text */
   .smile-text {
     position: absolute;
-    bottom: 12px; /* inside footer */
+    bottom: 10px; /* inside footer */
     left: 50%;
     transform: translateX(-50%);
-    font-size: 0.4rem;
+    font-size: 0.45rem;
     color: #6401e1;
     text-shadow: 0 0 6px #6401e1;
     white-space: nowrap;
@@ -247,7 +247,7 @@ columns.forEach(wrapper=>{
   });
 });
 
-// Make smile curved like a happy face
+// Make smile curved like a happy face with more pronounced curve
 const smileText = document.getElementById("smileText");
 const smileContent = smileText.textContent;
 smileText.textContent = '';
@@ -255,8 +255,8 @@ smileText.textContent = '';
 for(let i=0;i<smileContent.length;i++){
   const span = document.createElement('span');
   span.textContent = smileContent[i];
-  const angle = (i - smileContent.length/2) * 4; // spread letters
-  const radius = 4; // curve height
+  const angle = (i - smileContent.length/2) * 4; // letter spread
+  const radius = 7; // more pronounced curve
   span.style.display = 'inline-block';
   span.style.transform = `rotate(${angle}deg) translateY(${radius}px) rotate(${-angle}deg)`;
   smileText.appendChild(span);
