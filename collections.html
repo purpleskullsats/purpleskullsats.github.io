@@ -5,27 +5,48 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Collections - PurpleSkull</title>
 <style>
-  html, body {
+  body {
     margin: 0;
-    padding: 0;
     font-family: 'Arial', sans-serif;
     background-color: #000;
     color: #fff;
-    height: 100%;
     overflow-x: hidden;
-  }
-
-  body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
     position: relative;
   }
 
-  .glow {
-    text-shadow: 0 0 8px #6401e1, 0 0 16px #6401e1;
-    color: #6401e1;
+  /* Background skulls */
+  .background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    z-index: -1;
+    overflow: hidden;
   }
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    height: 100%;
+    white-space: nowrap;
+  }
+
+  .row img {
+    width: clamp(14px, 3vw, 28px);
+    margin: 0 6px;
+    filter: drop-shadow(0 0 6px #6401e1) drop-shadow(0 0 12px #6401e1);
+    opacity: 0.45;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: transform 0.2s;
+  }
+
+  @keyframes scrollRight { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  @keyframes scrollLeft { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
 
   header {
     display: flex;
@@ -45,15 +66,9 @@
     gap: 10px;
   }
 
-  header img {
-    height: 40px;
-    filter: drop-shadow(0 0 6px #6401e1);
-  }
+  header img { height: 40px; filter: drop-shadow(0 0 6px #6401e1); }
 
-  header h2 {
-    font-size: 1.6rem;
-    text-transform: uppercase;
-  }
+  header h2 { font-size: 1.6rem; text-transform: uppercase; color: #6401e1; text-shadow: 0 0 8px #6401e1, 0 0 16px #6401e1; }
 
   .menu-toggle {
     cursor: pointer;
@@ -64,11 +79,7 @@
     height: 20px;
   }
 
-  .menu-toggle div {
-    height: 3px;
-    background: #6401e1;
-    border-radius: 2px;
-  }
+  .menu-toggle div { height: 3px; background: #6401e1; border-radius: 2px; }
 
   nav {
     display: none;
@@ -89,17 +100,12 @@
     font-weight: bold;
   }
 
-  nav a:hover {
-    color: #6401e1;
-    text-shadow: 0 0 6px #6401e1;
-  }
+  nav a:hover { color: #6401e1; text-shadow: 0 0 6px #6401e1; }
 
   main {
-    flex: 1;
     padding: 3rem 2rem;
     text-align: center;
-    position: relative;
-    z-index: 2;
+    min-height: calc(100vh - 120px); /* header + footer buffer */
   }
 
   .collection-card {
@@ -113,8 +119,6 @@
     box-shadow: 0 0 12px #6401e1;
     transition: transform 0.3s, box-shadow 0.3s;
     cursor: pointer;
-    position: relative;
-    z-index: 2;
   }
 
   .collection-card:hover {
@@ -142,91 +146,74 @@
   }
 
   footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     text-align: center;
     padding: 1rem;
     border-top: 2px solid #6401e1;
     background: #0a0a0a;
-    position: relative;
-    z-index: 2;
+    z-index: 20;
   }
 
-  footer p {
-    font-size: 0.6rem;
-    margin: 0;
-    color: #000;
-  }
-
-  /* Horizontal scrolling background */
-  .background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    z-index: -1;
-    overflow: hidden;
-  }
-
-  .row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    position: absolute;
-    width: 200%;
-  }
-
-  .row img {
-    width: clamp(14px, 3vw, 28px);
-    margin: 0 6px;
-    filter: drop-shadow(0 0 3px #6401e1) drop-shadow(0 0 6px #6401e1);
-    opacity: 0.45;
+  footer a img {
+    height: 27px; /* 10% smaller */
+    margin: 0 5px;
+    filter: drop-shadow(0 0 6px #6401e1) drop-shadow(0 0 12px #6401e1);
+    transition: transform 0.3s, filter 0.3s;
     cursor: pointer;
-    pointer-events: auto;
-    transition: transform 0.2s;
   }
 
-  @keyframes scrollRight { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
-  @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
+  footer a img:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 12px #6401e1) drop-shadow(0 0 20px #6401e1);
+  }
 </style>
 </head>
 <body>
-  <div class="background" id="background"></div>
 
-  <header>
-    <div class="logo">
-      <h2 class="glow">Collections</h2>
-      <img src="logo.png" alt="PurpleSkull Logo" class="glow">
-    </div>
-    <div class="menu-toggle" onclick="toggleMenu()">
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-    <nav id="menu">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-    </nav>
-  </header>
+<div class="background" id="background"></div>
 
-  <main>
-    <div class="collection-card">
-      <a href="skulls-of-hold.html">
-        <img src="collection-icon.png" alt="Skulls of Hold">
-      </a>
-      <h3>Skulls of Hold</h3>
-    </div>
+<header>
+  <div class="logo">
+    <h2>Collections</h2>
+    <img src="logo.png" alt="PurpleSkull Logo">
+  </div>
+  <div class="menu-toggle" onclick="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <nav id="menu">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
 
-    <div class="collection-card" onclick="showBinaryText(this)">
-      <img src="coming-soon-icon.gif" alt="Coming Soon">
-      <h3>New Collection</h3>
-      <p>Coming Soon</p>
-    </div>
-  </main>
+<main>
+  <div class="collection-card">
+    <a href="skulls-of-hold.html">
+      <img src="collection-icon.png" alt="Skulls of Hold">
+    </a>
+    <h3>Skulls of Hold</h3>
+  </div>
 
-  <footer></footer>
+  <div class="collection-card" onclick="showBinaryText(this)">
+    <img src="coming-soon-icon.gif" alt="Coming Soon">
+    <h3>New Collection</h3>
+    <p>Coming Soon</p>
+  </div>
+</main>
+
+<footer>
+  <a href="https://x.com/purpleskullsats?t=JkKrPRwa1llyPSoJu0WUww&s=09" target="_blank">
+    <img src="x-logo.png" alt="Follow me on X">
+  </a>
+  <a href="https://www.instagram.com/purpleskullnft?igsh=aTgybnVrbXdjYjFl" target="_blank">
+    <img src="instagram-logo.png" alt="Follow me on Instagram">
+  </a>
+</footer>
 
 <script>
 function toggleMenu() {
@@ -252,64 +239,49 @@ function showBinaryText(card) {
   }
 }
 
-// Responsive horizontal skull background
-function createBackground() {
-  const background = document.getElementById('background');
-  background.innerHTML = '';
+// Horizontal scrolling skulls
+const background = document.getElementById('background');
+const rows = 12; // number of rows
+const skullSrc = "logo.png";
+const baseSrc = "background.png";
+const imgWidth = 34;
+const numImgs = Math.ceil(window.innerWidth / imgWidth) + 10;
 
-  const baseImg = "background.png";
-  const skullImg = "logo.png";
-
-  const rowHeight = 50; // px
-  const numRows = Math.ceil(window.innerHeight / rowHeight);
-
-  for (let r = 0; r < numRows; r++) {
-    const row = document.createElement('div');
-    row.className = 'row';
-    row.style.top = `${r * rowHeight}px`;
-    row.style.height = `${rowHeight}px`;
-    const speed = Math.floor(Math.random() * 30) + 30;
-    row.style.animation = (r % 2 === 0 ? "scrollRight" : "scrollLeft") + ` ${speed}s linear infinite`;
-
-    const numImgs = Math.ceil(window.innerWidth / 40) + 10;
-    for (let repeat = 0; repeat < 2; repeat++) {
-      for (let i = 0; i < numImgs; i++) {
-        const img = document.createElement('img');
-        img.src = baseImg;
-        row.appendChild(img);
-      }
+for (let r = 0; r < rows; r++) {
+  const row = document.createElement('div');
+  row.className = 'row';
+  for (let repeat = 0; repeat < 2; repeat++) {
+    for (let i = 0; i < numImgs; i++) {
+      const img = document.createElement('img');
+      img.src = baseSrc;
+      row.appendChild(img);
     }
-
-    background.appendChild(row);
   }
+  const speed = Math.floor(Math.random() * 20) + 30;
+  row.style.animation = (r % 2 === 0 ? "scrollRight" : "scrollLeft") + ` ${speed}s linear infinite`;
+  background.appendChild(row);
 }
 
-createBackground();
-
-// Update background on resize
-window.addEventListener('resize', createBackground);
-
-// Click detection for skulls
-document.addEventListener('click', (e) => {
+// Click effect for skulls
+document.addEventListener("click", (e) => {
   const x = e.clientX;
   const y = e.clientY;
-  document.querySelectorAll('.row').forEach(row => {
-    row.querySelectorAll('img').forEach(img => {
-      const rect = img.getBoundingClientRect();
-      if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
-        img.src = "logo.png";
-        img.style.transform = "scale(1.15)";
-        img.dataset.clicked = "true";
-      }
-    });
+  document.querySelectorAll('.row img').forEach(img => {
+    const rect = img.getBoundingClientRect();
+    if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
+      img.src = skullSrc;
+      img.style.transform = "scale(1.15)";
+      img.dataset.clicked = "true";
+    }
   });
 });
 
+// Reset clicked skulls
 document.querySelectorAll('.row').forEach(row => {
   row.addEventListener("animationiteration", () => {
     row.querySelectorAll("img").forEach(img => {
       if (img.dataset.clicked === "true") {
-        img.src = "background.png";
+        img.src = baseSrc;
         img.style.transform = "scale(1)";
         delete img.dataset.clicked;
       }
