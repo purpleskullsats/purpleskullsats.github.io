@@ -28,8 +28,8 @@
       top: 0;
       left: 0;
       width: 100%;
-      z-index: 1000;
-      background: transparent;
+      z-index: 0; /* stays behind skulls */
+      background: black; /* solid background so it doesn’t ghost through */
       text-align: center;
       padding: 0.3rem 0;
     }
@@ -40,10 +40,10 @@
       width: 90%;
       height: auto;
       filter: drop-shadow(0 0 8px #FFD700) drop-shadow(0 0 16px #FFD700);
-      pointer-events: none; /* lets clicks pass through */
+      pointer-events: none;
     }
 
-    /* Magic Eden button on top */
+    /* Magic Eden button */
     .me-button {
       display: inline-block;
       margin: 0.5rem 0 0 0;
@@ -63,9 +63,11 @@
       background-color: #7a2aff;
     }
 
-    /* Push content down so it doesn't overlap fixed title */
+    /* Push skull grid down so it doesn’t overlap title */
     .content {
-      margin-top: 260px; /* adjust for the height of fixed header */
+      margin-top: 260px;
+      position: relative;
+      z-index: 2; /* ensures skulls scroll OVER title */
     }
 
     /* Skull grid */
@@ -85,6 +87,7 @@
       border-radius: 8px;
       transition: transform 0.3s, box-shadow 0.3s;
       cursor: pointer;
+      background: #000; /* make sure skulls are solid, no transparency */
     }
 
     .grid img:hover {
@@ -259,7 +262,6 @@
     const skulls = Array.from(document.querySelectorAll(".grid img"));
     let currentIndex = 0;
 
-    // Open modal with clicked image
     skulls.forEach((img, index) => {
       img.addEventListener("click", () => {
         currentIndex = index;
@@ -268,26 +270,22 @@
       });
     });
 
-    // Close modal
     closeBtn.onclick = () => {
       modal.style.display = "none";
     }
 
-    // Close when clicking outside image
     modal.onclick = (e) => {
       if (e.target === modal) {
         modal.style.display = "none";
       }
     }
 
-    // Navigate left
     leftArrow.onclick = (e) => {
       e.stopPropagation();
       currentIndex = (currentIndex - 1 + skulls.length) % skulls.length;
       modalImg.src = skulls[currentIndex].src;
     }
 
-    // Navigate right
     rightArrow.onclick = (e) => {
       e.stopPropagation();
       currentIndex = (currentIndex + 1) % skulls.length;
