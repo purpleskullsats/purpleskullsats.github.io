@@ -14,42 +14,10 @@
     position: relative;
   }
 
-  /* Horizontal Background skulls */
-  .background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    z-index: -1;
-    overflow: hidden;
+  .glow {
+    text-shadow: 0 0 8px #6401e1, 0 0 16px #6401e1;
+    color: #6401e1;
   }
-
-  .row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: calc(100% / 12);
-    white-space: nowrap;
-  }
-
-  .row img {
-    width: clamp(14px, 3vw, 28px);
-    margin: 0 6px;
-    filter: drop-shadow(0 0 8px #6401e1)
-            drop-shadow(0 0 16px #6401e1)
-            drop-shadow(0 0 24px #6401e1)
-            drop-shadow(0 0 32px #6401e1);
-    opacity: 0.45;
-    cursor: pointer;
-    pointer-events: auto;
-    transition: transform 0.2s;
-  }
-
-  @keyframes scrollRight { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-  @keyframes scrollLeft { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
 
   header {
     display: flex;
@@ -71,14 +39,12 @@
 
   header img {
     height: 40px;
-    filter: drop-shadow(0 0 8px #6401e1) drop-shadow(0 0 16px #6401e1);
+    filter: drop-shadow(0 0 6px #6401e1);
   }
 
   header h2 {
     font-size: 1.6rem;
     text-transform: uppercase;
-    color: #6401e1;
-    text-shadow: 0 0 8px #6401e1, 0 0 16px #6401e1;
   }
 
   .menu-toggle {
@@ -90,7 +56,11 @@
     height: 20px;
   }
 
-  .menu-toggle div { height: 3px; background: #6401e1; border-radius: 2px; }
+  .menu-toggle div {
+    height: 3px;
+    background: #6401e1;
+    border-radius: 2px;
+  }
 
   nav {
     display: none;
@@ -111,12 +81,16 @@
     font-weight: bold;
   }
 
-  nav a:hover { color: #6401e1; text-shadow: 0 0 6px #6401e1; }
+  nav a:hover {
+    color: #6401e1;
+    text-shadow: 0 0 6px #6401e1;
+  }
 
   main {
     padding: 3rem 2rem;
     text-align: center;
-    min-height: calc(100vh - 120px);
+    position: relative;
+    z-index: 2;
   }
 
   .collection-card {
@@ -130,6 +104,8 @@
     box-shadow: 0 0 12px #6401e1;
     transition: transform 0.3s, box-shadow 0.3s;
     cursor: pointer;
+    position: relative;
+    z-index: 2;
   }
 
   .collection-card:hover {
@@ -157,30 +133,170 @@
   }
 
   footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
     text-align: center;
     padding: 1rem;
     border-top: 2px solid #6401e1;
     background: #0a0a0a;
-    z-index: 20;
+    margin-top: 2rem;
+    position: relative;
+    z-index: 2;
   }
 
-  footer a {
-    display: inline-block;
-    margin: 0 5px;
+  footer p {
+    font-size: 0.6rem;
+    margin: 0;
+    color: #000;
   }
 
-  footer a img {
-    height: 27px;
-    filter: drop-shadow(0 0 8px #6401e1) drop-shadow(0 0 16px #6401e1);
-    transition: transform 0.3s, filter 0.3s;
+  /* Horizontal scrolling background */
+  .background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    z-index: -1;
+    overflow: hidden;
+  }
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: absolute;
+    width: 200%; /* allow smooth repeating scroll */
+  }
+
+  .row img {
+    width: clamp(14px, 3vw, 28px);
+    margin: 0 6px;
+    filter: drop-shadow(0 0 6px #6401e1) drop-shadow(0 0 12px #6401e1);
+    opacity: 0.6;
     cursor: pointer;
+    pointer-events: auto;
+    transition: transform 0.2s;
   }
 
-  footer a img:hover {
-    transform: scale(1.1);
-    filter: drop-shadow(0 0 12px #6401e1) drop-shadow(0 0 20px #6401e1);
+  @keyframes scrollRight { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
+  @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+</style>
+</head>
+<body>
+  <!-- Background -->
+  <div class="background" id="background"></div>
+
+  <header>
+    <div class="logo">
+      <h2 class="glow">Collections</h2>
+      <img src="logo.png" alt="PurpleSkull Logo" class="glow">
+    </div>
+    <div class="menu-toggle" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <nav id="menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="collection-card">
+      <a href="skulls-of-hold.html">
+        <img src="collection-icon.png" alt="Skulls of Hold">
+      </a>
+      <h3>Skulls of Hold</h3>
+    </div>
+
+    <div class="collection-card" onclick="showBinaryText(this)">
+      <img src="coming-soon-icon.gif" alt="Coming Soon">
+      <h3>New Collection</h3>
+      <p>Coming Soon</p>
+    </div>
+  </main>
+
+  <footer></footer>
+
+<script>
+function toggleMenu() {
+  const menu = document.getElementById("menu");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+function shakeCard(card) {
+  card.classList.add('shake');
+  setTimeout(() => card.classList.remove('shake'), 500);
+}
+
+function showBinaryText(card) {
+  shakeCard(card);
+  const footer = document.querySelector('footer');
+  if (!document.getElementById('binaryText')) {
+    const p = document.createElement('p');
+    p.id = 'binaryText';
+    p.textContent = "01001001 00100000 01101000 01100001 01110110 01100101 00100000 01101110 01101111 00100000 01101001 01100100 01100101 01100001 00100000 01110111 01101000 01100001 01110100 00100000 01001001 00100111 01101101 00100000 01100100 01101111 01101001 01101110 01100111";
+    p.style.color = "#000";
+    p.style.fontSize = "0.6rem";
+    footer.appendChild(p);
   }
+}
+
+// Horizontal moving skulls background
+const background = document.getElementById('background');
+const numRows = 8;
+const baseImg = "background.png";
+const skullImg = "logo.png";
+const rows = [];
+const numImgs = Math.ceil(window.innerWidth / 40) + 5;
+
+for(let r=0; r<numRows; r++){
+  const row = document.createElement('div');
+  row.className = 'row';
+  row.style.top = `${(r/numRows)*100}%`;
+  row.style.animation = (r%2===0?"scrollRight":"scrollLeft") + ` ${Math.floor(Math.random()*30)+30}s linear infinite`;
+  for(let repeat=0; repeat<2; repeat++){
+    for(let i=0; i<numImgs; i++){
+      const img = document.createElement('img');
+      img.src = baseImg;
+      row.appendChild(img);
+    }
+  }
+  background.appendChild(row);
+  rows.push(row);
+}
+
+// Click detection for skulls
+document.addEventListener('click', (e)=>{
+  const x=e.clientX;
+  const y=e.clientY;
+  rows.forEach(row=>{
+    row.querySelectorAll('img').forEach(img=>{
+      const rect=img.getBoundingClientRect();
+      if(x>=rect.left && x<=rect.right && y>=rect.top && y<=rect.bottom){
+        img.src = skullImg;
+        img.style.transform="scale(1.15)";
+        img.dataset.clicked="true";
+      }
+    });
+  });
+});
+
+// Reset clicked skulls after animation
+rows.forEach(row=>{
+  row.addEventListener("animationiteration", ()=>{
+    row.querySelectorAll("img").forEach(img=>{
+      if(img.dataset.clicked==="true"){
+        img.src = baseImg;
+        img.style.transform="scale(1)";
+        delete img.dataset.clicked;
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>
