@@ -14,7 +14,7 @@
     position: relative;
   }
 
-  /* Background skulls */
+  /* Horizontal Background skulls */
   .background {
     position: fixed;
     top: 0;
@@ -30,7 +30,7 @@
   .row {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
     height: calc(100% / 12);
     white-space: nowrap;
   }
@@ -184,138 +184,3 @@
     transform: scale(1.1);
     filter: drop-shadow(0 0 12px #6401e1) drop-shadow(0 0 20px #6401e1);
   }
-
-  @keyframes shake {
-    0% { transform: translateX(0); }
-    20% { transform: translateX(-5px); }
-    40% { transform: translateX(5px); }
-    60% { transform: translateX(-5px); }
-    80% { transform: translateX(5px); }
-    100% { transform: translateX(0); }
-  }
-
-  .shake {
-    animation: shake 0.5s;
-  }
-</style>
-</head>
-<body>
-
-<div class="background" id="background"></div>
-
-<header>
-  <div class="logo">
-    <h2>Collections</h2>
-    <img src="logo.png" alt="PurpleSkull Logo">
-  </div>
-  <div class="menu-toggle" onclick="toggleMenu()">
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
-  <nav id="menu">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-  </nav>
-</header>
-
-<main>
-  <div class="collection-card">
-    <a href="skulls-of-hold.html">
-      <img src="collection-icon.png" alt="Skulls of Hold">
-    </a>
-    <h3>Skulls of Hold</h3>
-  </div>
-
-  <div class="collection-card" onclick="showBinaryText(this)">
-    <img src="coming-soon-icon.gif" alt="Coming Soon">
-    <h3>New Collection</h3>
-    <p>Coming Soon</p>
-  </div>
-</main>
-
-<footer>
-  <a href="https://x.com/purpleskullsats?t=JkKrPRwa1llyPSoJu0WUww&s=09" target="_blank">
-    <img src="x-logo.png" alt="Follow me on X">
-  </a>
-  <a href="https://www.instagram.com/purpleskullnft?igsh=aTgybnVrbXdjYjFl" target="_blank">
-    <img src="instagram-logo.png" alt="Follow me on Instagram">
-  </a>
-</footer>
-
-<script>
-function toggleMenu() {
-  const menu = document.getElementById("menu");
-  menu.style.display = menu.style.display === "block" ? "none" : "block";
-}
-
-function shakeCard(card) {
-  card.classList.add('shake');
-  setTimeout(() => card.classList.remove('shake'), 500);
-}
-
-function showBinaryText(card) {
-  shakeCard(card);
-  const footer = document.querySelector('footer');
-  if (!document.getElementById('binaryText')) {
-    const p = document.createElement('p');
-    p.id = 'binaryText';
-    p.textContent = "01001001 00100000 01101000 01100001 01110110 01100101 00100000 01101110 01101111 00100000 01101001 01100100 01100101 01100001 00100000 01110111 01101000 01100001 01110100 00100000 01001001 00100111 01101101 00100000 01100100 01101111 01101001 01101110 01100111";
-    p.style.color = "#000";
-    p.style.fontSize = "0.6rem";
-    footer.appendChild(p);
-  }
-}
-
-// Horizontal scrolling skulls
-const background = document.getElementById('background');
-const rows = 12;
-const skullSrc = "logo.png";
-const baseSrc = "background.png";
-const imgWidth = 34;
-const numImgs = Math.ceil(window.innerWidth / imgWidth) + 10;
-
-for (let r = 0; r < rows; r++) {
-  const row = document.createElement('div');
-  row.className = 'row';
-  for (let repeat = 0; repeat < 2; repeat++) {
-    for (let i = 0; i < numImgs; i++) {
-      const img = document.createElement('img');
-      img.src = baseSrc;
-      row.appendChild(img);
-    }
-  }
-  const speed = Math.floor(Math.random() * 20) + 30;
-  row.style.animation = (r % 2 === 0 ? "scrollRight" : "scrollLeft") + ` ${speed}s linear infinite`;
-  background.appendChild(row);
-}
-
-// Click effect for skulls
-document.addEventListener("click", (e) => {
-  const x = e.clientX;
-  const y = e.clientY;
-  document.querySelectorAll('.row img').forEach(img => {
-    const rect = img.getBoundingClientRect();
-    if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
-      img.src = skullSrc;
-      img.style.transform = "scale(1.15)";
-      img.dataset.clicked = "true";
-    }
-  });
-});
-
-// Reset clicked skulls
-document.querySelectorAll('.row').forEach(row => {
-  row.addEventListener("animationiteration", () => {
-    row.querySelectorAll("img").forEach(img => {
-      if (img.dataset.clicked === "true") {
-        img.src = baseSrc;
-        img.style.transform = "scale(1)";
-        delete img.dataset.clicked;
-      }
-    });
-  });
-});
-</script>
-</body>
-</html>
