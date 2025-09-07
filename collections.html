@@ -18,7 +18,7 @@
   }
 
   .glow {
-    text-shadow: 0 0 8px #6401e1, 0 0 16px #6401e1, 0 0 24px #6401e1, 0 0 32px #6401e1;
+    text-shadow: 0 0 8px #6401e1, 0 0 16px #6401e1;
     color: #6401e1;
   }
 
@@ -42,7 +42,7 @@
 
   header img {
     height: 40px;
-    filter: drop-shadow(0 0 12px #6401e1) drop-shadow(0 0 24px #6401e1);
+    filter: drop-shadow(0 0 6px #6401e1);
   }
 
   header h2 {
@@ -105,7 +105,7 @@
     padding: 2rem;
     margin: 1rem;
     text-align: center;
-    box-shadow: 0 0 16px #6401e1, 0 0 32px #6401e1;
+    box-shadow: 0 0 12px #6401e1;
     transition: transform 0.3s, box-shadow 0.3s;
     cursor: pointer;
     position: relative;
@@ -114,7 +114,7 @@
 
   .collection-card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 0 24px #6401e1, 0 0 48px #6401e1;
+    box-shadow: 0 0 20px #6401e1;
   }
 
   .collection-card img {
@@ -133,8 +133,6 @@
     padding: 1rem;
     border-top: 2px solid #6401e1;
     background: #0a0a0a;
-    position: sticky;
-    bottom: 0;
     display: flex;
     justify-content: center;
     gap: 15px;
@@ -143,14 +141,14 @@
 
   footer a img {
     height: 27px;
-    filter: drop-shadow(0 0 8px #6401e1) drop-shadow(0 0 16px #6401e1) drop-shadow(0 0 24px #6401e1);
+    filter: drop-shadow(0 0 8px #6401e1) drop-shadow(0 0 16px #6401e1);
     transition: transform 0.3s, filter 0.3s;
     cursor: pointer;
   }
 
   footer a img:hover {
     transform: scale(1.1);
-    filter: drop-shadow(0 0 12px #6401e1) drop-shadow(0 0 24px #6401e1) drop-shadow(0 0 36px #6401e1);
+    filter: drop-shadow(0 0 12px #6401e1) drop-shadow(0 0 24px #6401e1);
   }
 
   /* Horizontal scrolling background */
@@ -177,8 +175,8 @@
   .row img {
     width: clamp(14px, 3vw, 28px);
     margin: 0 6px;
-    filter: drop-shadow(0 0 12px #6401e1) drop-shadow(0 0 24px #6401e1) drop-shadow(0 0 36px #6401e1);
-    opacity: 0.7;
+    filter: drop-shadow(0 0 3px #6401e1) drop-shadow(0 0 6px #6401e1);
+    opacity: 0.45;
     cursor: pointer;
     pointer-events: auto;
     transition: transform 0.2s;
@@ -187,9 +185,23 @@
   @keyframes scrollRight { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
   @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    20% { transform: translateX(-5px); }
+    40% { transform: translateX(5px); }
+    60% { transform: translateX(-5px); }
+    80% { transform: translateX(5px); }
+    100% { transform: translateX(0); }
+  }
+
+  .shake {
+    animation: shake 0.5s;
+  }
+
 </style>
 </head>
 <body>
+
 <div class="background" id="background"></div>
 
 <header>
