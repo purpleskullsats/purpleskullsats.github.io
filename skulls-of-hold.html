@@ -19,22 +19,34 @@
       font-size: 1rem;
       color: #6401e1;
       text-shadow: 0 0 4px #6401e1;
-      margin: 0.3rem 0 0 0; /* moved up more */
+      margin: 0.3rem 0 0 0;
+    }
+
+    /* Fixed title container */
+    .title-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: transparent;
+      text-align: center;
+      padding: 0.3rem 0;
     }
 
     /* Title Image with yellow glow */
     .title-img {
-      margin: 0.3rem auto -0.5rem auto; /* top small, negative bottom to overlap button */
       max-width: 600px;
       width: 90%;
       height: auto;
       filter: drop-shadow(0 0 8px #FFD700) drop-shadow(0 0 16px #FFD700);
+      pointer-events: none; /* lets clicks pass through */
     }
 
     /* Magic Eden button on top */
     .me-button {
       display: inline-block;
-      margin: 0 0 0.5rem 0; /* nearly touching title */
+      margin: 0.5rem 0 0 0;
       padding: 0.8rem 1.5rem;
       background-color: #6401e1;
       color: #000; /* Black text */
@@ -51,13 +63,18 @@
       background-color: #7a2aff;
     }
 
+    /* Push content down so it doesn't overlap fixed title */
+    .content {
+      margin-top: 260px; /* adjust for the height of fixed header */
+    }
+
     /* Skull grid */
     .grid {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 15px;
-      padding: 0 1rem 1rem 1rem; /* removed top padding */
+      padding: 0 1rem 1rem 1rem;
     }
 
     .grid img {
@@ -175,52 +192,54 @@
   </style>
 </head>
 <body>
-  <!-- Top number -->
-  <div class="top-number">70297818 - 70560722</div>
+  <!-- Fixed Title Section -->
+  <div class="title-container">
+    <div class="top-number">70297818 - 70560722</div>
+    <img src="soh-title.png" alt="Skulls of Hold Title" class="title-img">
+    <br>
+    <a class="me-button" href="https://share.google/1IdiIGFyxKVDgnyXK" target="_blank">
+      - Collection on Magic Eden -
+    </a>
+  </div>
 
-  <!-- Title Image -->
-  <img src="soh-title.png" alt="Skulls of Hold Title" class="title-img">
-
-  <!-- Magic Eden Button -->
-  <a class="me-button" href="https://share.google/1IdiIGFyxKVDgnyXK" target="_blank">
-   - Collection on Magic Eden -
-  </a>
-
-  <div class="grid">
-    <!-- Repeat for all 33 images -->
-    <img src="skull1.png" alt="Skull 1">
-    <img src="skull2.png" alt="Skull 2">
-    <img src="skull3.png" alt="Skull 3">
-    <img src="skull4.png" alt="Skull 4">
-    <img src="skull5.png" alt="Skull 5">
-    <img src="skull6.png" alt="Skull 6">
-    <img src="skull7.png" alt="Skull 7">
-    <img src="skull8.png" alt="Skull 8">
-    <img src="skull9.png" alt="Skull 9">
-    <img src="skull10.png" alt="Skull 10">
-    <img src="skull11.png" alt="Skull 11">
-    <img src="skull12.png" alt="Skull 12">
-    <img src="skull13.png" alt="Skull 13">
-    <img src="skull14.png" alt="Skull 14">
-    <img src="skull15.png" alt="Skull 15">
-    <img src="skull16.png" alt="Skull 16">
-    <img src="skull17.png" alt="Skull 17">
-    <img src="skull18.png" alt="Skull 18">
-    <img src="skull19.png" alt="Skull 19">
-    <img src="skull20.png" alt="Skull 20">
-    <img src="skull21.png" alt="Skull 21">
-    <img src="skull22.png" alt="Skull 22">
-    <img src="skull23.png" alt="Skull 23">
-    <img src="skull24.png" alt="Skull 24">
-    <img src="skull25.png" alt="Skull 25">
-    <img src="skull26.png" alt="Skull 26">
-    <img src="skull27.png" alt="Skull 27">
-    <img src="skull28.png" alt="Skull 28">
-    <img src="skull29.png" alt="Skull 29">
-    <img src="skull30.png" alt="Skull 30">
-    <img src="skull31.png" alt="Skull 31">
-    <img src="skull32.png" alt="Skull 32">
-    <img src="skull33.png" alt="Skull 33">
+  <!-- Main Content -->
+  <div class="content">
+    <div class="grid">
+      <!-- Repeat for all 33 images -->
+      <img src="skull1.png" alt="Skull 1">
+      <img src="skull2.png" alt="Skull 2">
+      <img src="skull3.png" alt="Skull 3">
+      <img src="skull4.png" alt="Skull 4">
+      <img src="skull5.png" alt="Skull 5">
+      <img src="skull6.png" alt="Skull 6">
+      <img src="skull7.png" alt="Skull 7">
+      <img src="skull8.png" alt="Skull 8">
+      <img src="skull9.png" alt="Skull 9">
+      <img src="skull10.png" alt="Skull 10">
+      <img src="skull11.png" alt="Skull 11">
+      <img src="skull12.png" alt="Skull 12">
+      <img src="skull13.png" alt="Skull 13">
+      <img src="skull14.png" alt="Skull 14">
+      <img src="skull15.png" alt="Skull 15">
+      <img src="skull16.png" alt="Skull 16">
+      <img src="skull17.png" alt="Skull 17">
+      <img src="skull18.png" alt="Skull 18">
+      <img src="skull19.png" alt="Skull 19">
+      <img src="skull20.png" alt="Skull 20">
+      <img src="skull21.png" alt="Skull 21">
+      <img src="skull22.png" alt="Skull 22">
+      <img src="skull23.png" alt="Skull 23">
+      <img src="skull24.png" alt="Skull 24">
+      <img src="skull25.png" alt="Skull 25">
+      <img src="skull26.png" alt="Skull 26">
+      <img src="skull27.png" alt="Skull 27">
+      <img src="skull28.png" alt="Skull 28">
+      <img src="skull29.png" alt="Skull 29">
+      <img src="skull30.png" alt="Skull 30">
+      <img src="skull31.png" alt="Skull 31">
+      <img src="skull32.png" alt="Skull 32">
+      <img src="skull33.png" alt="Skull 33">
+    </div>
   </div>
 
   <!-- Modal -->
