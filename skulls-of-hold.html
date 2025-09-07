@@ -27,11 +27,20 @@
       box-shadow: 0 0 10px #6401e1;
       font-size: 0.9rem;
       transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
-      position: fixed;
+      position: absolute; /* we’ll switch to fixed when scrolling */
       top: 10px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 1001;
+    }
+
+    .me-button.fixed {
+      position: fixed;
+      top: 10px;
+    }
+
+    .me-button.sticky {
+      position: absolute;
     }
 
     .me-button:hover {
@@ -54,9 +63,9 @@
       top: 50px;
       left: 0;
       width: 100%;
-      z-index: 0; /* stays behind skulls */
+      z-index: 0;
       text-align: center;
-      pointer-events: none; /* lets clicks pass through */
+      pointer-events: none;
     }
 
     /* Title Image with yellow glow */
@@ -93,12 +102,12 @@
       transition: transform 0.3s, box-shadow 0.3s;
       cursor: pointer;
       background: #000;
-      box-shadow: 0 0 8px #6401e1; /* subtle glow */
+      box-shadow: 0 0 8px #6401e1;
     }
 
     .grid img:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 20px #6401e1; /* stronger glow on hover */
+      box-shadow: 0 0 20px #6401e1;
     }
 
     /* Modal styles */
@@ -176,7 +185,7 @@
     }
     @media (max-width: 480px) {
       .grid img { width: 80px; height: 80px; }
-      .me-button { padding: 0.5rem 1rem; font-size: 0.8rem; top: 5px; }
+      .me-button { padding: 0.5rem 1rem; font-size: 0.8rem; }
       .title-img { width: 95%; }
     }
   </style>
@@ -184,7 +193,7 @@
 <body>
 
   <!-- Magic Eden button -->
-  <a class="me-button" href="https://share.google/1IdiIGFyxKVDgnyXK" target="_blank">
+  <a class="me-button" href="https://share.google/1IdiIGFyxKVDgnyXK" target="_blank" id="me-button">
     - Collection on Magic Eden -
   </a>
 
@@ -194,8 +203,8 @@
   </div>
 
   <!-- Main Content -->
-  <div class="content">
-    <div class="grid">
+  <div class="content" id="content">
+    <div class="grid" id="grid">
       <!-- Repeat for all 33 images -->
       <img src="skull1.png" alt="Skull 1">
       <img src="skull2.png" alt="Skull 2">
@@ -250,14 +259,26 @@
     const rightArrow = document.querySelector(".arrow.right");
     const skulls = Array.from(document.querySelectorAll(".grid img"));
     const titleImg = document.getElementById("title-img");
+    const meButton = document.getElementById("me-button");
+    const grid = document.getElementById("grid");
 
     let currentIndex = 0;
+    const buttonOffset = 10; // initial offset from top
 
     // Fade title on scroll
     window.addEventListener("scroll", () => {
-      const fadePoint = 300; // px after which title fully fades
-      let opacity = Math.max(0, 1 - window.scrollY / fadePoint);
-      titleImg.style.opacity = opacity;
+      const fadePoint = 300; 
+      titleImg.style.opacity = Math.max(0, 1 - window.scrollY / fadePoint);
+
+      // Sticky button behavior
+      const gridTop = grid.getBoundingClientRect().top + window.scrollY - meButton.offsetHeight - 10;
+      if(window.scrollY + buttonOffset < gridTop){
+        meButton.style.position = "fixed";
+        meButton.style.top = buttonOffset + "px";
+      } else {
+        meButton.style.position = "absolute";
+        meButton.style.top = gridTop + "px";
+      }
     });
 
     // Modal functionality
