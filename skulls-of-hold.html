@@ -22,16 +22,17 @@
       margin: 0.3rem 0 0 0;
     }
 
-    /* Fixed title container */
+    /* Fixed title container with fade transition */
     .title-container {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      z-index: 0; /* stays behind skulls */
+      z-index: 0;
       background: black;
       text-align: center;
       padding: 0.3rem 0;
+      transition: opacity 0.5s ease;
     }
 
     /* Title Image with yellow glow */
@@ -68,7 +69,7 @@
     .content {
       margin-top: 260px;
       position: relative;
-      z-index: 2; /* ensures skulls scroll OVER title */
+      z-index: 2;
     }
 
     /* Skull grid */
@@ -198,11 +199,12 @@
 <body>
   <!-- Fixed Title Section -->
   <div class="title-container">
+    <div class="top-number">70297818 - 70560722</div>
+    <img src="soh-title.png" alt="Skulls of Hold Title" class="title-img">
+    <br>
     <a class="me-button" href="https://share.google/1IdiIGFyxKVDgnyXK" target="_blank">
       - Collection on Magic Eden -
     </a>
-    <div class="top-number">70297818 - 70560722</div>
-    <img src="soh-title.png" alt="Skulls of Hold Title" class="title-img">
   </div>
 
   <!-- Main Content -->
@@ -260,8 +262,10 @@
     const leftArrow = document.querySelector(".arrow.left");
     const rightArrow = document.querySelector(".arrow.right");
     const skulls = Array.from(document.querySelectorAll(".grid img"));
+    const titleContainer = document.querySelector('.title-container');
     let currentIndex = 0;
 
+    // Open modal with clicked image
     skulls.forEach((img, index) => {
       img.addEventListener("click", () => {
         currentIndex = index;
@@ -270,27 +274,42 @@
       });
     });
 
+    // Close modal
     closeBtn.onclick = () => {
       modal.style.display = "none";
     }
 
+    // Close when clicking outside image
     modal.onclick = (e) => {
       if (e.target === modal) {
         modal.style.display = "none";
       }
     }
 
+    // Navigate left
     leftArrow.onclick = (e) => {
       e.stopPropagation();
       currentIndex = (currentIndex - 1 + skulls.length) % skulls.length;
       modalImg.src = skulls[currentIndex].src;
     }
 
+    // Navigate right
     rightArrow.onclick = (e) => {
       e.stopPropagation();
       currentIndex = (currentIndex + 1) % skulls.length;
       modalImg.src = skulls[currentIndex].src;
     }
+
+    // Scroll fade effect for title
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      const fadeStart = 50;  // start fading after 50px
+      const fadeEnd = 300;   // fully faded by 300px
+      let opacity = 1 - (scrollY - fadeStart) / (fadeEnd - fadeStart);
+      if (opacity > 1) opacity = 1;
+      if (opacity < 0) opacity = 0;
+      titleContainer.style.opacity = opacity;
+    });
   </script>
 </body>
 </html>
