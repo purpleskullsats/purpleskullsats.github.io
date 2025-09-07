@@ -32,7 +32,7 @@
     flex-direction: column;
     align-items: center;
     position: relative;
-    min-height: 100vh; 
+    min-height: 100vh;
   }
 
   .scroll-wrapper {
@@ -157,7 +157,36 @@
 
   @keyframes pulsate { 0%,100% { transform: scale(1); } 50% { transform: scale(1.03); } }
 
-  /* Footer */
+  /* Smile quote */
+  .quote-container {
+    position: fixed;
+    bottom: 60px;
+    width: 100%;
+    text-align: center;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  .eyes {
+    font-size: 1rem;
+    color: #6401e1;
+    text-shadow: 0 0 6px #6401e1;
+    margin-bottom: 0.1rem;
+  }
+
+  .smile {
+    display: inline-block;
+    font-size: 0.6rem;
+    color: #6401e1;
+    text-shadow: 0 0 6px #6401e1;
+    white-space: nowrap;
+  }
+
+  .smile span {
+    display: inline-block;
+    position: relative;
+  }
+
   footer {
     position: fixed;
     bottom: 0;
@@ -173,39 +202,9 @@
   footer a { text-decoration: none; display: inline-block; margin: 0 5px; }
   footer img { transition: transform 0.3s, filter 0.3s; cursor: pointer; height: 30px; filter: drop-shadow(0 0 6px #6401e1); }
   footer img:hover { transform: scale(1.1); filter: drop-shadow(0 0 12px #6401e1); }
-
-  /* Smile quote */
-  .quote-container {
-    position: fixed;
-    bottom: 60px;
-    width: 100%;
-    text-align: center;
-    z-index: 5;
-    pointer-events: none;
-  }
-
-  .eyes {
-    font-size: 1.2rem;
-    color: #6401e1;
-    text-shadow: 0 0 6px #6401e1;
-    margin-bottom: 0.2rem;
-  }
-
-  .smile {
-    display: inline-block;
-    font-size: 0.9rem;
-    color: #6401e1;
-    text-shadow: 0 0 6px #6401e1;
-  }
-
-  .smile span {
-    display: inline-block;
-    transform-origin: bottom center;
-  }
 </style>
 </head>
 <body>
-
 <div class="background" id="background"></div>
 
 <header>
@@ -247,13 +246,13 @@ function toggleMenu() {
   menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 
-// Background scrolling columns
 const background = document.getElementById("background");
 const numCols = 12;
 const baseImg = "background.png";
 const skullImg = "logo.png";
 const columns = [];
 
+// Dynamically calculate number of images to cover height
 const imgHeight = 34;
 const numImgs = Math.ceil(window.innerHeight / imgHeight) + 10;
 
@@ -279,7 +278,7 @@ for(let c=0;c<numCols;c++){
   columns.push(wrapper);
 }
 
-// Click detection
+// Click detection for background skulls
 document.addEventListener("click",(e)=>{
   const x=e.clientX;
   const y=e.clientY;
@@ -296,7 +295,7 @@ document.addEventListener("click",(e)=>{
   });
 });
 
-// Reset on animation iteration
+// Reset images on animation loop
 columns.forEach(wrapper=>{
   wrapper.addEventListener("animationiteration",()=>{
     wrapper.querySelectorAll("img").forEach(img=>{
@@ -315,16 +314,16 @@ const text = smileText.textContent;
 smileText.textContent = "";
 const letters = text.split("");
 const total = letters.length;
-const curve = 30;
+const curveHeight = 8; // px
 
-letters.forEach((letter,i)=>{
-  const span=document.createElement("span");
-  const angle=((i/(total-1))-0.5)*curve;
-  span.style.transform=`rotate(${angle}deg)`;
-  span.textContent=letter;
+letters.forEach((letter, i) => {
+  const span = document.createElement("span");
+  const x = i / (total - 1);
+  const y = -4 + 4 * Math.pow((2*x - 1), 2); // parabola for smile
+  span.style.transform = `translateY(${y * curveHeight}px)`;
+  span.textContent = letter;
   smileText.appendChild(span);
 });
 </script>
-
 </body>
 </html>
