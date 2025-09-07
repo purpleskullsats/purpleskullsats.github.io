@@ -11,7 +11,6 @@
     background-color: #000;
     color: #fff;
     overflow-x: hidden;
-    padding-bottom: 60px;
     position: relative;
   }
 
@@ -55,19 +54,10 @@
     transition: transform 0.2s;
   }
 
-  @keyframes scrollDown {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-50%); }
-  }
+  @keyframes scrollDown { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
+  @keyframes scrollUp { 0% { transform: translateY(-50%); } 100% { transform: translateY(0); } }
 
-  @keyframes scrollUp {
-    0% { transform: translateY(-50%); }
-    100% { transform: translateY(0); }
-  }
-
-  .glow-img {
-    filter: drop-shadow(0 0 8px #6401e1) drop-shadow(0 0 16px #6401e1);
-  }
+  .glow-img { filter: drop-shadow(0 0 8px #6401e1) drop-shadow(0 0 16px #6401e1); }
 
   header {
     display: flex;
@@ -80,7 +70,6 @@
     top: 0;
     z-index: 10;
   }
-
   header .logo { display: flex; align-items: center; }
   header img { height: 40px; margin-right: 10px; }
 
@@ -92,13 +81,7 @@
     width: 28px;
     height: 20px;
   }
-
-  .menu-toggle div {
-    height: 3px;
-    background: #6401e1;
-    border-radius: 2px;
-    transition: 0.3s;
-  }
+  .menu-toggle div { height: 3px; background: #6401e1; border-radius: 2px; transition: 0.3s; }
 
   nav {
     display: none;
@@ -110,23 +93,10 @@
     border: 1px solid #6401e1;
     border-radius: 6px;
   }
-
-  nav a {
-    display: block;
-    margin: 0.5rem 0;
-    color: #fff;
-    text-decoration: none;
-    font-weight: bold;
-    transition: 0.3s;
-  }
-
-  nav a:hover {
-    color: #6401e1;
-    text-shadow: 0 0 6px #6401e1;
-  }
+  nav a { display: block; margin: 0.5rem 0; color: #fff; text-decoration: none; font-weight: bold; transition: 0.3s; }
+  nav a:hover { color: #6401e1; text-shadow: 0 0 6px #6401e1; }
 
   section { padding: 3rem 2rem; text-align: center; }
-
   section h2 {
     font-size: 2rem;
     margin-bottom: 2rem;
@@ -150,43 +120,12 @@
     transition: transform 0.3s, box-shadow 0.3s;
     animation: pulsate 4s ease-in-out infinite;
   }
-
   .collection-card:hover { transform: translateY(-6px) scale(1.05); box-shadow: 0 0 20px #6401e1; }
   .collection-card img { height: 120px; border-radius: 8px; border: 2px solid #6401e1; margin-bottom: 1rem; cursor: pointer; }
   .collection-card h3 { margin: 0; font-size: 1.3rem; color: #6401e1; text-shadow: 0 0 6px #6401e1; }
-
   @keyframes pulsate { 0%,100% { transform: scale(1); } 50% { transform: scale(1.03); } }
 
-  /* Smile quote */
-  .quote-container {
-    position: fixed;
-    bottom: 60px;
-    width: 100%;
-    text-align: center;
-    z-index: 5;
-    pointer-events: none;
-  }
-
-  .eyes {
-    font-size: 0.8rem;
-    color: #6401e1;
-    text-shadow: 0 0 6px #6401e1;
-    margin-bottom: 0.1rem;
-  }
-
-  .smile {
-    display: inline-block;
-    font-size: 0.5rem; /* smaller text */
-    color: #6401e1;
-    text-shadow: 0 0 6px #6401e1;
-    white-space: nowrap;
-  }
-
-  .smile span {
-    display: inline-block;
-    position: relative;
-  }
-
+  /* Footer */
   footer {
     position: fixed;
     bottom: 0;
@@ -198,13 +137,31 @@
     background: #0a0a0a;
     z-index: 20;
   }
-
   footer a { text-decoration: none; display: inline-block; margin: 0 5px; }
   footer img { transition: transform 0.3s, filter 0.3s; cursor: pointer; height: 30px; filter: drop-shadow(0 0 6px #6401e1); }
   footer img:hover { transform: scale(1.1); filter: drop-shadow(0 0 12px #6401e1); }
+
+  /* Smile Text Above Footer */
+  .quote-container {
+    position: fixed;
+    bottom: calc(1rem + 30px + 10px); /* footer height + padding + small gap */
+    width: 100%;
+    text-align: center;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  .quote-text {
+    font-size: 0.5rem; /* smaller text */
+    color: #6401e1;
+    text-shadow: 0 0 6px #6401e1;
+    display: inline-block;
+    transform-origin: center top;
+  }
 </style>
 </head>
 <body>
+
 <div class="background" id="background"></div>
 
 <header>
@@ -212,9 +169,7 @@
     <img src="logo.png" alt="PurpleSkull Logo">
     <img src="name-logo.png" alt="PurpleSkull Name" class="glow-img" style="height: 18px;">
   </div>
-  <div class="menu-toggle" onclick="toggleMenu()">
-    <div></div><div></div><div></div>
-  </div>
+  <div class="menu-toggle" onclick="toggleMenu()"><div></div><div></div><div></div></div>
   <nav id="menu">
     <a href="about.html">About</a>
     <a href="collections.html">Collections</a>
@@ -229,10 +184,9 @@
   </div>
 </section>
 
-<!-- Smile quote with eyes -->
-<div class="quote-container">
-  <div class="eyes">X&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X</div>
-  <div class="smile" id="smile-text">Art that hides teeth behind a smile.</div>
+<!-- Smile text container -->
+<div class="quote-container" id="quoteContainer">
+  <div id="quoteText" class="quote-text">Art that hides teeth behind a smile.</div>
 </div>
 
 <footer>
@@ -246,12 +200,12 @@ function toggleMenu() {
   menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 
+// Background skulls setup
 const background = document.getElementById("background");
 const numCols = 12;
 const baseImg = "background.png";
 const skullImg = "logo.png";
 const columns = [];
-
 const imgHeight = 34;
 const numImgs = Math.ceil(window.innerHeight / imgHeight) + 10;
 
@@ -260,7 +214,6 @@ for(let c=0;c<numCols;c++){
   col.className="column";
   const wrapper=document.createElement("div");
   wrapper.className="scroll-wrapper";
-
   for(let repeat=0;repeat<2;repeat++){
     for(let i=0;i<numImgs;i++){
       const img=document.createElement("img");
@@ -268,19 +221,17 @@ for(let c=0;c<numCols;c++){
       wrapper.appendChild(img);
     }
   }
-
   const speed=Math.floor(Math.random()*20)+30;
   wrapper.style.animation=(c%2===0?"scrollDown":"scrollUp")+` ${speed}s linear infinite`;
-
   col.appendChild(wrapper);
   background.appendChild(col);
   columns.push(wrapper);
 }
 
+// Click detection for skulls
 document.addEventListener("click",(e)=>{
   const x=e.clientX;
   const y=e.clientY;
-
   columns.forEach(wrapper=>{
     wrapper.querySelectorAll("img").forEach(img=>{
       const rect=img.getBoundingClientRect();
@@ -293,6 +244,7 @@ document.addEventListener("click",(e)=>{
   });
 });
 
+// Reset clicked skulls
 columns.forEach(wrapper=>{
   wrapper.addEventListener("animationiteration",()=>{
     wrapper.querySelectorAll("img").forEach(img=>{
@@ -305,22 +257,19 @@ columns.forEach(wrapper=>{
   });
 });
 
-// Smile U-shape effect (happy)
-const smileText = document.getElementById("smile-text");
-const text = smileText.textContent;
-smileText.textContent = "";
-const letters = text.split("");
-const total = letters.length;
-const curveHeight = 8;
+// Make smile curved
+const quoteText = document.getElementById("quoteText");
+const text = quoteText.textContent;
+quoteText.innerHTML = ''; // clear
 
-letters.forEach((letter, i) => {
+for(let i=0;i<text.length;i++){
   const span = document.createElement("span");
-  const x = i / (total - 1);
-  const y = -4 * Math.pow((2*x - 1), 2) + 4; // flipped for smile
-  span.style.transform = `translateY(${y * curveHeight}px)`;
-  span.textContent = letter;
-  smileText.appendChild(span);
-});
+  span.textContent = text[i];
+  const angle = (i - text.length/2) * 4; // adjust curve angle here
+  span.style.display = 'inline-block';
+  span.style.transform = `rotate(${angle}deg) translateY(${Math.sin(angle*Math.PI/180)*4}px)`;
+  quoteText.appendChild(span);
+}
 </script>
 </body>
 </html>
