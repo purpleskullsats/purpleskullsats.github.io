@@ -31,14 +31,17 @@
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    height: 100%;
+    height: calc(100% / 12);
     white-space: nowrap;
   }
 
   .row img {
     width: clamp(14px, 3vw, 28px);
     margin: 0 6px;
-    filter: drop-shadow(0 0 8px #6401e1) drop-shadow(0 0 16px #6401e1);
+    filter: drop-shadow(0 0 8px #6401e1)
+            drop-shadow(0 0 16px #6401e1)
+            drop-shadow(0 0 24px #6401e1)
+            drop-shadow(0 0 32px #6401e1);
     opacity: 0.45;
     cursor: pointer;
     pointer-events: auto;
@@ -66,9 +69,17 @@
     gap: 10px;
   }
 
-  header img { height: 40px; filter: drop-shadow(0 0 8px #6401e1) drop-shadow(0 0 16px #6401e1); }
+  header img {
+    height: 40px;
+    filter: drop-shadow(0 0 8px #6401e1) drop-shadow(0 0 16px #6401e1);
+  }
 
-  header h2 { font-size: 1.6rem; text-transform: uppercase; color: #6401e1; text-shadow: 0 0 8px #6401e1, 0 0 16px #6401e1; }
+  header h2 {
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    color: #6401e1;
+    text-shadow: 0 0 8px #6401e1, 0 0 16px #6401e1;
+  }
 
   .menu-toggle {
     cursor: pointer;
@@ -105,7 +116,7 @@
   main {
     padding: 3rem 2rem;
     text-align: center;
-    min-height: calc(100vh - 120px); /* header + footer buffer */
+    min-height: calc(100vh - 120px);
   }
 
   .collection-card {
@@ -163,7 +174,7 @@
   }
 
   footer a img {
-    height: 27px; /* 10% smaller */
+    height: 27px;
     filter: drop-shadow(0 0 8px #6401e1) drop-shadow(0 0 16px #6401e1);
     transition: transform 0.3s, filter 0.3s;
     cursor: pointer;
@@ -172,6 +183,19 @@
   footer a img:hover {
     transform: scale(1.1);
     filter: drop-shadow(0 0 12px #6401e1) drop-shadow(0 0 20px #6401e1);
+  }
+
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    20% { transform: translateX(-5px); }
+    40% { transform: translateX(5px); }
+    60% { transform: translateX(-5px); }
+    80% { transform: translateX(5px); }
+    100% { transform: translateX(0); }
+  }
+
+  .shake {
+    animation: shake 0.5s;
   }
 </style>
 </head>
