@@ -168,7 +168,7 @@
   }
 
   .eyes {
-    font-size: 1rem;
+    font-size: 0.8rem;
     color: #6401e1;
     text-shadow: 0 0 6px #6401e1;
     margin-bottom: 0.1rem;
@@ -176,7 +176,7 @@
 
   .smile {
     display: inline-block;
-    font-size: 0.6rem;
+    font-size: 0.5rem; /* smaller text */
     color: #6401e1;
     text-shadow: 0 0 6px #6401e1;
     white-space: nowrap;
@@ -252,7 +252,6 @@ const baseImg = "background.png";
 const skullImg = "logo.png";
 const columns = [];
 
-// Dynamically calculate number of images to cover height
 const imgHeight = 34;
 const numImgs = Math.ceil(window.innerHeight / imgHeight) + 10;
 
@@ -278,7 +277,6 @@ for(let c=0;c<numCols;c++){
   columns.push(wrapper);
 }
 
-// Click detection for background skulls
 document.addEventListener("click",(e)=>{
   const x=e.clientX;
   const y=e.clientY;
@@ -295,7 +293,6 @@ document.addEventListener("click",(e)=>{
   });
 });
 
-// Reset images on animation loop
 columns.forEach(wrapper=>{
   wrapper.addEventListener("animationiteration",()=>{
     wrapper.querySelectorAll("img").forEach(img=>{
@@ -308,18 +305,18 @@ columns.forEach(wrapper=>{
   });
 });
 
-// Smile U-shape effect
+// Smile U-shape effect (happy)
 const smileText = document.getElementById("smile-text");
 const text = smileText.textContent;
 smileText.textContent = "";
 const letters = text.split("");
 const total = letters.length;
-const curveHeight = 8; // px
+const curveHeight = 8;
 
 letters.forEach((letter, i) => {
   const span = document.createElement("span");
   const x = i / (total - 1);
-  const y = -4 + 4 * Math.pow((2*x - 1), 2); // parabola for smile
+  const y = -4 * Math.pow((2*x - 1), 2) + 4; // flipped for smile
   span.style.transform = `translateY(${y * curveHeight}px)`;
   span.textContent = letter;
   smileText.appendChild(span);
