@@ -11,6 +11,8 @@
       background-color: #000;
       color: #fff;
       overflow-x: hidden;
+      overflow-y: hidden; /* prevent gaps on mobile */
+      position: relative;
     }
 
     /* === Background Belts === */
@@ -22,6 +24,7 @@
       height: 100%;
       display: flex;
       z-index: -1;
+      pointer-events: none; /* keep behind content but we’ll handle clicks separately */
       overflow: hidden;
     }
 
@@ -50,7 +53,6 @@
       filter: drop-shadow(0 0 3px #6401e1) drop-shadow(0 0 6px #6401e1);
       opacity: 0.45;
       cursor: pointer;
-      pointer-events: auto;
       transition: transform 0.2s;
     }
 
@@ -267,6 +269,7 @@
     const numImgs = 25;
     const baseImg = "background.png"; 
     const skullImg = "logo.png"; 
+    const columns = [];
 
     for (let c = 0; c < numCols; c++) {
       const col = document.createElement("div");
@@ -279,21 +282,6 @@
         for (let i = 0; i < numImgs; i++) {
           const img = document.createElement("img");
           img.src = baseImg;
-
-          img.addEventListener("click", () => {
-            img.src = skullImg;
-            img.style.transform = "scale(1.05)";
-            img.dataset.clicked = "true";
-          });
-
-          wrapper.addEventListener("animationiteration", () => {
-            if (img.dataset.clicked === "true") {
-              img.src = baseImg;
-              img.style.transform = "scale(1)";
-              delete img.dataset.clicked;
-            }
-          });
-
           wrapper.appendChild(img);
         }
       }
@@ -303,7 +291,45 @@
 
       col.appendChild(wrapper);
       background.appendChild(col);
+      columns.push(wrapper);
     }
+
+    // === Click-through skull change ===
+    document.addEventListener("click", (e) => {
+      const x = e.clientX;
+      const y = e.clientY;
+
+      columns.forEach(wrapper => {
+        const imgs = wrapper.querySelectorAll("img");
+        imgs.forEach(img => {
+          const rect = img.getBoundingClientRect();
+          if (
+            x >= rect.left &&
+            x <= rect.right &&
+            y >= rect.top &&
+            y <= rect.bottom
+          ) {
+            img.src = skullImg;
+            img.style.transform = "scale(1.05)";
+            img.dataset.clicked = "true";
+          }
+        });
+      });
+    });
+
+    // Reset skulls on animation loop
+    columns.forEach(wrapper => {
+      wrapper.addEventListener("animationiteration", () => {
+        const imgs = wrapper.querySelectorAll("img");
+        imgs.forEach(img => {
+          if (img.dataset.clicked === "true") {
+            img.src = baseImg;
+            img.style.transform = "scale(1)";
+            delete img.dataset.clicked;
+          }
+        });
+      });
+    });
   </script>
 </body>
 </html>
