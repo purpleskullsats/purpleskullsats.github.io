@@ -10,6 +10,42 @@
       font-family: 'Arial', sans-serif;
       background-color: #000;
       color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* === Background Belts === */
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .column {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .column img {
+      width: 30px;
+      margin: 12px 0;
+      filter: drop-shadow(0 0 4px #6401e1) drop-shadow(0 0 8px #6401e1);
+    }
+
+    @keyframes scrollDown {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100%); }
+    }
+
+    @keyframes scrollUp {
+      0% { transform: translateY(100%); }
+      100% { transform: translateY(-100%); }
     }
 
     /* Glow effect */
@@ -137,14 +173,14 @@
       50% { transform: scale(1.03); }
     }
 
-    /* Quote – made very small */
+    /* Quote – very small */
     .quote {
       text-align: center;
       font-style: italic;
       color: #6401e1;
       text-shadow: 0 0 6px #6401e1;
       margin: 2rem 0 1rem 0;
-      font-size: 0.7rem; /* very small */
+      font-size: 0.7rem;
     }
 
     /* Footer */
@@ -176,6 +212,9 @@
   </style>
 </head>
 <body>
+  <!-- Moving background -->
+  <div class="background" id="background"></div>
+
   <!-- Header -->
   <header>
     <div class="logo">
@@ -223,6 +262,27 @@
     function toggleMenu() {
       const menu = document.getElementById("menu");
       menu.style.display = menu.style.display === "block" ? "none" : "block";
+    }
+
+    // === Generate columns dynamically ===
+    const background = document.getElementById("background");
+    const numCols = 6; // minimum columns (more may fit depending on screen)
+    const numImgs = 20; // enough to fill tall screens
+
+    for (let c = 0; c < numCols; c++) {
+      const col = document.createElement("div");
+      col.className = "column" + (c % 2 === 1 ? " reverse" : "");
+
+      // Random speed between 25s - 50s
+      const speed = Math.floor(Math.random() * 25) + 25;
+      col.style.animation = (c % 2 === 1 ? "scrollUp" : "scrollDown") + ` ${speed}s linear infinite`;
+
+      for (let i = 0; i < numImgs; i++) {
+        const img = document.createElement("img");
+        img.src = "background.png";
+        col.appendChild(img);
+      }
+      background.appendChild(col);
     }
   </script>
 </body>
