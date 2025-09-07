@@ -12,37 +12,12 @@
       text-align: center;
       margin: 0;
       padding: 0;
-      position: relative;
-      min-height: 100vh;
-    }
-
-    /* Fixed title container with fade transition */
-    .title-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 0;
-      background: black;
-      text-align: center;
-      padding: 0.3rem 0;
-      transition: opacity 0.5s ease;
-    }
-
-    /* Title Image with yellow glow */
-    .title-img {
-      max-width: 600px;
-      width: 90%;
-      height: auto;
-      filter: drop-shadow(0 0 8px #FFD700) drop-shadow(0 0 16px #FFD700);
-      pointer-events: none;
-      margin-top: 0.2rem;
     }
 
     /* Magic Eden button */
     .me-button {
       display: inline-block;
-      margin: 0.2rem 0 0.4rem 0;
+      margin: 0.6rem 0 0.4rem 0;
       padding: 0.6rem 1.2rem;
       background-color: #6401e1;
       color: #000;
@@ -52,12 +27,45 @@
       box-shadow: 0 0 10px #6401e1;
       font-size: 0.9rem;
       transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1001;
     }
 
     .me-button:hover {
-      transform: translateY(-3px);
+      transform: translateX(-50%) translateY(-3px);
       box-shadow: 0 0 18px #6401e1;
       background-color: #7a2aff;
+    }
+
+    /* Top number text at bottom of page */
+    .bottom-number {
+      font-size: 1rem;
+      color: #6401e1;
+      text-shadow: 0 0 4px #6401e1;
+      margin: 2rem 0;
+    }
+
+    /* Fixed title container */
+    .title-container {
+      position: fixed;
+      top: 50px;
+      left: 0;
+      width: 100%;
+      z-index: 0; /* stays behind skulls */
+      text-align: center;
+      pointer-events: none; /* lets clicks pass through */
+    }
+
+    /* Title Image with yellow glow */
+    .title-img {
+      max-width: 600px;
+      width: 90%;
+      height: auto;
+      filter: drop-shadow(0 0 8px #FFD700) drop-shadow(0 0 16px #FFD700);
+      transition: opacity 0.3s;
     }
 
     /* Push skull grid down so it doesn’t overlap title */
@@ -85,11 +93,12 @@
       transition: transform 0.3s, box-shadow 0.3s;
       cursor: pointer;
       background: #000;
+      box-shadow: 0 0 8px #6401e1; /* subtle glow */
     }
 
     .grid img:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 12px #6401e1;
+      box-shadow: 0 0 20px #6401e1; /* stronger glow on hover */
     }
 
     /* Modal styles */
@@ -158,57 +167,30 @@
       right: 20px;
     }
 
-    /* Bottom number text */
-    .bottom-number {
-      font-size: 1rem;
-      color: #6401e1;
-      text-shadow: 0 0 4px #6401e1;
-      position: absolute;
-      bottom: 10px;
-      width: 100%;
-      text-align: center;
-    }
-
     /* Responsive */
     @media (max-width: 1024px) {
-      .grid img {
-        width: 120px;
-        height: 120px;
-      }
+      .grid img { width: 120px; height: 120px; }
     }
-
     @media (max-width: 768px) {
-      .grid img {
-        width: 100px;
-        height: 100px;
-      }
+      .grid img { width: 100px; height: 100px; }
     }
-
     @media (max-width: 480px) {
-      .grid img {
-        width: 80px;
-        height: 80px;
-      }
-      .me-button {
-        padding: 0.5rem 1rem;
-        font-size: 0.8rem;
-      }
-      .title-img {
-        width: 95%;
-      }
-      .bottom-number {
-        font-size: 0.85rem;
-      }
+      .grid img { width: 80px; height: 80px; }
+      .me-button { padding: 0.5rem 1rem; font-size: 0.8rem; top: 5px; }
+      .title-img { width: 95%; }
     }
   </style>
 </head>
 <body>
+
+  <!-- Magic Eden button -->
+  <a class="me-button" href="https://share.google/1IdiIGFyxKVDgnyXK" target="_blank">
+    - Collection on Magic Eden -
+  </a>
+
   <!-- Fixed Title Section -->
   <div class="title-container">
-    <a class="me-button" href="https://share.google/1IdiIGFyxKVDgnyXK" target="_blank">
-      - Collection on Magic Eden -
-    </a>
-    <img src="soh-title.png" alt="Skulls of Hold Title" class="title-img">
+    <img src="soh-title.png" alt="Skulls of Hold Title" class="title-img" id="title-img">
   </div>
 
   <!-- Main Content -->
@@ -249,10 +231,8 @@
       <img src="skull32.png" alt="Skull 32">
       <img src="skull33.png" alt="Skull 33">
     </div>
+    <div class="bottom-number">70297818 - 70560722</div>
   </div>
-
-  <!-- Bottom Number -->
-  <div class="bottom-number">70297818 - 70560722</div>
 
   <!-- Modal -->
   <div id="modal" class="modal">
@@ -269,10 +249,18 @@
     const leftArrow = document.querySelector(".arrow.left");
     const rightArrow = document.querySelector(".arrow.right");
     const skulls = Array.from(document.querySelectorAll(".grid img"));
-    const titleContainer = document.querySelector('.title-container');
+    const titleImg = document.getElementById("title-img");
+
     let currentIndex = 0;
 
-    // Open modal with clicked image
+    // Fade title on scroll
+    window.addEventListener("scroll", () => {
+      const fadePoint = 300; // px after which title fully fades
+      let opacity = Math.max(0, 1 - window.scrollY / fadePoint);
+      titleImg.style.opacity = opacity;
+    });
+
+    // Modal functionality
     skulls.forEach((img, index) => {
       img.addEventListener("click", () => {
         currentIndex = index;
@@ -281,42 +269,18 @@
       });
     });
 
-    // Close modal
-    closeBtn.onclick = () => {
-      modal.style.display = "none";
-    }
-
-    // Close when clicking outside image
-    modal.onclick = (e) => {
-      if (e.target === modal) {
-        modal.style.display = "none";
-      }
-    }
-
-    // Navigate left
+    closeBtn.onclick = () => { modal.style.display = "none"; }
+    modal.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; }
     leftArrow.onclick = (e) => {
       e.stopPropagation();
       currentIndex = (currentIndex - 1 + skulls.length) % skulls.length;
       modalImg.src = skulls[currentIndex].src;
     }
-
-    // Navigate right
     rightArrow.onclick = (e) => {
       e.stopPropagation();
       currentIndex = (currentIndex + 1) % skulls.length;
       modalImg.src = skulls[currentIndex].src;
     }
-
-    // Scroll fade effect for title
-    window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      const fadeStart = 50;  
-      const fadeEnd = 300;   
-      let opacity = 1 - (scrollY - fadeStart) / (fadeEnd - fadeStart);
-      if (opacity > 1) opacity = 1;
-      if (opacity < 0) opacity = 0;
-      titleContainer.style.opacity = opacity;
-    });
   </script>
 </body>
 </html>
