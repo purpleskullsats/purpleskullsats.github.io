@@ -23,6 +23,7 @@
       display: flex;
       z-index: -1;
       pointer-events: none;
+      overflow: hidden;
     }
 
     .column {
@@ -30,25 +31,38 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      position: relative;
+      height: 200%;
     }
 
-    .column img {
+    .scroll-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .scroll-wrapper img {
       width: 30px;
       margin: 12px 0;
       filter: drop-shadow(0 0 4px #6401e1) drop-shadow(0 0 8px #6401e1);
+      opacity: 0.5; /* fade so it doesn’t overpower content */
     }
 
     @keyframes scrollDown {
-      0% { transform: translateY(-100%); }
-      100% { transform: translateY(100%); }
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
     }
 
     @keyframes scrollUp {
-      0% { transform: translateY(100%); }
-      100% { transform: translateY(-100%); }
+      0% { transform: translateY(-50%); }
+      100% { transform: translateY(0); }
     }
 
-    /* Glow effect */
+    /* Glow effect for logos */
     .glow-img {
       filter: drop-shadow(0 0 8px #6401e1) drop-shadow(0 0 16px #6401e1);
     }
@@ -264,24 +278,32 @@
       menu.style.display = menu.style.display === "block" ? "none" : "block";
     }
 
-    // === Generate columns dynamically ===
+    // === Generate seamless scrolling background ===
     const background = document.getElementById("background");
-    const numCols = 6; // minimum columns (more may fit depending on screen)
-    const numImgs = 20; // enough to fill tall screens
+    const numCols = 6; 
+    const numImgs = 20; // enough to fill screen
 
     for (let c = 0; c < numCols; c++) {
       const col = document.createElement("div");
-      col.className = "column" + (c % 2 === 1 ? " reverse" : "");
+      col.className = "column";
 
-      // Random speed between 25s - 50s
-      const speed = Math.floor(Math.random() * 25) + 25;
-      col.style.animation = (c % 2 === 1 ? "scrollUp" : "scrollDown") + ` ${speed}s linear infinite`;
+      const wrapper = document.createElement("div");
+      wrapper.className = "scroll-wrapper";
 
-      for (let i = 0; i < numImgs; i++) {
-        const img = document.createElement("img");
-        img.src = "background.png";
-        col.appendChild(img);
+      // Fill wrapper twice to allow seamless looping
+      for (let repeat = 0; repeat < 2; repeat++) {
+        for (let i = 0; i < numImgs; i++) {
+          const img = document.createElement("img");
+          img.src = "background.png";
+          wrapper.appendChild(img);
+        }
       }
+
+      // Random speed and direction
+      const speed = Math.floor(Math.random() * 20) + 25;
+      wrapper.style.animation = (c % 2 === 0 ? "scrollDown" : "scrollUp") + ` ${speed}s linear infinite`;
+
+      col.appendChild(wrapper);
       background.appendChild(col);
     }
   </script>
