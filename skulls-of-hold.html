@@ -29,7 +29,7 @@
       left: 0;
       width: 100%;
       z-index: 0; /* stays behind skulls */
-      background: black; /* solid background so it doesn’t ghost through */
+      background: black;
       text-align: center;
       padding: 0.3rem 0;
     }
@@ -46,20 +46,21 @@
     /* Magic Eden button */
     .me-button {
       display: inline-block;
-      margin: 0.5rem 0 0 0;
-      padding: 0.8rem 1.5rem;
+      margin: 0.2rem 0 0.4rem 0;
+      padding: 0.6rem 1.2rem; /* smaller */
       background-color: #6401e1;
-      color: #000; /* Black text */
+      color: #000;
       font-weight: bold;
       text-decoration: none;
       border-radius: 8px;
-      box-shadow: 0 0 12px #6401e1;
+      box-shadow: 0 0 10px #6401e1;
+      font-size: 0.9rem; /* slightly smaller text */
       transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
     }
 
     .me-button:hover {
       transform: translateY(-3px);
-      box-shadow: 0 0 20px #6401e1;
+      box-shadow: 0 0 18px #6401e1;
       background-color: #7a2aff;
     }
 
@@ -87,7 +88,7 @@
       border-radius: 8px;
       transition: transform 0.3s, box-shadow 0.3s;
       cursor: pointer;
-      background: #000; /* make sure skulls are solid, no transparency */
+      background: #000;
     }
 
     .grid img:hover {
@@ -185,8 +186,8 @@
         font-size: 0.85rem;
       }
       .me-button {
-        padding: 0.6rem 1.2rem;
-        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
       }
       .title-img {
         width: 95%;
@@ -197,12 +198,11 @@
 <body>
   <!-- Fixed Title Section -->
   <div class="title-container">
-    <div class="top-number">70297818 - 70560722</div>
-    <img src="soh-title.png" alt="Skulls of Hold Title" class="title-img">
-    <br>
     <a class="me-button" href="https://share.google/1IdiIGFyxKVDgnyXK" target="_blank">
       - Collection on Magic Eden -
     </a>
+    <div class="top-number">70297818 - 70560722</div>
+    <img src="soh-title.png" alt="Skulls of Hold Title" class="title-img">
   </div>
 
   <!-- Main Content -->
