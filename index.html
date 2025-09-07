@@ -125,38 +125,31 @@
   .collection-card h3 { margin: 0; font-size: 1.3rem; color: #6401e1; text-shadow: 0 0 6px #6401e1; }
   @keyframes pulsate { 0%,100% { transform: scale(1); } 50% { transform: scale(1.03); } }
 
-  /* Footer */
+  /* Footer as smiley */
   footer {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    text-align: center;
-    padding: 1rem;
-    border-top: 2px solid #6401e1;
     background: #0a0a0a;
+    border-top: 2px solid #6401e1;
     z-index: 20;
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-  footer a { text-decoration: none; display: inline-block; margin: 0 5px; }
-  footer img { transition: transform 0.3s, filter 0.3s; cursor: pointer; height: 30px; filter: drop-shadow(0 0 6px #6401e1); }
-  footer img:hover { transform: scale(1.1); filter: drop-shadow(0 0 12px #6401e1); }
+  .eyes { display: flex; justify-content: center; gap: 20px; margin-bottom: 5px; }
+  .eyes img { height: 30px; filter: drop-shadow(0 0 6px #6401e1); cursor:pointer; transition: transform 0.3s; }
+  .eyes img:hover { transform: scale(1.1); filter: drop-shadow(0 0 12px #6401e1); }
 
-  /* Smile Text Above Footer */
-  .quote-container {
-    position: fixed;
-    bottom: calc(1rem + 30px + 10px); /* footer height + padding + small gap */
-    width: 100%;
-    text-align: center;
-    z-index: 5;
-    pointer-events: none;
-  }
-
-  .quote-text {
-    font-size: 0.5rem; /* smaller text */
+  .smile-text {
+    display: flex;
+    justify-content: center;
+    font-size: 0.4rem;
     color: #6401e1;
     text-shadow: 0 0 6px #6401e1;
-    display: inline-block;
-    transform-origin: center top;
+    white-space: nowrap;
   }
 </style>
 </head>
@@ -184,14 +177,16 @@
   </div>
 </section>
 
-<!-- Smile text container -->
-<div class="quote-container" id="quoteContainer">
-  <div id="quoteText" class="quote-text">Art that hides teeth behind a smile.</div>
-</div>
-
 <footer>
-  <a href="https://x.com/purpleskullsats?t=JkKrPRwa1llyPSoJu0WUww&s=09" target="_blank"><img src="x-logo.png" alt="Follow me on X"></a>
-  <a href="https://www.instagram.com/purpleskullnft?igsh=aTgybnVrbXdjYjFl" target="_blank"><img src="instagram-logo.png" alt="Follow me on Instagram"></a>
+  <div class="eyes">
+    <a href="https://x.com/purpleskullsats?t=JkKrPRwa1llyPSoJu0WUww&s=09" target="_blank">
+      <img src="x-logo.png" alt="X Logo">
+    </a>
+    <a href="https://www.instagram.com/purpleskullnft?igsh=aTgybnVrbXdjYjFl" target="_blank">
+      <img src="instagram-logo.png" alt="Instagram Logo">
+    </a>
+  </div>
+  <div class="smile-text"></div>
 </footer>
 
 <script>
@@ -257,19 +252,22 @@ columns.forEach(wrapper=>{
   });
 });
 
-// Make smile curved
-const quoteText = document.getElementById("quoteText");
-const text = quoteText.textContent;
-quoteText.innerHTML = ''; // clear
+// Footer smile text
+const smileContainer = document.querySelector(".smile-text");
+const smileText = "Art that hides teeth behind a smile.";
+const radius = 25;
+const angleStep = 8;
+const startAngle = -angleStep * (smileText.length - 1) / 2;
 
-for(let i=0;i<text.length;i++){
+smileText.split("").forEach((char, i) => {
   const span = document.createElement("span");
-  span.textContent = text[i];
-  const angle = (i - text.length/2) * 4; // adjust curve angle here
-  span.style.display = 'inline-block';
-  span.style.transform = `rotate(${angle}deg) translateY(${Math.sin(angle*Math.PI/180)*4}px)`;
-  quoteText.appendChild(span);
-}
+  span.textContent = char;
+  const angle = startAngle + i * angleStep;
+  span.style.display = "inline-block";
+  span.style.transform = `rotate(${angle}deg) translateY(-${radius}px) rotate(${-angle}deg)`;
+  smileContainer.appendChild(span);
+});
 </script>
+
 </body>
 </html>
