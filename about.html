@@ -10,6 +10,8 @@
       font-family: 'Arial', sans-serif;
       background-color: #000;
       color: #fff;
+      position: relative;
+      overflow: hidden;
     }
 
     /* Glow effect */
@@ -93,6 +95,8 @@
     main {
       text-align: center;
       padding: 3rem 2rem;
+      position: relative;
+      z-index: 1;
     }
 
     main p {
@@ -152,6 +156,8 @@
       border-top: 2px solid #6401e1;
       background: #0a0a0a;
       margin-top: 2rem;
+      position: relative;
+      z-index: 1;
     }
 
     footer a {
@@ -170,9 +176,23 @@
       transform: scale(1.1);
       filter: drop-shadow(0 0 12px #6401e1);
     }
+
+    /* DVD Logo Background Animation */
+    #dvd-logo {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      width: 200px; /* Adjust size as needed for your dvd.png */
+      height: auto;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
+  <!-- DVD Background Logo -->
+  <img id="dvd-logo" src="dvd.png" alt="DVD Background">
+
   <!-- Header -->
   <header>
     <div class="logo">
@@ -221,6 +241,52 @@
       const menu = document.getElementById("menu");
       menu.style.display = menu.style.display === "block" ? "none" : "block";
     }
+
+    // DVD Screensaver Animation
+    (function() {
+      const logo = document.getElementById('dvd-logo');
+      if (!logo) return;
+
+      let x = 0;
+      let y = 0;
+      let dx = 0.5; // Initial velocity X (slow)
+      let dy = 0.5; // Initial velocity Y (slow)
+      const speed = 0.3; // Adjust for slower/faster movement
+
+      function animate() {
+        x += dx;
+        y += dy;
+
+        const rect = logo.getBoundingClientRect();
+        const logoWidth = rect.width;
+        const logoHeight = rect.height;
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+
+        // Bounce off left/right edges
+        if (x <= 0 || x + logoWidth >= screenWidth) {
+          dx = -dx;
+          // Ensure it doesn't go off-screen
+          if (x <= 0) x = 0;
+          if (x + logoWidth >= screenWidth) x = screenWidth - logoWidth;
+        }
+
+        // Bounce off top/bottom edges
+        if (y <= 0 || y + logoHeight >= screenHeight) {
+          dy = -dy;
+          // Ensure it doesn't go off-screen
+          if (y <= 0) y = 0;
+          if (y + logoHeight >= screenHeight) y = screenHeight - logoHeight;
+        }
+
+        logo.style.left = x + 'px';
+        logo.style.top = y + 'px';
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    })();
   </script>
 </body>
 </html>
