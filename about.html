@@ -1,15 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About - PurpleSkull</title>
 
-  <!-- Pixel fonts -->
+  <!-- Google Fonts for pixel style -->
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
 
   <style>
     body {
       margin: 0;
-      font-family: 'VT323', monospace; /* Pixel body font */
+      font-family: 'VT323', monospace, Arial, sans-serif; /* Pixel body text */
       background-color: #000;
       color: #fff;
       display: flex;
@@ -47,8 +49,8 @@
     }
 
     header h2 {
-      font-family: 'Press Start 2P', cursive; /* Pixel title font */
-      font-size: 1.2rem; /* slightly smaller for better fit */
+      font-family: 'Press Start 2P', cursive, Arial, sans-serif; /* Pixel header */
+      font-size: 1.6rem;
       text-transform: uppercase;
     }
 
@@ -108,7 +110,6 @@
       line-height: 1.6;
       font-size: 1.1rem;
       color: #6401e1;
-      font-family: 'VT323', monospace; /* Pixel body font */
     }
 
     .display-images {
@@ -192,3 +193,117 @@
     }
   </style>
 </head>
+<body>
+  <!-- DVD Background Logo -->
+  <img id="dvd-logo" src="dvd.png" alt="DVD Background">
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <h2 class="glow">About</h2>
+      <img src="logo.png" alt="PurpleSkull Logo" class="glow">
+    </div>
+    <div class="menu-toggle" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <nav id="menu">
+      <a href="index.html">Home</a>
+      <a href="collections.html">Collections</a>
+    </nav>
+  </header>
+
+  <!-- About Content -->
+  <main>
+    <p>
+      PurpleSkull began their artistic journey exploring digital art on <strong>Bitcoin</strong>, starting with <strong>Ordinals</strong> and the <strong>Bitcoin Stampchain</strong>. Previously a collector of digital art, PurpleSkull transitioned into creating their own pieces, combining a deep appreciation for crypto art with a background in formal art education.  
+      Their work has been showcased at <strong>Beeple Studios’ ELECTION NIGHT</strong>, the <strong>1st PUNKS MEETUP</strong>, and <strong>NFT NYC</strong>, earning recognition for its distinctive style and creative vision.  
+      Today, PurpleSkull continues to push the boundaries of digital and blockchain-based art, producing collections that captivate and inspire.
+    </p>
+
+    <div class="display-images">
+      <img src="display1.jpg" alt="Artwork on Display 1">
+      <img src="display2.jpg" alt="Artwork on Display 2">
+    </div>
+  </main>
+
+  <!-- Home button just above footer -->
+  <div class="home-wrapper">
+    <a href="index.html">
+      <img src="home.png" alt="Back Home" class="home-icon">
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <a href="https://x.com/purpleskullsats?t=JkKrPRwa1llyPSoJu0WUww&s=09" target="_blank">
+      <img src="x-logo.png" alt="X">
+    </a>
+    <a href="https://www.instagram.com/purpleskullnft?igsh=aTgybnVrbXdjYjFl" target="_blank">
+      <img src="instagram-logo.png" alt="Instagram">
+    </a>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("menu");
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
+    }
+
+    document.addEventListener("click", function(e) {
+      const menu = document.getElementById("menu");
+      const toggle = document.querySelector(".menu-toggle");
+      if (menu.style.display === "block" && !menu.contains(e.target) && !toggle.contains(e.target)) {
+        menu.style.display = "none";
+      }
+    });
+
+    // DVD Screensaver Animation (faster)
+    (function() {
+      const logo = document.getElementById('dvd-logo');
+      if (!logo) return;
+
+      let x = 0;
+      let y = 0;
+      let dx = 0.7;
+      let dy = 0.7;
+
+      const header = document.querySelector('header');
+      const footer = document.querySelector('footer');
+
+      function animate() {
+        x += dx;
+        y += dy;
+
+        const rect = logo.getBoundingClientRect();
+        const logoWidth = rect.width;
+        const logoHeight = rect.height;
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+        const headerHeight = header.getBoundingClientRect().height;
+        const footerTop = footer.getBoundingClientRect().top;
+
+        if (x <= 0 || x + logoWidth >= screenWidth) {
+          dx = -dx;
+          if (x <= 0) x = 0;
+          if (x + logoWidth >= screenWidth) x = screenWidth - logoWidth;
+        }
+
+        if (y <= headerHeight || y + logoHeight >= footerTop) {
+          dy = -dy;
+          if (y <= headerHeight) y = headerHeight;
+          if (y + logoHeight >= footerTop) y = footerTop - logoHeight;
+        }
+
+        logo.style.left = x + 'px';
+        logo.style.top = y + 'px';
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    })();
+  </script>
+</body>
+</html>
