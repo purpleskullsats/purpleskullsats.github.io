@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Collections - PurpleSkull</title>
+<!-- VT323 font for collection titles and text -->
+<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 <style>
   body {
     margin: 0;
@@ -120,21 +122,23 @@
     margin-bottom: 1rem;
   }
 
+  /* VT323 font for collection card titles and paragraphs */
   .collection-card h3, .collection-card p {
+    font-family: 'VT323', monospace;
     color: #6401e1;
   }
 
   /* Home icon just above footer line */
   .home-wrapper {
     position: relative;
-    height: 50px; /* Reserve space for the icon */
+    height: 50px; 
     text-align: center;
     z-index: 25;
   }
 
   .home-icon {
     position: absolute;
-    bottom: 0; /* bottom of icon aligns with top of footer border */
+    bottom: 0;
     left: 50%;
     transform: translateX(-50%);
     width: 50px;
@@ -254,7 +258,6 @@
   </div>
 </main>
 
-<!-- Home button just above footer -->
 <div class="home-wrapper">
   <a href="index.html">
     <img src="home.png" alt="Back Home" class="home-icon">
@@ -287,11 +290,10 @@ document.addEventListener('click', function(event) {
 // Horizontal moving skulls background
 const background = document.getElementById('background');
 const numRows = 8;
-const baseImg = "background.png"; // Default skull/image
-const skullImg = "logo.png"; // Changes when clicked
+const baseImg = "background.png";
+const skullImg = "logo.png";
 const rows = [];
 const numImgs = Math.ceil(window.innerWidth / 40) + 5;
-
 const headerHeight = document.querySelector('header').offsetHeight;
 const footerHeight = document.querySelector('footer').offsetHeight;
 
