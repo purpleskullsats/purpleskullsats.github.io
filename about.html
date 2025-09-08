@@ -134,23 +134,21 @@
       box-shadow: 0 0 24px #6401e1;
     }
 
-    /* Home icon button */
-    .back-home {
-      margin-top: 2rem;
-      text-align: center;
-    }
-
-    .back-home img {
+    /* Home icon button positioned above footer */
+    .home-icon {
+      position: fixed;
+      bottom: 60px; /* Just above footer */
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      cursor: pointer;
       width: 50px;
       height: 50px;
-      cursor: pointer;
-      filter: drop-shadow(0 0 8px #6401e1) drop-shadow(0 0 16px #6401e1);
-      transition: transform 0.3s, filter 0.3s;
+      transition: transform 0.3s;
     }
 
-    .back-home img:hover {
-      transform: scale(1.1);
-      filter: drop-shadow(0 0 12px #6401e1) drop-shadow(0 0 24px #6401e1);
+    .home-icon:hover {
+      transform: translateX(-50%) scale(1.1);
     }
 
     /* Footer */
@@ -225,14 +223,12 @@
       <img src="display1.jpg" alt="Artwork on Display 1">
       <img src="display2.jpg" alt="Artwork on Display 2">
     </div>
-
-    <!-- Home button -->
-    <div class="back-home">
-      <a href="index.html">
-        <img src="home.png" alt="Back Home">
-      </a>
-    </div>
   </main>
+
+  <!-- Home Icon Button -->
+  <a href="index.html">
+    <img src="home.png" alt="Back Home" class="home-icon">
+  </a>
 
   <!-- Footer -->
   <footer>
