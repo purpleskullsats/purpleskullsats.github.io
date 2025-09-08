@@ -4,14 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PurpleSkull</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+
 <style>
   body {
     margin: 0;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Arial', sans-serif; /* default body text */
     background-color: #000;
     color: #fff;
     overflow-x: hidden;
     position: relative;
+  }
+
+  /* Apply pixel font to menu links and collection text */
+  nav a, .collection-card h3 {
+    font-family: 'VT323', monospace;
   }
 
   .background {
@@ -80,20 +89,19 @@
     z-index: 10;
   }
 
-  /* 👇 Adjustments for logo/title spacing */
   header .logo {
     display: flex;
     align-items: center;
-    margin-left: -10px; /* move logo/title left */
+    margin-left: -10px;
   }
 
   header img {
-    height: 38px; /* slightly smaller */
+    height: 38px;
     margin-right: 8px;
   }
 
   header img.glow-img {
-    height: 16px !important; /* shrink name a little */
+    height: 16px !important;
   }
 
   .menu-toggle {
@@ -112,7 +120,6 @@
     transition: 0.3s;
   }
 
-  /* Updated nav styles */
   nav {
     display: none;
     position: fixed;
@@ -157,7 +164,9 @@
     text-align: center;
   }
 
+  /* Featured Collection header font */
   section h2 {
+    font-family: 'Press Start 2P', cursive;
     font-size: 2rem;
     margin-bottom: 2rem;
     color: #6401e1;
@@ -236,7 +245,6 @@
     filter: drop-shadow(0 0 12px #6401e1);
   }
 
-  /* Smile Text */
   .smile-text {
     position: absolute;
     bottom: 10px;
@@ -252,6 +260,7 @@
 </head>
 <body>
 <div class="background" id="background"></div>
+
 <header>
   <div class="logo">
     <img src="logo.png" alt="PurpleSkull Logo">
@@ -263,6 +272,7 @@
     <a href="collections.html">Collections</a>
   </nav>
 </header>
+
 <section>
   <h2>Featured Collection</h2>
   <div class="collection-card">
@@ -270,17 +280,19 @@
     <h3>Skulls of Hold</h3>
   </div>
 </section>
+
 <footer>
   <a href="https://x.com/purpleskullsats?t=JkKrPRwa1llyPSoJu0WUww&s=09" target="_blank"><img src="x-logo.png" alt="Follow me on X"></a>
   <a href="https://www.instagram.com/purpleskullnft?igsh=aTgybnVrbXdjYjFl" target="_blank"><img src="instagram-logo.png" alt="Follow me on Instagram"></a>
   <div id="smileText" class="smile-text">Art that hides teeth behind a smile.</div>
 </footer>
+
 <script>
 function toggleMenu() {
   const menu = document.getElementById("menu");
   menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
-// Close menu when clicking outside
+
 document.addEventListener('click', function(event) {
   const menu = document.getElementById("menu");
   const toggle = document.querySelector(".menu-toggle");
@@ -317,7 +329,6 @@ for(let c=0;c<numCols;c++){
   columns.push(wrapper);
 }
 
-// Click detection for skulls
 document.addEventListener("click",(e)=>{
   const x=e.clientX;
   const y=e.clientY;
@@ -333,7 +344,6 @@ document.addEventListener("click",(e)=>{
   });
 });
 
-// Reset clicked skulls
 columns.forEach(wrapper=>{
   wrapper.addEventListener("animationiteration",()=>{
     wrapper.querySelectorAll("img").forEach(img=>{
@@ -346,7 +356,6 @@ columns.forEach(wrapper=>{
   });
 });
 
-// Make smile curved like a happy face
 const smileText = document.getElementById("smileText");
 const smileContent = smileText.textContent;
 smileText.textContent = '';
