@@ -1,173 +1,225 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PurpleSkull</title>
-<style>
-  body {
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #000;
-    color: #fff;
-    overflow-x: hidden;
-    position: relative;
-  }
-
-  .background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    z-index: -1;
-    overflow: hidden;
-  }
-
-  .column {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    min-height: 100vh;
-  }
-
-  .scroll-wrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .scroll-wrapper img {
-    width: clamp(14px, 3vw, 28px);
-    margin: 6px 0;
-    filter: drop-shadow(0 0 3px #6401e1) drop-shadow(0 0 6px #6401e1);
-    opacity: 0.45;
-    cursor: pointer;
-    pointer-events: auto;
-    transition: transform 0.2s;
-  }
-
-  @keyframes scrollDown { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
-  @keyframes scrollUp { 0% { transform: translateY(-50%); } 100% { transform: translateY(0); } }
-
-  .glow-img { filter: drop-shadow(0 0 8px #6401e1) drop-shadow(0 0 16px #6401e1); }
-
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    background-color: #0a0a0a;
-    border-bottom: 2px solid #6401e1;
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-  header .logo { display: flex; align-items: center; }
-  header img { height: 40px; margin-right: 10px; }
-
-  .menu-toggle {
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 28px;
-    height: 20px;
-  }
-  .menu-toggle div { height: 3px; background: #6401e1; border-radius: 2px; transition: 0.3s; }
-
-  /* Updated nav styles for always visible, responsive, and clickable outside close */
-  nav {
-    display: none;
-    position: fixed;
-    top: clamp(50px, 5%, 60px);
-    right: clamp(10px, 5%, 20px);
-    background: #111;
-    padding: 1rem;
-    border: 1px solid #6401e1;
-    border-radius: 6px;
-    z-index: 100;
-    max-width: 90vw;
-    box-sizing: border-box;
-  }
-  nav a { display: block; margin: 0.5rem 0; color: #fff; text-decoration: none; font-weight: bold; transition: 0.3s; }
-  nav a:hover { color: #6401e1; text-shadow: 0 0 6px #6401e1; }
-
-  @media screen and (max-width: 480px) {
-    nav {
-      right: 0;
-      left: 0;
-      top: 50px;
-      border-radius: 0;
-      max-width: 100vw;
-      padding: 1rem 2rem;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PurpleSkull</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #000;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
-  }
 
-  section { padding: 3rem 2rem; text-align: center; }
-  section h2 {
-    font-size: 2rem;
-    margin-bottom: 2rem;
-    color: #6401e1;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    border-top: 2px solid #6401e1;
-    display: inline-block;
-    padding-top: 0.5rem;
-    text-shadow: 0 0 8px #6401e1, 0 0 16px #6401e1;
-  }
+    .glow {
+      text-shadow: 0 0 8px #6401e1, 0 0 16px #6401e1;
+      color: #6401e1;
+    }
 
-  .collection-card {
-    display: inline-block;
-    background: #111;
-    border: 2px solid #6401e1;
-    border-radius: 12px;
-    padding: 2rem;
-    text-align: center;
-    box-shadow: 0 0 12px #6401e1;
-    transition: transform 0.3s, box-shadow 0.3s;
-    animation: pulsate 4s ease-in-out infinite;
-  }
-  .collection-card:hover { transform: translateY(-6px) scale(1.05); box-shadow: 0 0 20px #6401e1; }
-  .collection-card img { height: 120px; border-radius: 8px; border: 2px solid #6401e1; margin-bottom: 1rem; cursor: pointer; }
-  .collection-card h3 { margin: 0; font-size: 1.3rem; color: #6401e1; text-shadow: 0 0 6px #6401e1; }
-  @keyframes pulsate { 0%,100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: #0a0a0a;
+      border-bottom: 2px solid #6401e1;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
 
-  footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    padding: 1rem;
-    border-top: 2px solid #6401e1;
-    background: #0a0a0a;
-    z-index: 20;
-  }
-  footer a { text-decoration: none; display: inline-block; margin: 0 18px; }
-  footer img { transition: transform 0.3s, filter 0.3s; cursor: pointer; height: 27px; filter: drop-shadow(0 0 6px #6401e1); }
-  footer img:hover { transform: scale(1.1); filter: drop-shadow(0 0 12px #6401e1); }
+    header .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-  /* Smile Text */
-  .smile-text {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.45rem;
-    color: #6401e1;
-    text-shadow: 0 0 6px #6401e1;
-    white-space: nowrap;
-    pointer-events: none;
-  }
-</style>
+    header img {
+      height: 40px;
+      filter: drop-shadow(0 0 6px #6401e1);
+    }
+
+    header h2 {
+      font-size: 1.6rem;
+      text-transform: uppercase;
+    }
+
+    /* Burger menu */
+    .menu-toggle {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 28px;
+      height: 20px;
+      margin-left: auto; /* keeps it visible on all screen sizes */
+    }
+
+    .menu-toggle div {
+      height: 3px;
+      background: #6401e1;
+      border-radius: 2px;
+    }
+
+    nav {
+      display: none;
+      position: absolute;
+      top: 60px;
+      right: 2rem; /* aligned with header padding */
+      background: #111;
+      padding: 1rem;
+      border: 1px solid #6401e1;
+      border-radius: 6px;
+      z-index: 30;
+    }
+
+    nav a {
+      display: block;
+      margin: 0.5rem 0;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #6401e1;
+      text-shadow: 0 0 6px #6401e1;
+    }
+
+    main {
+      padding: 3rem 2rem;
+      text-align: center;
+      flex: 1;
+    }
+
+    .collection-card {
+      display: inline-block;
+      background: #111;
+      border: 2px solid #6401e1;
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 1rem;
+      text-align: center;
+      box-shadow: 0 0 12px #6401e1;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .collection-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 20px #6401e1;
+    }
+
+    .collection-card img {
+      height: 120px;
+      border-radius: 8px;
+      border: 2px solid #6401e1;
+      margin-bottom: 1rem;
+    }
+
+    .collection-card h3, .collection-card p {
+      color: #6401e1;
+    }
+
+    /* Home icon just above footer line */
+    .home-wrapper {
+      position: relative;
+      height: 50px; /* reserve space for icon */
+      text-align: center;
+      z-index: 25;
+    }
+
+    .home-icon {
+      position: absolute;
+      bottom: 0; /* bottom aligns with top of footer */
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .home-icon:hover {
+      transform: translateX(-50%) scale(1.1);
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      border-top: 2px solid #6401e1;
+      background: #0a0a0a;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      position: relative;
+      z-index: 20;
+    }
+
+    footer a img {
+      height: 27px;
+      filter: drop-shadow(0 0 8px #6401e1) drop-shadow(0 0 16px #6401e1);
+      transition: transform 0.3s, filter 0.3s;
+      cursor: pointer;
+    }
+
+    footer a img:hover {
+      transform: scale(1.1);
+      filter: drop-shadow(0 0 12px #6401e1) drop-shadow(0 0 24px #6401e1);
+    }
+
+    /* Background animation */
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      position: absolute;
+      width: 200%;
+    }
+
+    .row img {
+      width: clamp(14px, 3vw, 28px);
+      margin: 0 6px;
+      filter: drop-shadow(0 0 3px #6401e1) drop-shadow(0 0 6px #6401e1);
+      opacity: 0.45;
+      cursor: pointer;
+      pointer-events: auto;
+      transition: transform 0.2s;
+    }
+
+    @keyframes scrollRight { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
+    @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      20% { transform: translateX(-5px); }
+      40% { transform: translateX(5px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+      100% { transform: translateX(0); }
+    }
+
+    .shake {
+      animation: shake 0.5s;
+    }
+  </style>
 </head>
 <body>
 
@@ -175,28 +227,49 @@
 
 <header>
   <div class="logo">
-    <img src="logo.png" alt="PurpleSkull Logo">
-    <img src="name-logo.png" alt="PurpleSkull Name" class="glow-img" style="height: 18px;">
+    <h2 class="glow">Collections</h2>
+    <img src="logo.png" alt="PurpleSkull Logo" class="glow">
   </div>
-  <div class="menu-toggle" onclick="toggleMenu()"><div></div><div></div><div></div></div>
+  <div class="menu-toggle" onclick="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
   <nav id="menu">
+    <a href="index.html">Home</a>
     <a href="about.html">About</a>
-    <a href="collections.html">Collections</a>
   </nav>
 </header>
 
-<section>
-  <h2>Featured Collection</h2>
+<main>
   <div class="collection-card">
-    <a href="skulls-of-hold.html"><img src="collection-icon.png" alt="Collection Icon"></a>
+    <a href="skulls-of-hold.html">
+      <img src="collection-icon.png" alt="Skulls of Hold">
+    </a>
     <h3>Skulls of Hold</h3>
   </div>
-</section>
+
+  <div class="collection-card">
+    <img src="coming-soon-icon.gif" alt="Coming Soon">
+    <h3>New Collection</h3>
+    <p>Coming Soon</p>
+  </div>
+</main>
+
+<!-- Home button above footer -->
+<div class="home-wrapper">
+  <a href="index.html">
+    <img src="home.png" alt="Back Home" class="home-icon">
+  </a>
+</div>
 
 <footer>
-  <a href="https://x.com/purpleskullsats?t=JkKrPRwa1llyPSoJu0WUww&s=09" target="_blank"><img src="x-logo.png" alt="Follow me on X"></a>
-  <a href="https://www.instagram.com/purpleskullnft?igsh=aTgybnVrbXdjYjFl" target="_blank"><img src="instagram-logo.png" alt="Follow me on Instagram"></a>
-  <div id="smileText" class="smile-text">Art that hides teeth behind a smile.</div>
+  <a href="https://x.com/purpleskullsats" target="_blank">
+    <img src="x-logo.png" alt="Follow me on X">
+  </a>
+  <a href="https://www.instagram.com/purpleskullnft" target="_blank">
+    <img src="instagram-logo.png" alt="Follow me on Instagram">
+  </a>
 </footer>
 
 <script>
@@ -205,7 +278,6 @@ function toggleMenu() {
   menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 
-// Close menu when clicking outside
 document.addEventListener('click', function(event) {
   const menu = document.getElementById("menu");
   const toggle = document.querySelector(".menu-toggle");
@@ -214,76 +286,60 @@ document.addEventListener('click', function(event) {
   }
 });
 
-// Background skulls setup
-const background = document.getElementById("background");
-const numCols = 12;
+// Background skulls
+const background = document.getElementById('background');
+const numRows = 8;
 const baseImg = "background.png";
 const skullImg = "logo.png";
-const columns = [];
-const imgHeight = 34;
-const numImgs = Math.ceil(window.innerHeight / imgHeight) + 10;
+const rows = [];
+const numImgs = Math.ceil(window.innerWidth / 40) + 5;
 
-for(let c=0;c<numCols;c++){
-  const col=document.createElement("div");
-  col.className="column";
-  const wrapper=document.createElement("div");
-  wrapper.className="scroll-wrapper";
-  for(let repeat=0;repeat<2;repeat++){
-    for(let i=0;i<numImgs;i++){
-      const img=document.createElement("img");
-      img.src=baseImg;
-      wrapper.appendChild(img);
+const headerHeight = document.querySelector('header').offsetHeight;
+const footerHeight = document.querySelector('footer').offsetHeight;
+
+for (let r = 0; r < numRows; r++) {
+  const row = document.createElement('div');
+  row.className = 'row';
+  const availableHeight = window.innerHeight - headerHeight - footerHeight;
+  row.style.top = `${headerHeight + (r / numRows) * availableHeight}px`;
+  row.style.animation = (r % 2 === 0 ? "scrollRight" : "scrollLeft") + ` ${Math.floor(Math.random() * 30) + 30}s linear infinite`;
+  for (let repeat = 0; repeat < 2; repeat++) {
+    for (let i = 0; i < numImgs; i++) {
+      const img = document.createElement('img');
+      img.src = baseImg;
+      row.appendChild(img);
     }
   }
-  const speed=Math.floor(Math.random()*20)+30;
-  wrapper.style.animation=(c%2===0?"scrollDown":"scrollUp")+` ${speed}s linear infinite`;
-  col.appendChild(wrapper);
-  background.appendChild(col);
-  columns.push(wrapper);
+  background.appendChild(row);
+  rows.push(row);
 }
 
-// Click detection for skulls
-document.addEventListener("click",(e)=>{
-  const x=e.clientX;
-  const y=e.clientY;
-  columns.forEach(wrapper=>{
-    wrapper.querySelectorAll("img").forEach(img=>{
-      const rect=img.getBoundingClientRect();
-      if(x>=rect.left && x<=rect.right && y>=rect.top && y<=rect.bottom){
-        img.src=skullImg;
-        img.style.transform="scale(1.15)";
-        img.dataset.clicked="true";
+document.addEventListener('click', (e) => {
+  const x = e.clientX;
+  const y = e.clientY;
+  rows.forEach(row => {
+    row.querySelectorAll('img').forEach(img => {
+      const rect = img.getBoundingClientRect();
+      if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
+        img.src = skullImg;
+        img.style.transform = "scale(1.15)";
+        img.dataset.clicked = "true";
       }
     });
   });
 });
 
-// Reset clicked skulls
-columns.forEach(wrapper=>{
-  wrapper.addEventListener("animationiteration",()=>{
-    wrapper.querySelectorAll("img").forEach(img=>{
-      if(img.dataset.clicked==="true"){
-        img.src=baseImg;
-        img.style.transform="scale(1)";
+rows.forEach(row => {
+  row.addEventListener("animationiteration", () => {
+    row.querySelectorAll("img").forEach(img => {
+      if (img.dataset.clicked === "true") {
+        img.src = baseImg;
+        img.style.transform = "scale(1)";
         delete img.dataset.clicked;
       }
     });
   });
 });
-
-// Make smile curved like a happy face
-const smileText = document.getElementById("smileText");
-const smileContent = smileText.textContent;
-smileText.textContent = '';
-for(let i=0;i<smileContent.length;i++){
-  const span = document.createElement('span');
-  span.textContent = smileContent[i];
-  const angle = (i - smileContent.length/2) * 4;
-  const radius = 7;
-  span.style.display = 'inline-block';
-  span.style.transform = `rotate(${angle}deg) translateY(${radius}px) rotate(${-angle}deg)`;
-  smileText.appendChild(span);
-}
 </script>
 </body>
 </html>
