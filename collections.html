@@ -11,7 +11,6 @@
     background-color: #000;
     color: #fff;
     overflow-x: hidden;
-    position: relative;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -93,8 +92,6 @@
   main {
     padding: 3rem 2rem;
     text-align: center;
-    position: relative;
-    z-index: 2;
     flex: 1;
   }
 
@@ -110,7 +107,6 @@
     transition: transform 0.3s, box-shadow 0.3s;
     cursor: pointer;
     position: relative;
-    z-index: 2;
   }
 
   .collection-card:hover {
@@ -137,7 +133,6 @@
     display: flex;
     justify-content: center;
     gap: 15px;
-    z-index: 20;
     position: relative;
   }
 
@@ -153,25 +148,22 @@
     filter: drop-shadow(0 0 12px #6401e1) drop-shadow(0 0 24px #6401e1);
   }
 
-  /* Horizontal moving skulls background */
+  /* Background skulls */
   .background {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
     z-index: -1;
     overflow: hidden;
   }
 
   .row {
     display: flex;
-    flex-direction: row;
-    align-items: center;
     position: absolute;
     width: 200%;
+    align-items: center;
   }
 
   .row img {
@@ -179,8 +171,6 @@
     margin: 0 6px;
     filter: drop-shadow(0 0 3px #6401e1) drop-shadow(0 0 6px #6401e1);
     opacity: 0.45;
-    cursor: pointer;
-    pointer-events: auto;
     transition: transform 0.2s;
   }
 
@@ -200,22 +190,27 @@
     animation: shake 0.5s;
   }
 
-  /* Home icon button fixed just above footer */
-  .home-icon {
-    position: fixed;
-    bottom: 80px; /* Just above footer */
-    left: 50%;
-    transform: translateX(-50%);
+  /* Home button sitting on top of footer */
+  .home-icon-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    margin-bottom: -50px; /* Pulls it up to sit on footer */
     z-index: 30;
-    cursor: pointer;
+  }
+
+  .home-icon {
     width: 50px;
     height: 50px;
+    cursor: pointer;
     transition: transform 0.3s;
   }
 
   .home-icon:hover {
-    transform: translateX(-50%) scale(1.1);
+    transform: scale(1.1);
   }
+
 </style>
 </head>
 <body>
@@ -253,10 +248,12 @@
   </div>
 </main>
 
-<!-- Home Icon Button -->
-<a href="index.html">
-  <img src="home.png" alt="Back Home" class="home-icon">
-</a>
+<!-- Home icon sits directly on top of footer -->
+<div class="home-icon-container">
+  <a href="index.html">
+    <img src="home.png" alt="Back Home" class="home-icon">
+  </a>
+</div>
 
 <footer>
   <a href="https://x.com/purpleskullsats?t=JkKrPRwa1llyPSoJu0WUww&s=09" target="_blank">
