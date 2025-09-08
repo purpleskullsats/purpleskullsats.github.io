@@ -124,6 +124,29 @@
     color: #6401e1;
   }
 
+  /* Home icon just above footer line */
+  .home-wrapper {
+    position: relative;
+    height: 50px; /* Reserve space for the icon */
+    text-align: center;
+    z-index: 25;
+  }
+
+  .home-icon {
+    position: absolute;
+    bottom: 0; /* bottom of icon aligns with top of footer border */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+
+  .home-icon:hover {
+    transform: translateX(-50%) scale(1.1);
+  }
+
   footer {
     text-align: center;
     padding: 1rem;
@@ -148,30 +171,62 @@
     filter: drop-shadow(0 0 12px #6401e1) drop-shadow(0 0 24px #6401e1);
   }
 
-  /* Home icon fixed so bottom sits on top of footer line */
-  .home-icon {
+  /* Horizontal moving skulls background */
+  .background {
     position: fixed;
-    bottom: calc(1rem + 2px); /* footer padding + border width */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-    transition: transform 0.3s;
-    z-index: 25;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    z-index: -1;
+    overflow: hidden;
   }
 
-  .home-icon:hover {
-    transform: translateX(-50%) scale(1.1);
+  .row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: absolute;
+    width: 200%;
+  }
+
+  .row img {
+    width: clamp(14px, 3vw, 28px);
+    margin: 0 6px;
+    filter: drop-shadow(0 0 3px #6401e1) drop-shadow(0 0 6px #6401e1);
+    opacity: 0.45;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: transform 0.2s;
+  }
+
+  @keyframes scrollRight { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
+  @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    20% { transform: translateX(-5px); }
+    40% { transform: translateX(5px); }
+    60% { transform: translateX(-5px); }
+    80% { transform: translateX(5px); }
+    100% { transform: translateX(0); }
+  }
+
+  .shake {
+    animation: shake 0.5s;
   }
 </style>
 </head>
 <body>
 
+<div class="background" id="background"></div>
+
 <header>
   <div class="logo">
     <h2 class="glow">Collections</h2>
-    <img src="PurpleSkull Logo" alt="PurpleSkull Logo" class="glow">
+    <img src="logo.png" alt="PurpleSkull Logo" class="glow">
   </div>
   <div class="menu-toggle" onclick="toggleMenu()">
     <div></div>
@@ -199,16 +254,18 @@
   </div>
 </main>
 
-<!-- Home button fixed above footer -->
-<a href="index.html">
-  <img src="home.png" alt="Back Home" class="home-icon">
-</a>
+<!-- Home button just above footer -->
+<div class="home-wrapper">
+  <a href="index.html">
+    <img src="home.png" alt="Back Home" class="home-icon">
+  </a>
+</div>
 
 <footer>
-  <a href="https://x.com/purpleskullsats?t=JkKrPRwa1llyPSoJu0WUww&s=09" target="_blank">
+  <a href="https://x.com/purpleskullsats" target="_blank">
     <img src="x-logo.png" alt="Follow me on X">
   </a>
-  <a href="https://www.instagram.com/purpleskullnft?igsh=aTgybnVrbXdjYjFl" target="_blank">
+  <a href="https://www.instagram.com/purpleskullnft" target="_blank">
     <img src="instagram-logo.png" alt="Follow me on Instagram">
   </a>
 </footer>
@@ -226,7 +283,61 @@ document.addEventListener('click', function(event) {
     menu.style.display = "none";
   }
 });
-</script>
 
+// Horizontal moving skulls background
+const background = document.getElementById('background');
+const numRows = 8;
+const baseImg = "background.png"; // Default skull/image
+const skullImg = "logo.png"; // Changes when clicked
+const rows = [];
+const numImgs = Math.ceil(window.innerWidth / 40) + 5;
+
+const headerHeight = document.querySelector('header').offsetHeight;
+const footerHeight = document.querySelector('footer').offsetHeight;
+
+for (let r = 0; r < numRows; r++) {
+  const row = document.createElement('div');
+  row.className = 'row';
+  const availableHeight = window.innerHeight - headerHeight - footerHeight;
+  row.style.top = `${headerHeight + (r / numRows) * availableHeight}px`;
+  row.style.animation = (r % 2 === 0 ? "scrollRight" : "scrollLeft") + ` ${Math.floor(Math.random() * 30) + 30}s linear infinite`;
+  for (let repeat = 0; repeat < 2; repeat++) {
+    for (let i = 0; i < numImgs; i++) {
+      const img = document.createElement('img');
+      img.src = baseImg;
+      row.appendChild(img);
+    }
+  }
+  background.appendChild(row);
+  rows.push(row);
+}
+
+document.addEventListener('click', (e) => {
+  const x = e.clientX;
+  const y = e.clientY;
+  rows.forEach(row => {
+    row.querySelectorAll('img').forEach(img => {
+      const rect = img.getBoundingClientRect();
+      if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
+        img.src = skullImg;
+        img.style.transform = "scale(1.15)";
+        img.dataset.clicked = "true";
+      }
+    });
+  });
+});
+
+rows.forEach(row => {
+  row.addEventListener("animationiteration", () => {
+    row.querySelectorAll("img").forEach(img => {
+      if (img.dataset.clicked === "true") {
+        img.src = baseImg;
+        img.style.transform = "scale(1)";
+        delete img.dataset.clicked;
+      }
+    });
+  });
+});
+</script>
 </body>
 </html>
