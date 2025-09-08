@@ -129,30 +129,6 @@
     color: #6401e1;
   }
 
-  .back-home {
-    margin-top: 2rem;
-    text-align: center;
-  }
-
-  .back-home a {
-    display: inline-block;
-    padding: 0.7rem 1.5rem;
-    border: 2px solid #6401e1;
-    border-radius: 8px;
-    color: #6401e1;
-    text-decoration: none;
-    font-weight: bold;
-    text-shadow: 0 0 8px #6401e1, 0 0 16px #6401e1;
-    box-shadow: 0 0 10px #6401e1;
-    transition: all 0.3s;
-  }
-
-  .back-home a:hover {
-    background: #6401e1;
-    color: #000;
-    box-shadow: 0 0 20px #6401e1, 0 0 40px #6401e1;
-  }
-
   footer {
     text-align: center;
     padding: 1rem;
@@ -223,6 +199,23 @@
   .shake {
     animation: shake 0.5s;
   }
+
+  /* Home icon button above footer */
+  .home-icon {
+    position: fixed;
+    bottom: 60px; /* Just above footer */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    transition: transform 0.3s;
+  }
+
+  .home-icon:hover {
+    transform: translateX(-50%) scale(1.1);
+  }
 </style>
 </head>
 <body>
@@ -258,11 +251,12 @@
     <h3>New Collection</h3>
     <p>Coming Soon</p>
   </div>
-
-  <div class="back-home">
-    <a href="index.html">← Back to Home</a>
-  </div>
 </main>
+
+<!-- Home Icon Button -->
+<a href="index.html">
+  <img src="home.png" alt="Back Home" class="home-icon">
+</a>
 
 <footer>
   <a href="https://x.com/purpleskullsats?t=JkKrPRwa1llyPSoJu0WUww&s=09" target="_blank">
@@ -320,7 +314,6 @@ const footerHeight = document.querySelector('footer').offsetHeight;
 for(let r=0; r<numRows; r++){
   const row = document.createElement('div');
   row.className = 'row';
-  // Constrain rows to stay within visible area (not under header/footer)
   const availableHeight = window.innerHeight - headerHeight - footerHeight;
   row.style.top = `${headerHeight + (r/numRows)*availableHeight}px`;
   row.style.animation = (r%2===0?"scrollRight":"scrollLeft") + ` ${Math.floor(Math.random()*30)+30}s linear infinite`;
@@ -335,7 +328,6 @@ for(let r=0; r<numRows; r++){
   rows.push(row);
 }
 
-// Click detection for skulls
 document.addEventListener('click', (e)=>{
   const x=e.clientX;
   const y=e.clientY;
@@ -351,7 +343,6 @@ document.addEventListener('click', (e)=>{
   });
 });
 
-// Reset clicked skulls after animation
 rows.forEach(row=>{
   row.addEventListener("animationiteration", ()=>{
     row.querySelectorAll("img").forEach(img=>{
