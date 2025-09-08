@@ -200,13 +200,13 @@
     animation: shake 0.5s;
   }
 
-  /* Home icon button above footer */
+  /* Home icon button fixed just above footer */
   .home-icon {
     position: fixed;
-    bottom: 60px; /* Just above footer */
+    bottom: 80px; /* Just above footer */
     left: 50%;
     transform: translateX(-50%);
-    z-index: 10;
+    z-index: 30;
     cursor: pointer;
     width: 50px;
     height: 50px;
@@ -273,7 +273,6 @@ function toggleMenu() {
   menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 
-// Close menu when clicking outside
 document.addEventListener('click', function(event) {
   const menu = document.getElementById("menu");
   const toggle = document.querySelector(".menu-toggle");
