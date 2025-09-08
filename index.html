@@ -54,14 +54,14 @@
     transition: transform 0.2s;
   }
 
-  @keyframes scrollDown { 
-    0% { transform: translateY(0); } 
-    100% { transform: translateY(-50%); } 
+  @keyframes scrollDown {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-50%); }
   }
 
-  @keyframes scrollUp { 
-    0% { transform: translateY(-50%); } 
-    100% { transform: translateY(0); } 
+  @keyframes scrollUp {
+    0% { transform: translateY(-50%); }
+    100% { transform: translateY(0); }
   }
 
   .glow-img {
@@ -80,30 +80,29 @@
     z-index: 10;
   }
 
-  header .header-left {
-    flex: 1;
-  }
-
+  /* 👇 Adjustments for logo/title spacing */
   header .logo {
-    flex: 1;
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: 8px;
+    margin-left: -10px; /* move logo/title left */
   }
 
-  header .logo img:first-child {
-    height: 40px;
+  header img {
+    height: 38px; /* slightly smaller */
+    margin-right: 8px;
   }
 
-  header .menu-toggle {
-    flex: 1;
+  header img.glow-img {
+    height: 16px !important; /* shrink name a little */
+  }
+
+  .menu-toggle {
+    cursor: pointer;
     display: flex;
-    justify-content: flex-end;
     flex-direction: column;
+    justify-content: space-between;
     width: 28px;
     height: 20px;
-    cursor: pointer;
   }
 
   .menu-toggle div {
@@ -113,6 +112,7 @@
     transition: 0.3s;
   }
 
+  /* Updated nav styles */
   nav {
     display: none;
     position: fixed;
@@ -236,6 +236,7 @@
     filter: drop-shadow(0 0 12px #6401e1);
   }
 
+  /* Smile Text */
   .smile-text {
     position: absolute;
     bottom: 10px;
@@ -251,25 +252,17 @@
 </head>
 <body>
 <div class="background" id="background"></div>
-
 <header>
-  <div class="header-left"></div>
-  
   <div class="logo">
     <img src="logo.png" alt="PurpleSkull Logo">
-    <img src="name-logo.png" alt="PurpleSkull Name" class="glow-img" style="height: 18px;">
+    <img src="name-logo.png" alt="PurpleSkull Name" class="glow-img">
   </div>
-  
-  <div class="menu-toggle" onclick="toggleMenu()">
-    <div></div><div></div><div></div>
-  </div>
-
+  <div class="menu-toggle" onclick="toggleMenu()"><div></div><div></div><div></div></div>
   <nav id="menu">
     <a href="about.html">About</a>
     <a href="collections.html">Collections</a>
   </nav>
 </header>
-
 <section>
   <h2>Featured Collection</h2>
   <div class="collection-card">
@@ -277,19 +270,17 @@
     <h3>Skulls of Hold</h3>
   </div>
 </section>
-
 <footer>
   <a href="https://x.com/purpleskullsats?t=JkKrPRwa1llyPSoJu0WUww&s=09" target="_blank"><img src="x-logo.png" alt="Follow me on X"></a>
   <a href="https://www.instagram.com/purpleskullnft?igsh=aTgybnVrbXdjYjFl" target="_blank"><img src="instagram-logo.png" alt="Follow me on Instagram"></a>
   <div id="smileText" class="smile-text">Art that hides teeth behind a smile.</div>
 </footer>
-
 <script>
 function toggleMenu() {
   const menu = document.getElementById("menu");
   menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
-
+// Close menu when clicking outside
 document.addEventListener('click', function(event) {
   const menu = document.getElementById("menu");
   const toggle = document.querySelector(".menu-toggle");
