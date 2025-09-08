@@ -128,6 +128,31 @@
     color: #6401e1;
   }
 
+  /* Back Home button */
+  .back-home {
+    margin-top: 2rem;
+    text-align: center;
+  }
+
+  .back-home a {
+    display: inline-block;
+    padding: 0.7rem 1.5rem;
+    border: 2px solid #6401e1;
+    border-radius: 8px;
+    color: #6401e1;
+    text-decoration: none;
+    font-weight: bold;
+    text-shadow: 0 0 8px #6401e1, 0 0 16px #6401e1;
+    box-shadow: 0 0 10px #6401e1;
+    transition: all 0.3s;
+  }
+
+  .back-home a:hover {
+    background: #6401e1;
+    color: #000;
+    box-shadow: 0 0 20px #6401e1, 0 0 40px #6401e1;
+  }
+
   footer {
     text-align: center;
     padding: 1rem;
@@ -197,7 +222,6 @@
   .shake {
     animation: shake 0.5s;
   }
-
 </style>
 </head>
 <body>
@@ -232,6 +256,11 @@
     <img src="coming-soon-icon.gif" alt="Coming Soon">
     <h3>New Collection</h3>
     <p>Coming Soon</p>
+  </div>
+
+  <!-- Back to Home Button -->
+  <div class="back-home">
+    <a href="index.html">← Back to Home</a>
   </div>
 </main>
 
