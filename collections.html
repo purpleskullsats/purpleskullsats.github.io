@@ -4,8 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Collections - PurpleSkull</title>
-<!-- VT323 font for all titles and menu text -->
+<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet"> <!-- Start font -->
 <style>
   body {
     margin: 0;
@@ -32,7 +33,6 @@
     position: sticky;
     top: 0;
     z-index: 20;
-    font-family: 'VT323', monospace;
   }
 
   header .logo {
@@ -47,6 +47,7 @@
   }
 
   header h2 {
+    font-family: 'Share Tech Mono', monospace; /* Start font for title */
     font-size: 1.6rem;
     text-transform: uppercase;
   }
@@ -111,7 +112,7 @@
     transition: transform 0.3s, box-shadow 0.3s;
     cursor: pointer;
     position: relative;
-    font-family: 'VT323', monospace;
+    font-family: 'VT323', monospace; /* Card font */
   }
 
   .collection-card:hover {
@@ -176,6 +177,7 @@
     filter: drop-shadow(0 0 12px #6401e1) drop-shadow(0 0 24px #6401e1);
   }
 
+  /* Background skulls */
   .background {
     position: fixed;
     top: 0;
@@ -229,7 +231,7 @@
 
 <header>
   <div class="logo">
-    <h2 class="glow">Collections</h2>
+    <h2 class="glow">Collections</h2> <!-- Start font applied -->
     <img src="logo.png" alt="PurpleSkull Logo" class="glow">
   </div>
   <div class="menu-toggle" onclick="toggleMenu()">
@@ -287,7 +289,7 @@ document.addEventListener('click', function(event) {
   }
 });
 
-// Horizontal moving skulls background
+// Background skulls
 const background = document.getElementById('background');
 const numRows = 8;
 const baseImg = "background.png";
