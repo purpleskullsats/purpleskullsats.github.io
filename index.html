@@ -13,6 +13,7 @@
     overflow-x: hidden;
     position: relative;
   }
+
   .background {
     position: fixed;
     top: 0;
@@ -23,6 +24,7 @@
     z-index: -1;
     overflow: hidden;
   }
+
   .column {
     flex: 1;
     display: flex;
@@ -31,6 +33,7 @@
     position: relative;
     min-height: 100vh;
   }
+
   .scroll-wrapper {
     position: absolute;
     top: 0;
@@ -40,6 +43,7 @@
     flex-direction: column;
     align-items: center;
   }
+
   .scroll-wrapper img {
     width: clamp(14px, 3vw, 28px);
     margin: 6px 0;
@@ -49,9 +53,20 @@
     pointer-events: auto;
     transition: transform 0.2s;
   }
-  @keyframes scrollDown { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
-  @keyframes scrollUp { 0% { transform: translateY(-50%); } 100% { transform: translateY(0); } }
-  .glow-img { filter: drop-shadow(0 0 8px #6401e1) drop-shadow(0 0 16px #6401e1); }
+
+  @keyframes scrollDown { 
+    0% { transform: translateY(0); } 
+    100% { transform: translateY(-50%); } 
+  }
+
+  @keyframes scrollUp { 
+    0% { transform: translateY(-50%); } 
+    100% { transform: translateY(0); } 
+  }
+
+  .glow-img {
+    filter: drop-shadow(0 0 8px #6401e1) drop-shadow(0 0 16px #6401e1);
+  }
 
   header {
     display: flex;
@@ -65,38 +80,39 @@
     z-index: 10;
   }
 
-  /* keep logo from growing so it can't push the toggle off-screen */
+  header .header-left {
+    flex: 1;
+  }
+
   header .logo {
+    flex: 1;
     display: flex;
+    justify-content: center;
     align-items: center;
-    min-width: 0; /* allow shrinking */
-    max-width: calc(100% - 80px); /* leave room for toggle (adjust if you change toggle width/padding) */
-    overflow: hidden;
-    gap: 10px;
+    gap: 8px;
   }
 
-  header img {
+  header .logo img:first-child {
     height: 40px;
-    margin-right: 10px;
-    flex-shrink: 0;
   }
 
-  .menu-toggle {
-    cursor: pointer;
+  header .menu-toggle {
+    flex: 1;
     display: flex;
+    justify-content: flex-end;
     flex-direction: column;
-    justify-content: space-between;
     width: 28px;
     height: 20px;
-    /* ensure toggle remains in the header area and doesn't get pushed out */
-    margin-left: auto;
-    flex: 0 0 auto;
-    z-index: 60;
+    cursor: pointer;
   }
 
-  .menu-toggle div { height: 3px; background: #6401e1; border-radius: 2px; transition: 0.3s; }
+  .menu-toggle div {
+    height: 3px;
+    background: #6401e1;
+    border-radius: 2px;
+    transition: 0.3s;
+  }
 
-  /* Updated nav styles for always visible, responsive, and clickable outside close */
   nav {
     display: none;
     position: fixed;
@@ -111,8 +127,19 @@
     box-sizing: border-box;
   }
 
-  nav a { display: block; margin: 0.5rem 0; color: #fff; text-decoration: none; font-weight: bold; }
-  nav a:hover { color: #6401e1; text-shadow: 0 0 6px #6401e1; }
+  nav a {
+    display: block;
+    margin: 0.5rem 0;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+
+  nav a:hover {
+    color: #6401e1;
+    text-shadow: 0 0 6px #6401e1;
+  }
 
   @media screen and (max-width: 480px) {
     nav {
@@ -123,10 +150,13 @@
       max-width: 100vw;
       padding: 1rem 2rem;
     }
-    header .logo { max-width: calc(100% - 60px); } /* smaller on tiny screens */
   }
 
-  section { padding: 3rem 2rem; text-align: center; }
+  section {
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+
   section h2 {
     font-size: 2rem;
     margin-bottom: 2rem;
@@ -150,10 +180,31 @@
     transition: transform 0.3s, box-shadow 0.3s;
     animation: pulsate 4s ease-in-out infinite;
   }
-  .collection-card:hover { transform: translateY(-6px) scale(1.05); box-shadow: 0 0 20px #6401e1; }
-  .collection-card img { height: 120px; border-radius: 8px; border: 2px solid #6401e1; margin-bottom: 1rem; }
-  .collection-card h3 { margin: 0; font-size: 1.3rem; color: #6401e1; text-shadow: 0 0 6px #6401e1; }
-  @keyframes pulsate { 0%,100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+
+  .collection-card:hover {
+    transform: translateY(-6px) scale(1.05);
+    box-shadow: 0 0 20px #6401e1;
+  }
+
+  .collection-card img {
+    height: 120px;
+    border-radius: 8px;
+    border: 2px solid #6401e1;
+    margin-bottom: 1rem;
+    cursor: pointer;
+  }
+
+  .collection-card h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    color: #6401e1;
+    text-shadow: 0 0 6px #6401e1;
+  }
+
+  @keyframes pulsate {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+  }
 
   footer {
     position: fixed;
@@ -166,11 +217,25 @@
     background: #0a0a0a;
     z-index: 20;
   }
-  footer a { text-decoration: none; display: inline-block; margin: 0 18px; } 
-  footer img { transition: transform 0.3s, filter 0.3s; cursor: pointer; height: 27px; filter: drop-shadow(0 0 6px #6401e1); }
-  footer img:hover { transform: scale(1.1); filter: drop-shadow(0 0 12px #6401e1); }
 
-  /* Smile Text */
+  footer a {
+    text-decoration: none;
+    display: inline-block;
+    margin: 0 18px;
+  }
+
+  footer img {
+    transition: transform 0.3s, filter 0.3s;
+    cursor: pointer;
+    height: 27px;
+    filter: drop-shadow(0 0 6px #6401e1);
+  }
+
+  footer img:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 12px #6401e1);
+  }
+
   .smile-text {
     position: absolute;
     bottom: 10px;
@@ -188,11 +253,17 @@
 <div class="background" id="background"></div>
 
 <header>
+  <div class="header-left"></div>
+  
   <div class="logo">
     <img src="logo.png" alt="PurpleSkull Logo">
     <img src="name-logo.png" alt="PurpleSkull Name" class="glow-img" style="height: 18px;">
   </div>
-  <div class="menu-toggle" onclick="toggleMenu()"><div></div><div></div><div></div></div>
+  
+  <div class="menu-toggle" onclick="toggleMenu()">
+    <div></div><div></div><div></div>
+  </div>
+
   <nav id="menu">
     <a href="about.html">About</a>
     <a href="collections.html">Collections</a>
@@ -219,7 +290,6 @@ function toggleMenu() {
   menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 
-// Close menu when clicking outside
 document.addEventListener('click', function(event) {
   const menu = document.getElementById("menu");
   const toggle = document.querySelector(".menu-toggle");
@@ -227,25 +297,6 @@ document.addEventListener('click', function(event) {
     menu.style.display = "none";
   }
 });
-
-// --- new helper: ensure logo can shrink so toggle never gets pushed off-screen ---
-function adjustHeaderLogo() {
-  const header = document.querySelector('header');
-  const logo = header.querySelector('.logo');
-  const toggle = document.querySelector('.menu-toggle');
-  if (!logo || !toggle) return;
-  // available width inside header = header width - toggle width - paddings (approx)
-  const headerStyle = getComputedStyle(header);
-  const paddingLeft = parseFloat(headerStyle.paddingLeft) || 0;
-  const paddingRight = parseFloat(headerStyle.paddingRight) || 0;
-  const available = header.clientWidth - toggle.offsetWidth - paddingLeft - paddingRight - 16; // small gap buffer
-  // ensure logo doesn't exceed available space
-  logo.style.maxWidth = Math.max(60, available) + 'px';
-  logo.style.overflow = 'hidden';
-}
-window.addEventListener('load', adjustHeaderLogo);
-window.addEventListener('resize', adjustHeaderLogo);
-window.addEventListener('orientationchange', adjustHeaderLogo);
 
 // Background skulls setup
 const background = document.getElementById("background");
@@ -304,16 +355,15 @@ columns.forEach(wrapper=>{
   });
 });
 
-// Make smile curved like a happy face with more pronounced curve
+// Make smile curved like a happy face
 const smileText = document.getElementById("smileText");
 const smileContent = smileText.textContent;
 smileText.textContent = '';
-
 for(let i=0;i<smileContent.length;i++){
   const span = document.createElement('span');
   span.textContent = smileContent[i];
-  const angle = (i - smileContent.length/2) * 4; // letter spread
-  const radius = 7; // more pronounced curve
+  const angle = (i - smileContent.length/2) * 4;
+  const radius = 7;
   span.style.display = 'inline-block';
   span.style.transform = `rotate(${angle}deg) translateY(${radius}px) rotate(${-angle}deg)`;
   smileText.appendChild(span);
