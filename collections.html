@@ -1,231 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Collections - PurpleSkull</title>
-<style>
-  body {
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #000;
-    color: #fff;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PurpleSkull</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #000;
+      color: #fff;
+      overflow-x: hidden;
+      position: relative;
+    }
 
-  .glow {
-    text-shadow: 0 0 8px #6401e1, 0 0 16px #6401e1;
-    color: #6401e1;
-  }
+    header {
+      background: linear-gradient(90deg, #6a0dad, #9b30ff);
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
 
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-    background-color: #0a0a0a;
-    border-bottom: 2px solid #6401e1;
-    position: sticky;
-    top: 0;
-    z-index: 20;
-  }
+    main {
+      padding: 40px;
+      text-align: center;
+      min-height: 70vh;
+    }
 
-  header .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+    footer {
+      background: linear-gradient(90deg, #6a0dad, #9b30ff);
+      color: #fff;
+      text-align: center;
+      padding: 30px 20px 20px;
+      position: relative;
+    }
 
-  header img {
-    height: 40px;
-    filter: drop-shadow(0 0 6px #6401e1);
-  }
+    /* Home icon button */
+    .home-button {
+      position: absolute;
+      bottom: 100%; /* place it just above the footer */
+      left: 50%;
+      transform: translateX(-50%);
+    }
 
-  header h2 {
-    font-size: 1.6rem;
-    text-transform: uppercase;
-  }
-
-  .menu-toggle {
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 28px;
-    height: 20px;
-  }
-
-  .menu-toggle div {
-    height: 3px;
-    background: #6401e1;
-    border-radius: 2px;
-  }
-
-  nav {
-    display: none;
-    position: absolute;
-    top: 60px;
-    right: 20px;
-    background: #111;
-    padding: 1rem;
-    border: 1px solid #6401e1;
-    border-radius: 6px;
-    z-index: 30;
-  }
-
-  nav a {
-    display: block;
-    margin: 0.5rem 0;
-    color: #fff;
-    text-decoration: none;
-    font-weight: bold;
-  }
-
-  nav a:hover {
-    color: #6401e1;
-    text-shadow: 0 0 6px #6401e1;
-  }
-
-  main {
-    padding: 3rem 2rem;
-    text-align: center;
-    flex: 1;
-  }
-
-  .collection-card {
-    display: inline-block;
-    background: #111;
-    border: 2px solid #6401e1;
-    border-radius: 12px;
-    padding: 2rem;
-    margin: 1rem;
-    text-align: center;
-    box-shadow: 0 0 12px #6401e1;
-    transition: transform 0.3s, box-shadow 0.3s;
-    cursor: pointer;
-    position: relative;
-  }
-
-  .collection-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 0 20px #6401e1;
-  }
-
-  .collection-card img {
-    height: 120px;
-    border-radius: 8px;
-    border: 2px solid #6401e1;
-    margin-bottom: 1rem;
-  }
-
-  .collection-card h3, .collection-card p {
-    color: #6401e1;
-  }
-
-  footer {
-    text-align: center;
-    padding: 1rem;
-    border-top: 2px solid #6401e1;
-    background: #0a0a0a;
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    position: relative;
-    z-index: 20;
-  }
-
-  footer a img {
-    height: 27px;
-    filter: drop-shadow(0 0 8px #6401e1) drop-shadow(0 0 16px #6401e1);
-    transition: transform 0.3s, filter 0.3s;
-    cursor: pointer;
-  }
-
-  footer a img:hover {
-    transform: scale(1.1);
-    filter: drop-shadow(0 0 12px #6401e1) drop-shadow(0 0 24px #6401e1);
-  }
-
-  /* Home icon anchored to top of footer */
-  .home-icon {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-    transition: transform 0.3s;
-    z-index: 25;
-  }
-
-  .home-icon:hover {
-    transform: translate(-50%, -50%) scale(1.1);
-  }
-</style>
+    .home-button img {
+      width: 50px;
+      height: 50px;
+      display: block;
+    }
+  </style>
 </head>
 <body>
+  <header>
+    PurpleSkull
+  </header>
 
-<header>
-  <div class="logo">
-    <h2 class="glow">Collections</h2>
-    <img src="logo.png" alt="PurpleSkull Logo" class="glow">
-  </div>
-  <div class="menu-toggle" onclick="toggleMenu()">
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
-  <nav id="menu">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-  </nav>
-</header>
+  <main>
+    <h1>Welcome to PurpleSkull</h1>
+    <p>Explore the darkness within art and imagination.</p>
+  </main>
 
-<main>
-  <div class="collection-card">
-    <a href="skulls-of-hold.html">
-      <img src="collection-icon.png" alt="Skulls of Hold">
+  <footer>
+    <a href="index.html" class="home-button">
+      <img src="home.png" alt="Home">
     </a>
-    <h3>Skulls of Hold</h3>
-  </div>
-
-  <div class="collection-card">
-    <img src="coming-soon-icon.gif" alt="Coming Soon">
-    <h3>New Collection</h3>
-    <p>Coming Soon</p>
-  </div>
-</main>
-
-<footer>
-  <!-- Home button anchored to top of footer -->
-  <a href="index.html">
-    <img src="home.png" alt="Back Home" class="home-icon">
-  </a>
-
-  <a href="https://x.com/purpleskullsats" target="_blank">
-    <img src="x-logo.png" alt="Follow me on X">
-  </a>
-  <a href="https://www.instagram.com/purpleskullnft" target="_blank">
-    <img src="instagram-logo.png" alt="Follow me on Instagram">
-  </a>
-</footer>
-
-<script>
-function toggleMenu() {
-  const menu = document.getElementById("menu");
-  menu.style.display = menu.style.display === "block" ? "none" : "block";
-}
-
-document.addEventListener('click', function(event) {
-  const menu = document.getElementById("menu");
-  const toggle = document.querySelector(".menu-toggle");
-  if (!menu.contains(event.target) && !toggle.contains(event.target)) {
-    menu.style.display = "none";
-  }
-});
-</script>
+    <p>&copy; 2025 PurpleSkull. All rights reserved.</p>
+  </footer>
 </body>
 </html>
