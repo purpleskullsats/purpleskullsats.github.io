@@ -148,12 +148,12 @@
     filter: drop-shadow(0 0 12px #6401e1) drop-shadow(0 0 24px #6401e1);
   }
 
-  /* Home icon fixed above footer */
+  /* Home icon anchored to top of footer */
   .home-icon {
-    position: fixed;
-    bottom: 60px; /* always above footer (footer height ~60px) */
+    position: absolute;
+    top: 0;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     width: 50px;
     height: 50px;
     cursor: pointer;
@@ -162,7 +162,7 @@
   }
 
   .home-icon:hover {
-    transform: translateX(-50%) scale(1.1);
+    transform: translate(-50%, -50%) scale(1.1);
   }
 </style>
 </head>
@@ -199,12 +199,12 @@
   </div>
 </main>
 
-<!-- Home button fixed above footer -->
-<a href="index.html">
-  <img src="home.png" alt="Back Home" class="home-icon">
-</a>
-
 <footer>
+  <!-- Home button anchored to top of footer -->
+  <a href="index.html">
+    <img src="home.png" alt="Back Home" class="home-icon">
+  </a>
+
   <a href="https://x.com/purpleskullsats" target="_blank">
     <img src="x-logo.png" alt="Follow me on X">
   </a>
