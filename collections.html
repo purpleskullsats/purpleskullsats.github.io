@@ -31,7 +31,7 @@
     border-bottom: 2px solid #6401e1;
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 20;
   }
 
   header .logo {
@@ -74,6 +74,7 @@
     padding: 1rem;
     border: 1px solid #6401e1;
     border-radius: 6px;
+    z-index: 30;
   }
 
   nav a {
@@ -128,7 +129,6 @@
     color: #6401e1;
   }
 
-  /* Back Home button */
   .back-home {
     margin-top: 2rem;
     text-align: center;
@@ -161,7 +161,8 @@
     display: flex;
     justify-content: center;
     gap: 15px;
-    z-index: 2;
+    z-index: 20;
+    position: relative;
   }
 
   footer a img {
@@ -176,7 +177,7 @@
     filter: drop-shadow(0 0 12px #6401e1) drop-shadow(0 0 24px #6401e1);
   }
 
-  /* Horizontal scrolling background */
+  /* Horizontal moving skulls background */
   .background {
     position: fixed;
     top: 0;
@@ -258,7 +259,6 @@
     <p>Coming Soon</p>
   </div>
 
-  <!-- Back to Home Button -->
   <div class="back-home">
     <a href="index.html">← Back to Home</a>
   </div>
@@ -278,6 +278,15 @@ function toggleMenu() {
   const menu = document.getElementById("menu");
   menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
+
+// Close menu when clicking outside
+document.addEventListener('click', function(event) {
+  const menu = document.getElementById("menu");
+  const toggle = document.querySelector(".menu-toggle");
+  if (!menu.contains(event.target) && !toggle.contains(event.target)) {
+    menu.style.display = "none";
+  }
+});
 
 function shakeCard(card) {
   card.classList.add('shake');
@@ -305,10 +314,15 @@ const skullImg = "logo.png";
 const rows = [];
 const numImgs = Math.ceil(window.innerWidth / 40) + 5;
 
+const headerHeight = document.querySelector('header').offsetHeight;
+const footerHeight = document.querySelector('footer').offsetHeight;
+
 for(let r=0; r<numRows; r++){
   const row = document.createElement('div');
   row.className = 'row';
-  row.style.top = `${(r/numRows)*100}%`;
+  // Constrain rows to stay within visible area (not under header/footer)
+  const availableHeight = window.innerHeight - headerHeight - footerHeight;
+  row.style.top = `${headerHeight + (r/numRows)*availableHeight}px`;
   row.style.animation = (r%2===0?"scrollRight":"scrollLeft") + ` ${Math.floor(Math.random()*30)+30}s linear infinite`;
   for(let repeat=0; repeat<2; repeat++){
     for(let i=0; i<numImgs; i++){
