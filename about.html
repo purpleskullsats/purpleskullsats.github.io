@@ -11,7 +11,9 @@
       background-color: #000;
       color: #fff;
       position: relative;
-      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh; /* Full height */
     }
 
     /* Glow effect */
@@ -93,6 +95,7 @@
 
     /* About content */
     main {
+      flex: 1; /* Push footer down */
       text-align: center;
       padding: 3rem 2rem;
       position: relative;
@@ -155,13 +158,12 @@
       padding: 1rem;
       border-top: 2px solid #6401e1;
       background: #0a0a0a;
-      margin-top: 2rem;
-      position: relative;
+      margin-top: auto; /* Stick footer at bottom */
       z-index: 1;
     }
 
     footer a {
-      text-decoration: none; /* remove underline */
+      text-decoration: none;
       margin: 0 5px;
     }
 
@@ -183,7 +185,7 @@
       top: 0;
       left: 0;
       z-index: -1;
-      width: 120px; /* Reduced by 20% from 150px */
+      width: 120px;
       height: auto;
       pointer-events: none;
     }
@@ -249,11 +251,10 @@
 
       let x = 0;
       let y = 0;
-      let dx = 0.5; // Initial velocity X (slow)
-      let dy = 0.5; // Initial velocity Y (slow)
-      const speed = 0.3; // Adjust for slower/faster movement
+      let dx = 0.5;
+      let dy = 0.5;
       const header = document.querySelector('header');
-      const headerHeight = header.getBoundingClientRect().height; // Get header height
+      const headerHeight = header.getBoundingClientRect().height;
 
       function animate() {
         x += dx;
@@ -265,18 +266,14 @@
         const screenWidth = window.innerWidth;
         const screenHeight = window.innerHeight;
 
-        // Bounce off left/right edges
         if (x <= 0 || x + logoWidth >= screenWidth) {
           dx = -dx;
-          // Ensure it doesn't go off-screen
           if (x <= 0) x = 0;
           if (x + logoWidth >= screenWidth) x = screenWidth - logoWidth;
         }
 
-        // Bounce off top/bottom edges, prevent going under header
         if (y <= headerHeight || y + logoHeight >= screenHeight) {
           dy = -dy;
-          // Ensure it doesn't go under header or off-screen
           if (y <= headerHeight) y = headerHeight;
           if (y + logoHeight >= screenHeight) y = screenHeight - logoHeight;
         }
