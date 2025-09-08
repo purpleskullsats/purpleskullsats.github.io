@@ -10,7 +10,6 @@
     font-family: 'Arial', sans-serif;
     background-color: #000;
     color: #fff;
-    overflow-x: hidden;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -134,6 +133,7 @@
     justify-content: center;
     gap: 15px;
     position: relative;
+    z-index: 20;
   }
 
   footer a img {
@@ -148,74 +148,25 @@
     filter: drop-shadow(0 0 12px #6401e1) drop-shadow(0 0 24px #6401e1);
   }
 
-  /* Background skulls */
-  .background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    overflow: hidden;
-  }
-
-  .row {
-    display: flex;
-    position: absolute;
-    width: 200%;
-    align-items: center;
-  }
-
-  .row img {
-    width: clamp(14px, 3vw, 28px);
-    margin: 0 6px;
-    filter: drop-shadow(0 0 3px #6401e1) drop-shadow(0 0 6px #6401e1);
-    opacity: 0.45;
-    transition: transform 0.2s;
-  }
-
-  @keyframes scrollRight { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
-  @keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-  @keyframes shake {
-    0% { transform: translateX(0); }
-    20% { transform: translateX(-5px); }
-    40% { transform: translateX(5px); }
-    60% { transform: translateX(-5px); }
-    80% { transform: translateX(5px); }
-    100% { transform: translateX(0); }
-  }
-
-  .shake {
-    animation: shake 0.5s;
-  }
-
-  /* Home button sitting on top of footer */
-  .home-icon-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    position: relative;
-    margin-bottom: -50px; /* Pulls it up to sit on footer */
-    z-index: 30;
-  }
-
+  /* Home icon fixed above footer */
   .home-icon {
+    position: fixed;
+    bottom: 60px; /* always above footer (footer height ~60px) */
+    left: 50%;
+    transform: translateX(-50%);
     width: 50px;
     height: 50px;
     cursor: pointer;
     transition: transform 0.3s;
+    z-index: 25;
   }
 
   .home-icon:hover {
-    transform: scale(1.1);
+    transform: translateX(-50%) scale(1.1);
   }
-
 </style>
 </head>
 <body>
-
-<div class="background" id="background"></div>
 
 <header>
   <div class="logo">
@@ -241,25 +192,23 @@
     <h3>Skulls of Hold</h3>
   </div>
 
-  <div class="collection-card" onclick="showBinaryText(this)">
+  <div class="collection-card">
     <img src="coming-soon-icon.gif" alt="Coming Soon">
     <h3>New Collection</h3>
     <p>Coming Soon</p>
   </div>
 </main>
 
-<!-- Home icon sits directly on top of footer -->
-<div class="home-icon-container">
-  <a href="index.html">
-    <img src="home.png" alt="Back Home" class="home-icon">
-  </a>
-</div>
+<!-- Home button fixed above footer -->
+<a href="index.html">
+  <img src="home.png" alt="Back Home" class="home-icon">
+</a>
 
 <footer>
-  <a href="https://x.com/purpleskullsats?t=JkKrPRwa1llyPSoJu0WUww&s=09" target="_blank">
+  <a href="https://x.com/purpleskullsats" target="_blank">
     <img src="x-logo.png" alt="Follow me on X">
   </a>
-  <a href="https://www.instagram.com/purpleskullnft?igsh=aTgybnVrbXdjYjFl" target="_blank">
+  <a href="https://www.instagram.com/purpleskullnft" target="_blank">
     <img src="instagram-logo.png" alt="Follow me on Instagram">
   </a>
 </footer>
@@ -276,79 +225,6 @@ document.addEventListener('click', function(event) {
   if (!menu.contains(event.target) && !toggle.contains(event.target)) {
     menu.style.display = "none";
   }
-});
-
-function shakeCard(card) {
-  card.classList.add('shake');
-  setTimeout(() => card.classList.remove('shake'), 500);
-}
-
-function showBinaryText(card) {
-  shakeCard(card);
-  const footer = document.querySelector('footer');
-  if (!document.getElementById('binaryText')) {
-    const p = document.createElement('p');
-    p.id = 'binaryText';
-    p.textContent = "01001001 00100000 01101000 01100001 01110110 01100101 00100000 01101110 01101111 00100000 01101001 01100100 01100101 01100001 00100000 01110111 01101000 01100001 01110100 00100000 01001001 00100111 01101101 00100000 01100100 01101111 01101001 01101110 01100111";
-    p.style.color = "#000";
-    p.style.fontSize = "0.6rem";
-    footer.appendChild(p);
-  }
-}
-
-// Horizontal moving skulls background
-const background = document.getElementById('background');
-const numRows = 8;
-const baseImg = "background.png";
-const skullImg = "logo.png";
-const rows = [];
-const numImgs = Math.ceil(window.innerWidth / 40) + 5;
-
-const headerHeight = document.querySelector('header').offsetHeight;
-const footerHeight = document.querySelector('footer').offsetHeight;
-
-for(let r=0; r<numRows; r++){
-  const row = document.createElement('div');
-  row.className = 'row';
-  const availableHeight = window.innerHeight - headerHeight - footerHeight;
-  row.style.top = `${headerHeight + (r/numRows)*availableHeight}px`;
-  row.style.animation = (r%2===0?"scrollRight":"scrollLeft") + ` ${Math.floor(Math.random()*30)+30}s linear infinite`;
-  for(let repeat=0; repeat<2; repeat++){
-    for(let i=0; i<numImgs; i++){
-      const img = document.createElement('img');
-      img.src = baseImg;
-      row.appendChild(img);
-    }
-  }
-  background.appendChild(row);
-  rows.push(row);
-}
-
-document.addEventListener('click', (e)=>{
-  const x=e.clientX;
-  const y=e.clientY;
-  rows.forEach(row=>{
-    row.querySelectorAll('img').forEach(img=>{
-      const rect=img.getBoundingClientRect();
-      if(x>=rect.left && x<=rect.right && y>=rect.top && y<=rect.bottom){
-        img.src = skullImg;
-        img.style.transform="scale(1.15)";
-        img.dataset.clicked="true";
-      }
-    });
-  });
-});
-
-rows.forEach(row=>{
-  row.addEventListener("animationiteration", ()=>{
-    row.querySelectorAll("img").forEach(img=>{
-      if(img.dataset.clicked==="true"){
-        img.src = baseImg;
-        img.style.transform="scale(1)";
-        delete img.dataset.clicked;
-      }
-    });
-  });
 });
 </script>
 </body>
