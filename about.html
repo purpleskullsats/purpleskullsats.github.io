@@ -13,6 +13,7 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
+      position: relative;
     }
 
     .glow {
@@ -128,17 +129,16 @@
       box-shadow: 0 0 24px #6401e1;
     }
 
-    /* Home button wrapper just above footer */
     .home-wrapper {
       position: relative;
-      height: 50px; /* Reserve space for the icon */
+      height: 50px;
       text-align: center;
       z-index: 10;
     }
 
     .home-icon {
       position: absolute;
-      bottom: 0; /* bottom of icon aligns with top of footer border */
+      bottom: 0;
       left: 50%;
       transform: translateX(-50%);
       width: 50px;
@@ -253,6 +253,54 @@
         menu.style.display = "none";
       }
     });
+
+    // DVD Screensaver Animation (faster)
+    (function() {
+      const logo = document.getElementById('dvd-logo');
+      if (!logo) return;
+
+      let x = 0;
+      let y = 0;
+      let dx = 0.7; // slightly faster
+      let dy = 0.7; // slightly faster
+
+      const header = document.querySelector('header');
+      const footer = document.querySelector('footer');
+
+      function animate() {
+        x += dx;
+        y += dy;
+
+        const rect = logo.getBoundingClientRect();
+        const logoWidth = rect.width;
+        const logoHeight = rect.height;
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+        const headerHeight = header.getBoundingClientRect().height;
+        const footerTop = footer.getBoundingClientRect().top;
+
+        // Bounce horizontally
+        if (x <= 0 || x + logoWidth >= screenWidth) {
+          dx = -dx;
+          if (x <= 0) x = 0;
+          if (x + logoWidth >= screenWidth) x = screenWidth - logoWidth;
+        }
+
+        // Bounce vertically between header and footer
+        if (y <= headerHeight || y + logoHeight >= footerTop) {
+          dy = -dy;
+          if (y <= headerHeight) y = headerHeight;
+          if (y + logoHeight >= footerTop) y = footerTop - logoHeight;
+        }
+
+        logo.style.left = x + 'px';
+        logo.style.top = y + 'px';
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
+    })();
   </script>
 </body>
 </html>
