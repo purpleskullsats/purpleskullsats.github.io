@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Collections - PurpleSkull</title>
-<!-- VT323 font for collection titles and text -->
+<!-- VT323 font for all titles and menu text -->
 <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 <style>
   body {
@@ -32,6 +32,7 @@
     position: sticky;
     top: 0;
     z-index: 20;
+    font-family: 'VT323', monospace;
   }
 
   header .logo {
@@ -75,6 +76,7 @@
     border: 1px solid #6401e1;
     border-radius: 6px;
     z-index: 30;
+    font-family: 'VT323', monospace;
   }
 
   nav a {
@@ -83,6 +85,7 @@
     color: #fff;
     text-decoration: none;
     font-weight: bold;
+    text-transform: uppercase;
   }
 
   nav a:hover {
@@ -108,6 +111,7 @@
     transition: transform 0.3s, box-shadow 0.3s;
     cursor: pointer;
     position: relative;
+    font-family: 'VT323', monospace;
   }
 
   .collection-card:hover {
@@ -122,13 +126,10 @@
     margin-bottom: 1rem;
   }
 
-  /* VT323 font for collection card titles and paragraphs */
   .collection-card h3, .collection-card p {
-    font-family: 'VT323', monospace;
     color: #6401e1;
   }
 
-  /* Home icon just above footer line */
   .home-wrapper {
     position: relative;
     height: 50px; 
@@ -175,7 +176,6 @@
     filter: drop-shadow(0 0 12px #6401e1) drop-shadow(0 0 24px #6401e1);
   }
 
-  /* Horizontal moving skulls background */
   .background {
     position: fixed;
     top: 0;
