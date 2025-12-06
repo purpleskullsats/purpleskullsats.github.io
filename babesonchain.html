@@ -10,7 +10,7 @@
 
   <style>
     body {
-      background-color: #111;
+      background-color: #1700b5; /* updated background */
       color: #eee;
       font-family: Arial, sans-serif;
       text-align: center;
@@ -26,7 +26,7 @@
     }
 
     .title-img {
-      max-width: 300px; /* slightly smaller than before */
+      max-width: 300px; 
       width: 80%;
       height: auto;
       filter: drop-shadow(0 0 8px #FFD700) drop-shadow(0 0 16px #FFD700); /* yellow glow */
@@ -34,12 +34,21 @@
     }
 
     /* CTA message below title */
-    .cta-message {
+    .cta-message a {
       font-family: 'Playfair Display', serif;
       font-size: 1rem;
       color: #FFD700;
       text-shadow: 0 0 4px #FFD700;
       margin-top: 10px;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+
+    /* CTA hover glow animation */
+    .cta-message a:hover {
+      text-shadow: 0 0 8px #FFD700, 0 0 16px #FFD700;
+      transform: scale(1.05);
     }
 
     .content {
@@ -68,7 +77,7 @@
       border-radius: 8px;
       transition: transform 0.3s, box-shadow 0.3s;
       cursor: pointer;
-      background: #111;
+      background: #1700b5;
       box-shadow: 0 0 8px #f44336;
     }
 
@@ -85,7 +94,7 @@
       color: #f44336;
     }
 
-    /* Optional bottom number range */
+    /* Bottom number range */
     .bottom-number {
       font-size: 1rem;
       color: #f44336;
@@ -180,7 +189,11 @@
     <a href="https://share.google/ENoiZtAoxqxgPQY5J" target="_blank">
       <img src="boc.png" alt="Babes On Chain" class="title-img">
     </a>
-    <div class="cta-message">Click to explore the full collection</div>
+    <div class="cta-message">
+      <a href="https://share.google/ENoiZtAoxqxgPQY5J" target="_blank">
+        Click to explore the full collection
+      </a>
+    </div>
   </div>
 
   <!-- Main Content -->
