@@ -272,15 +272,17 @@
   </div>
 
   <script>
-    // Matrix Effect
+    // Matrix Effect: "BABE" falling
     const canvas = document.getElementById('matrix');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+    const word = 'BABE';
     const fontSize = 16;
     const columns = canvas.width / fontSize;
     const drops = [];
+
     for (let x = 0; x < columns; x++) drops[x] = Math.random() * canvas.height;
 
     function drawMatrix() {
@@ -288,9 +290,11 @@
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = '#1700b5';
       ctx.font = fontSize + 'px monospace';
+      
       for (let i = 0; i < drops.length; i++) {
-        const text = letters.charAt(Math.floor(Math.random() * letters.length));
-        ctx.fillText(text, i * fontSize, drops[i]);
+        const char = word.charAt(Math.floor(drops[i]/fontSize) % word.length);
+        ctx.fillText(char, i * fontSize, drops[i]);
+        
         drops[i] += fontSize;
         if (drops[i] > canvas.height && Math.random() > 0.975) drops[i] = 0;
       }
