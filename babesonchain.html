@@ -10,12 +10,24 @@
 
   <style>
     body {
-      background-color: #1700b5; /* updated background */
+      background-color: #000; /* black background */
       color: #eee;
       font-family: Arial, sans-serif;
       text-align: center;
       margin: 0;
       padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* Matrix canvas */
+    #matrix {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none; /* allow clicks through */
     }
 
     /* Title container at top */
@@ -23,6 +35,8 @@
       text-align: center;
       margin-top: 20px;
       margin-bottom: 40px;
+      position: relative;
+      z-index: 2; /* above matrix */
     }
 
     .title-img {
@@ -53,7 +67,7 @@
 
     .content {
       position: relative;
-      z-index: 1;
+      z-index: 2; /* above matrix */
     }
 
     /* Babe grid */
@@ -77,7 +91,7 @@
       border-radius: 8px;
       transition: transform 0.3s, box-shadow 0.3s;
       cursor: pointer;
-      background: #1700b5;
+      background: #000;
       box-shadow: 0 0 8px #f44336;
     }
 
@@ -184,6 +198,9 @@
 </head>
 <body>
 
+  <!-- Matrix Canvas -->
+  <canvas id="matrix"></canvas>
+
   <!-- Title Section -->
   <div class="title-container">
     <a href="https://share.google/ENoiZtAoxqxgPQY5J" target="_blank">
@@ -255,16 +272,46 @@
   </div>
 
   <script>
+    // Matrix Effect
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+    const drops = [];
+    for (let x = 0; x < columns; x++) drops[x] = Math.random() * canvas.height;
+
+    function drawMatrix() {
+      ctx.fillStyle = 'rgba(0,0,0,0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#1700b5';
+      ctx.font = fontSize + 'px monospace';
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(text, i * fontSize, drops[i]);
+        drops[i] += fontSize;
+        if (drops[i] > canvas.height && Math.random() > 0.975) drops[i] = 0;
+      }
+    }
+
+    setInterval(drawMatrix, 50);
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    // Modal functionality
     const modal = document.getElementById("modal");
     const modalImg = document.getElementById("modal-img");
     const closeBtn = document.getElementsByClassName("close")[0];
     const leftArrow = document.querySelector(".arrow.left");
     const rightArrow = document.querySelector(".arrow.right");
     const babes = Array.from(document.querySelectorAll(".grid img"));
-
     let currentIndex = 0;
 
-    // Modal functionality
     babes.forEach((img, index) => {
       img.addEventListener("click", () => {
         currentIndex = index;
