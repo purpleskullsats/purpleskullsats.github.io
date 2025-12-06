@@ -14,36 +14,7 @@
       padding: 0;
     }
 
-    /* Collection button */
-    .collection-button {
-      display: inline-block;
-      margin: 0.6rem 0 0.4rem 0;
-      padding: 0.6rem 1.2rem;
-      background-color: #f44336; /* red accent */
-      color: #fff;
-      font-weight: bold;
-      text-decoration: none;
-      border-radius: 8px;
-      box-shadow: 0 0 10px #f44336;
-      font-size: 0.9rem;
-      transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
-      position: absolute;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1001;
-    }
-
-    .collection-button.fixed { position: fixed; top: 10px; }
-    .collection-button.sticky { position: absolute; }
-
-    .collection-button:hover {
-      transform: translateX(-50%) translateY(-3px);
-      box-shadow: 0 0 18px #f44336;
-      background-color: #ff6659;
-    }
-
-    /* Bottom number text */
+    /* Bottom number text (optional series range) */
     .bottom-number {
       font-size: 1rem;
       color: #f44336;
@@ -102,6 +73,10 @@
       padding: 0 1rem 1rem 1rem;
     }
 
+    .babe {
+      text-align: center;
+    }
+
     .grid img {
       width: 200px;
       height: 200px;
@@ -117,6 +92,12 @@
     .grid img:hover {
       transform: scale(1.05);
       box-shadow: 0 0 20px #f44336;
+    }
+
+    .babe h2 {
+      margin-top: 8px;
+      font-size: 1.2rem;
+      color: #f44336;
     }
 
     /* Modal styles */
@@ -179,17 +160,11 @@
     @media (max-width: 480px) {
       .home-icon { width: 35px; height: 35px; }
       .grid img { width: 120px; height: 120px; }
-      .collection-button { padding: 0.5rem 1rem; font-size: 0.8rem; }
       .title-img { width: 90%; }
     }
   </style>
 </head>
 <body>
-
-  <!-- Collection button -->
-  <a class="collection-button" href="#" target="_blank" id="collection-button">
-    - View Collection on Explorer -
-  </a>
 
   <!-- Fixed Title Section -->
   <div class="title-container">
@@ -202,51 +177,42 @@
       <div class="babe">
         <img src="babe1.png" alt="Isabelle">
         <h2>Isabelle</h2>
-        <p>#99001352</p>
       </div>
       <div class="babe">
         <img src="babe2.png" alt="Natalie">
         <h2>Natalie</h2>
-        <p>#99001353</p>
       </div>
       <div class="babe">
         <img src="babe3.png" alt="Sophia">
         <h2>Sophia</h2>
-        <p>#99001354</p>
       </div>
       <div class="babe">
         <img src="babe4.png" alt="Charlotte">
         <h2>Charlotte</h2>
-        <p>#99001355</p>
       </div>
       <div class="babe">
         <img src="babe5.png" alt="Rebecca">
         <h2>Rebecca</h2>
-        <p>#99001356</p>
       </div>
       <div class="babe">
         <img src="babe6.png" alt="Isla">
         <h2>Isla</h2>
-        <p>#99001357</p>
       </div>
       <div class="babe">
         <img src="babe7.png" alt="Bella">
         <h2>Bella</h2>
-        <p>#99001358</p>
       </div>
       <div class="babe">
         <img src="babe8.png" alt="Emma">
         <h2>Emma</h2>
-        <p>#99001359</p>
       </div>
       <div class="babe">
         <img src="babe9.png" alt="Daisy">
         <h2>Daisy</h2>
-        <p>#99001360</p>
       </div>
     </div>
 
-    <!-- Number range -->
+    <!-- Optional: series range -->
     <div class="bottom-number">#99001352 - #99001360</div>
 
     <!-- Home icon below the number -->
@@ -273,25 +239,13 @@
     const rightArrow = document.querySelector(".arrow.right");
     const babes = Array.from(document.querySelectorAll(".grid img"));
     const titleImg = document.getElementById("title-img");
-    const collectionButton = document.getElementById("collection-button");
-    const grid = document.getElementById("grid");
 
     let currentIndex = 0;
-    const buttonOffset = 10;
 
-    // Fade title and sticky button
+    // Fade title on scroll
     window.addEventListener("scroll", () => {
       const fadePoint = 300;
       titleImg.style.opacity = Math.max(0, 1 - window.scrollY / fadePoint);
-
-      const gridTop = grid.getBoundingClientRect().top + window.scrollY - collectionButton.offsetHeight - 10;
-      if(window.scrollY + buttonOffset < gridTop){
-        collectionButton.style.position = "fixed";
-        collectionButton.style.top = buttonOffset + "px";
-      } else {
-        collectionButton.style.position = "absolute";
-        collectionButton.style.top = gridTop + "px";
-      }
     });
 
     // Modal functionality
