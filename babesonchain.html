@@ -14,28 +14,21 @@
       padding: 0;
     }
 
-    /* Fixed title container */
+    /* Title container at top */
     .title-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 100;
       text-align: center;
-      background-color: #111;
-      padding: 10px 0;
-      border-bottom: 2px solid #f44336;
+      margin-top: 20px;
+      margin-bottom: 40px;
     }
 
     .title-img {
-      max-width: 400px;
-      width: 90%;
+      max-width: 300px; /* slightly smaller than before */
+      width: 80%;
       height: auto;
       filter: drop-shadow(0 0 8px #f44336) drop-shadow(0 0 16px #f44336);
     }
 
     .content {
-      margin-top: 140px; /* space for fixed title */
       position: relative;
       z-index: 1;
     }
@@ -46,7 +39,7 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 20px;
-      padding: 0 1rem 1rem 1rem;
+      padding: 0 1rem 2rem 1rem;
     }
 
     .babe {
@@ -76,7 +69,7 @@
       color: #f44336;
     }
 
-    /* Optional: bottom number range */
+    /* Optional bottom number range */
     .bottom-number {
       font-size: 1rem;
       color: #f44336;
@@ -160,13 +153,13 @@
     @media (max-width: 480px) {
       .home-icon { width: 35px; height: 35px; }
       .grid img { width: 120px; height: 120px; }
-      .title-img { width: 90%; }
+      .title-img { max-width: 200px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Fixed Title Section -->
+  <!-- Title Section -->
   <div class="title-container">
     <img src="boc.png" alt="Babes On Chain" class="title-img">
   </div>
@@ -212,10 +205,8 @@
       </div>
     </div>
 
-    <!-- Optional: bottom number range -->
     <div class="bottom-number">#99001352 - #99001360</div>
 
-    <!-- Home icon -->
     <div class="home-icon-container">
       <a href="index.html">
         <img src="home2.png" alt="Back Home" class="home-icon">
