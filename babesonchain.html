@@ -14,40 +14,17 @@
       padding: 0;
     }
 
-    /* Bottom number text (optional series range) */
-    .bottom-number {
-      font-size: 1rem;
-      color: #f44336;
-      text-shadow: 0 0 4px #f44336;
-      margin: 2rem 0 10px 0;
-    }
-
-    /* Home icon container */
-    .home-icon-container {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    .home-icon {
-      width: 50px;
-      height: 50px;
-      cursor: pointer;
-      transition: transform 0.3s;
-    }
-
-    .home-icon:hover {
-      transform: scale(1.1);
-    }
-
     /* Fixed title container */
     .title-container {
       position: fixed;
-      top: 50px;
+      top: 0;
       left: 0;
       width: 100%;
-      z-index: 0;
+      z-index: 100;
       text-align: center;
-      pointer-events: none;
+      background-color: #111;
+      padding: 10px 0;
+      border-bottom: 2px solid #f44336;
     }
 
     .title-img {
@@ -55,13 +32,12 @@
       width: 90%;
       height: auto;
       filter: drop-shadow(0 0 8px #f44336) drop-shadow(0 0 16px #f44336);
-      transition: opacity 0.3s;
     }
 
     .content {
-      margin-top: 220px;
+      margin-top: 140px; /* space for fixed title */
       position: relative;
-      z-index: 2;
+      z-index: 1;
     }
 
     /* Babe grid */
@@ -100,7 +76,32 @@
       color: #f44336;
     }
 
-    /* Modal styles */
+    /* Optional: bottom number range */
+    .bottom-number {
+      font-size: 1rem;
+      color: #f44336;
+      text-shadow: 0 0 4px #f44336;
+      margin: 2rem 0 10px 0;
+    }
+
+    /* Home icon */
+    .home-icon-container {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .home-icon {
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .home-icon:hover {
+      transform: scale(1.1);
+    }
+
+    /* Modal */
     .modal {
       display: none;
       position: fixed;
@@ -138,7 +139,6 @@
 
     .close:hover { color: #f44336; }
 
-    /* Navigation arrows */
     .arrow {
       position: absolute;
       top: 50%;
@@ -168,12 +168,12 @@
 
   <!-- Fixed Title Section -->
   <div class="title-container">
-    <img src="boc.png" alt="Babes On Chain" class="title-img" id="title-img">
+    <img src="boc.png" alt="Babes On Chain" class="title-img">
   </div>
 
   <!-- Main Content -->
-  <div class="content" id="content">
-    <div class="grid" id="grid">
+  <div class="content">
+    <div class="grid">
       <div class="babe">
         <img src="babe1.png" alt="Isabelle">
         <h2>Isabelle</h2>
@@ -212,10 +212,10 @@
       </div>
     </div>
 
-    <!-- Optional: series range -->
+    <!-- Optional: bottom number range -->
     <div class="bottom-number">#99001352 - #99001360</div>
 
-    <!-- Home icon below the number -->
+    <!-- Home icon -->
     <div class="home-icon-container">
       <a href="index.html">
         <img src="home2.png" alt="Back Home" class="home-icon">
@@ -238,15 +238,8 @@
     const leftArrow = document.querySelector(".arrow.left");
     const rightArrow = document.querySelector(".arrow.right");
     const babes = Array.from(document.querySelectorAll(".grid img"));
-    const titleImg = document.getElementById("title-img");
 
     let currentIndex = 0;
-
-    // Fade title on scroll
-    window.addEventListener("scroll", () => {
-      const fadePoint = 300;
-      titleImg.style.opacity = Math.max(0, 1 - window.scrollY / fadePoint);
-    });
 
     // Modal functionality
     babes.forEach((img, index) => {
