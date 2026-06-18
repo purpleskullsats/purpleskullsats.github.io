@@ -43,12 +43,22 @@ button {
   flex-direction: column;
 }
 
+/* 🔥 FIXED IMAGE FIT */
 #mainImg {
-  width: min(85vw, 700px);
-  max-height: 80vh;
-  object-fit: contain;
-  box-shadow: 0 0 40px rgba(255,0,51,0.4);
-  border-radius: 12px;
+  width: 100vw;
+  height: 100vh;
+  object-fit: contain;   /* key fix */
+  display: block;
+  padding: 70px 20px 80px; /* top + bottom breathing room */
+  box-sizing: border-box;
+}
+
+/* RANDOM BUTTON AREA */
+#randomControls {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 /* GALLERY */
@@ -62,13 +72,17 @@ button {
   justify-content: center;
 }
 
+/* 🔥 STATIC THUMBNAILS (NO ANIMATION) */
 .thumb {
   width: 110px;
   height: 110px;
   object-fit: cover;
   cursor: pointer;
   border: 1px solid #222;
-  transition: 0.2s;
+  background: #000;
+
+  /* freeze frame style */
+  image-rendering: auto;
 }
 
 .thumb:hover {
@@ -76,7 +90,7 @@ button {
   border-color: #ff0033;
 }
 
-/* MODAL */
+/* MODAL (FULL SCREEN GIF) */
 #modal {
   display: none;
   position: fixed;
@@ -87,10 +101,13 @@ button {
   z-index: 2000;
 }
 
+/* 🔥 FULL SCREEN VIEW */
 #modal img {
-  width: min(95vw, 1000px);
-  max-height: 90vh;
+  width: 100vw;
+  height: 100vh;
   object-fit: contain;
+  padding: 40px;
+  box-sizing: border-box;
 }
 </style>
 </head>
@@ -106,10 +123,11 @@ button {
 <!-- RANDOM VIEW -->
 <div id="randomView">
   <img id="mainImg" />
+</div>
 
-  <div style="margin-top:20px;">
-    <button onclick="randomFlick()">Random</button>
-  </div>
+<!-- RANDOM BUTTON (BOTTOM CENTRE) -->
+<div id="randomControls">
+  <button onclick="randomFlick()">Random</button>
 </div>
 
 <!-- GALLERY -->
@@ -125,26 +143,26 @@ button {
 const total = 69;
 let current = 1;
 
-/* IMAGE PATH (rb01.gif → rb69.gif in ROOT) */
+/* IMAGE PATH */
 function img(n){
   return `rb${String(n).padStart(2,'0')}.gif`;
 }
 
-/* preload images */
+/* preload */
 for(let i=1;i<=total;i++){
   const im = new Image();
   im.src = img(i);
 }
 
-/* show image */
+/* SHOW */
 function show(n){
   current = n;
   document.getElementById("mainImg").src = img(current);
 }
 
-/* RANDOM FLICKER EFFECT */
+/* FAST FLICK RANDOM EFFECT */
 function randomFlick(){
-  let count = 12;
+  let count = 10;
 
   const interval = setInterval(() => {
     current = Math.floor(Math.random()*total)+1;
@@ -155,21 +173,10 @@ function randomFlick(){
       clearInterval(interval);
       show(current);
     }
-  }, 50);
+  }, 60);
 }
 
-/* navigation (optional) */
-function next(){
-  current = (current % total) + 1;
-  show(current);
-}
-
-function prev(){
-  current = (current - 2 + total) % total + 1;
-  show(current);
-}
-
-/* gallery */
+/* GALLERY */
 function buildGallery(){
   const g = document.getElementById("gallery");
   g.innerHTML = "";
@@ -178,12 +185,13 @@ function buildGallery(){
     const im = document.createElement("img");
     im.src = img(i);
     im.className = "thumb";
+
     im.onclick = () => openModal(i);
     g.appendChild(im);
   }
 }
 
-/* modal */
+/* MODAL (FULL SIZE GIF PLAY) */
 function openModal(i){
   document.getElementById("modal").style.display="flex";
   document.getElementById("modalImg").src = img(i);
@@ -193,7 +201,7 @@ function closeModal(){
   document.getElementById("modal").style.display="none";
 }
 
-/* view switch */
+/* VIEW SWITCH */
 function toggleGallery(){
   document.getElementById("randomView").style.display="none";
   document.getElementById("gallery").style.display="flex";
@@ -214,7 +222,7 @@ function toggleRandom(){
   show(current);
 }
 
-/* init */
+/* INIT */
 show(Math.floor(Math.random()*total)+1);
 
 </script>
