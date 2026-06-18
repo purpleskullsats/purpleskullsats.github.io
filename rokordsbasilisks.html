@@ -9,27 +9,28 @@
 body {
   margin: 0;
   background: #000;
-  color: #eee;
-  font-family: Arial, sans-serif;
   overflow: hidden;
+  font-family: Arial;
+  color: #fff;
 }
 
-/* Title */
+/* TITLE */
 .title {
   text-align: center;
-  margin-top: 18px;
+  padding-top: 18px;
   font-size: 20px;
   color: #ff0033;
   text-shadow: 0 0 10px #ff0033;
 }
 
-/* CAMERA ROLL WRAPPER */
-.viewer {
+/* MAIN VIEWPORT */
+.viewport {
   position: absolute;
   top: 60px;
   bottom: 60px;
   width: 100%;
   display: flex;
+  justify-content: center;
   align-items: center;
   overflow: hidden;
 }
@@ -38,50 +39,56 @@ body {
 .track {
   display: flex;
   align-items: center;
-  transition: transform 0.35s ease;
+  gap: 40px;
   will-change: transform;
+  transition: transform 0.25s ease;
 }
 
-/* EACH IMAGE */
+/* ITEM */
 .item {
   flex: 0 0 auto;
-  width: 70vw;
-  max-width: 700px;
-  margin: 0 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  transform: scale(0.55);
+  opacity: 0.35;
   transition: transform 0.35s ease, opacity 0.35s ease;
-  opacity: 0.3;
-  transform: scale(0.85);
 }
 
-/* ACTIVE CENTER */
+/* CENTER ITEM */
 .item.active {
-  opacity: 1;
   transform: scale(1);
+  opacity: 1;
 }
 
+/* IMAGE */
 .item img {
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
+  max-width: 70vw;
+  max-height: 70vh;
+  object-fit: contain;
+  border-radius: 10px;
   background: #000;
-  box-shadow: 0 0 25px rgba(255,0,50,0.25);
   user-select: none;
   pointer-events: none;
+}
+
+/* SIDE IMAGES SMALLER FEEL */
+.item:not(.active) img {
+  max-width: 25vw;
+  max-height: 25vh;
+  filter: brightness(0.6);
 }
 
 /* INFO */
 .info {
   position: absolute;
-  bottom: 18px;
+  bottom: 15px;
   width: 100%;
   text-align: center;
   color: #888;
   font-size: 14px;
 }
-
 </style>
 </head>
 
@@ -89,44 +96,51 @@ body {
 
 <div class="title">ROKORDS BASILISKS</div>
 
-<div class="viewer">
+<div class="viewport">
   <div class="track" id="track"></div>
 </div>
 
 <div class="info">
-  Basilisk <span id="index">1</span> / 69 — Swipe / Drag
+  Basilisk <span id="index">1</span> / 69 — swipe / drag
 </div>
 
 <script>
+
 const total = 69;
 let current = 1;
 
+/* momentum variables */
+let velocity = 0;
+let lastX = 0;
+let dragging = false;
+
 const track = document.getElementById("track");
 
-/* build gallery */
+/* build images */
 for (let i = 1; i <= total; i++) {
-  const div = document.createElement("div");
-  div.className = "item";
+  const item = document.createElement("div");
+  item.className = "item";
 
   const img = document.createElement("img");
   img.src = `rb${String(i).padStart(2,'0')}.gif`;
 
-  div.appendChild(img);
-  track.appendChild(div);
+  item.appendChild(img);
+  track.appendChild(item);
 }
 
 const items = document.querySelectorAll(".item");
 
-/* update view */
+/* render */
 function render() {
+
   items.forEach((el, i) => {
     el.classList.toggle("active", i === current - 1);
   });
 
   document.getElementById("index").innerText = current;
 
-  const offset = window.innerWidth / 2 - (current - 1) * (window.innerWidth * 0.75);
-  track.style.transform = `translateX(${offset}px)`;
+  const centerOffset = window.innerWidth / 2 - (current - 1) * 300;
+  track.style.transform = `translateX(${centerOffset}px)`;
 }
 
 /* navigation */
@@ -136,44 +150,60 @@ function next() {
 }
 
 function prev() {
-  current = (current - 1 + total - 1) % total + 1;
+  current = (current - 2 + total) % total + 1;
   render();
 }
 
-/* swipe / drag */
-let startX = 0;
-let dragging = false;
+/* momentum loop */
+function momentum() {
+  if (Math.abs(velocity) > 0.5 && !dragging) {
+    if (velocity < 0) next();
+    else prev();
 
+    velocity *= 0.85;
+  }
+  requestAnimationFrame(momentum);
+}
+momentum();
+
+/* TOUCH */
 document.addEventListener("touchstart", e => {
-  startX = e.touches[0].clientX;
+  lastX = e.touches[0].clientX;
+  velocity = 0;
   dragging = true;
 });
 
-document.addEventListener("touchend", e => {
-  if (!dragging) return;
-  let endX = e.changedTouches[0].clientX;
-
-  if (startX - endX > 40) next();
-  if (endX - startX > 40) prev();
-
-  dragging = false;
+document.addEventListener("touchmove", e => {
+  const x = e.touches[0].clientX;
+  velocity = x - lastX;
+  lastX = x;
 });
 
-/* mouse drag */
+document.addEventListener("touchend", () => {
+  dragging = false;
+
+  if (velocity < -10) next();
+  if (velocity > 10) prev();
+});
+
+/* MOUSE */
 document.addEventListener("mousedown", e => {
-  startX = e.clientX;
+  lastX = e.clientX;
+  velocity = 0;
   dragging = true;
 });
 
-document.addEventListener("mouseup", e => {
+document.addEventListener("mousemove", e => {
   if (!dragging) return;
+  velocity = e.clientX - lastX;
+  lastX = e.clientX;
+});
 
-  let endX = e.clientX;
-
-  if (startX - endX > 40) next();
-  if (endX - startX > 40) prev();
-
+document.addEventListener("mouseup", () => {
   dragging = false;
+
+  if (velocity < -10) next();
+  if (velocity > 10) prev();
 });
 
 /* keyboard */
@@ -184,6 +214,7 @@ document.addEventListener("keydown", e => {
 
 /* init */
 render();
+
 </script>
 
 </body>
