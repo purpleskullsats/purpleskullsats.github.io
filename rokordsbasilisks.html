@@ -1,8 +1,11 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rokords Basilisks</title><style>
+<title>Rokords Basilisks</title>
+
+<style>
 body {
   margin: 0;
   background: #000;
@@ -11,177 +14,177 @@ body {
   overflow: hidden;
 }
 
+/* Title */
 .title {
   text-align: center;
-  margin-top: 20px;
-  font-size: 22px;
+  margin-top: 18px;
+  font-size: 20px;
   color: #ff0033;
   text-shadow: 0 0 10px #ff0033;
 }
 
-.carousel {
-  position: relative;
-  width: 100vw;
-  height: 75vh;
+/* CAMERA ROLL WRAPPER */
+.viewer {
+  position: absolute;
+  top: 60px;
+  bottom: 60px;
+  width: 100%;
   display: flex;
-  justify-content: center;
   align-items: center;
   overflow: hidden;
 }
 
-.card {
-  position: absolute;
-  transition: transform 0.5s ease, opacity 0.5s ease;
-  cursor: pointer;
+/* TRACK */
+.track {
+  display: flex;
+  align-items: center;
+  transition: transform 0.35s ease;
+  will-change: transform;
 }
 
-.card img {
-  border-radius: 10px;
-  max-width: 100%;
+/* EACH IMAGE */
+.item {
+  flex: 0 0 auto;
+  width: 70vw;
+  max-width: 700px;
+  margin: 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+  opacity: 0.3;
+  transform: scale(0.85);
+}
+
+/* ACTIVE CENTER */
+.item.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.item img {
+  width: 100%;
   height: auto;
+  border-radius: 12px;
   background: #000;
+  box-shadow: 0 0 25px rgba(255,0,50,0.25);
+  user-select: none;
+  pointer-events: none;
 }
 
-/* CENTER */
-.center {
-  transform: translateX(0) scale(1);
-  z-index: 10;
-}
-
-.center img {
-  max-width: 65vw;
-}
-
-/* LEFT */
-.left {
-  transform: translateX(-320px) scale(0.6);
-  opacity: 0.4;
-  z-index: 5;
-}
-
-.left img {
-  max-width: 250px;
-}
-
-/* RIGHT */
-.right {
-  transform: translateX(320px) scale(0.6);
-  opacity: 0.4;
-  z-index: 5;
-}
-
-.right img {
-  max-width: 250px;
-}
-
+/* INFO */
 .info {
+  position: absolute;
+  bottom: 18px;
+  width: 100%;
   text-align: center;
-  margin-top: -10px;
   color: #888;
+  font-size: 14px;
 }
 
-.hint {
-  text-align: center;
-  font-size: 12px;
-  color: #444;
-}
-</style></head><body><div class="title">ROKORDS BASILISKS</div><div class="carousel">  <div class="card left" id="leftCard">
-    <img id="leftImg">
-  </div>  <div class="card center" id="centerCard">
-    <img id="centerImg">
-  </div>  <div class="card right" id="rightCard">
-    <img id="rightImg">
-  </div></div><div class="info">
-Basilisk <span id="index">1</span> / 69
-</div><div class="hint">
-Swipe / Click / Arrow Keys
-</div><script>
+</style>
+</head>
 
-/* =========================
-   CONFIG
-========================= */
+<body>
 
+<div class="title">ROKORDS BASILISKS</div>
+
+<div class="viewer">
+  <div class="track" id="track"></div>
+</div>
+
+<div class="info">
+  Basilisk <span id="index">1</span> / 69 — Swipe / Drag
+</div>
+
+<script>
 const total = 69;
 let current = 1;
 
-/* =========================
-   IMAGE LOADER (rb01 format)
-========================= */
+const track = document.getElementById("track");
 
-function img(n){
-  return `images/rb${String(n).padStart(2, '0')}.gif`;
+/* build gallery */
+for (let i = 1; i <= total; i++) {
+  const div = document.createElement("div");
+  div.className = "item";
+
+  const img = document.createElement("img");
+  img.src = `rb${String(i).padStart(2,'0')}.gif`;
+
+  div.appendChild(img);
+  track.appendChild(div);
 }
 
-/* =========================
-   PRELOAD ALL IMAGES
-========================= */
+const items = document.querySelectorAll(".item");
 
-for(let i = 1; i <= total; i++){
-  const preload = new Image();
-  preload.src = img(i);
-}
-
-/* =========================
-   RENDER FUNCTION
-========================= */
-
-function update(){
-
-  let left = current - 1;
-  let right = current + 1;
-
-  if(left < 1) left = total;
-  if(right > total) right = 1;
-
-  document.getElementById("centerImg").src = img(current);
-  document.getElementById("leftImg").src = img(left);
-  document.getElementById("rightImg").src = img(right);
+/* update view */
+function render() {
+  items.forEach((el, i) => {
+    el.classList.toggle("active", i === current - 1);
+  });
 
   document.getElementById("index").innerText = current;
+
+  const offset = window.innerWidth / 2 - (current - 1) * (window.innerWidth * 0.75);
+  track.style.transform = `translateX(${offset}px)`;
 }
 
-/* =========================
-   NAVIGATION
-========================= */
-
-function next(){
-  current++;
-  if(current > total) current = 1;
-  update();
+/* navigation */
+function next() {
+  current = current % total + 1;
+  render();
 }
 
-function prev(){
-  current--;
-  if(current < 1) current = total;
-  update();
+function prev() {
+  current = (current - 1 + total - 1) % total + 1;
+  render();
 }
 
-/* click navigation */
-document.getElementById("leftCard").onclick = prev;
-document.getElementById("rightCard").onclick = next;
-
-/* keyboard */
-document.addEventListener("keydown", e => {
-  if(e.key === "ArrowRight") next();
-  if(e.key === "ArrowLeft") prev();
-});
-
-/* swipe support */
+/* swipe / drag */
 let startX = 0;
+let dragging = false;
 
 document.addEventListener("touchstart", e => {
   startX = e.touches[0].clientX;
+  dragging = true;
 });
 
 document.addEventListener("touchend", e => {
+  if (!dragging) return;
   let endX = e.changedTouches[0].clientX;
 
-  if(startX - endX > 50) next();
-  if(endX - startX > 50) prev();
+  if (startX - endX > 40) next();
+  if (endX - startX > 40) prev();
+
+  dragging = false;
+});
+
+/* mouse drag */
+document.addEventListener("mousedown", e => {
+  startX = e.clientX;
+  dragging = true;
+});
+
+document.addEventListener("mouseup", e => {
+  if (!dragging) return;
+
+  let endX = e.clientX;
+
+  if (startX - endX > 40) next();
+  if (endX - startX > 40) prev();
+
+  dragging = false;
+});
+
+/* keyboard */
+document.addEventListener("keydown", e => {
+  if (e.key === "ArrowRight") next();
+  if (e.key === "ArrowLeft") prev();
 });
 
 /* init */
-update();
+render();
+</script>
 
-</script></body>
+</body>
 </html>
