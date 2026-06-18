@@ -1,0 +1,171 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rokords Basilisks</title><style>
+body {
+  margin: 0;
+  background: #000;
+  color: #eee;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+.title {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 22px;
+  color: #ff0033;
+  text-shadow: 0 0 10px #ff0033;
+}
+
+.carousel {
+  position: relative;
+  width: 100vw;
+  height: 75vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.card {
+  position: absolute;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  cursor: pointer;
+}
+
+.card img {
+  border-radius: 10px;
+  max-width: 100%;
+  height: auto;
+  background: #000;
+}
+
+/* CENTER */
+.center {
+  transform: translateX(0) scale(1);
+  z-index: 10;
+}
+
+.center img {
+  max-width: 65vw;
+}
+
+/* LEFT */
+.left {
+  transform: translateX(-320px) scale(0.6);
+  opacity: 0.4;
+  z-index: 5;
+}
+
+.left img {
+  max-width: 250px;
+}
+
+/* RIGHT */
+.right {
+  transform: translateX(320px) scale(0.6);
+  opacity: 0.4;
+  z-index: 5;
+}
+
+.right img {
+  max-width: 250px;
+}
+
+.info {
+  text-align: center;
+  margin-top: -10px;
+  color: #888;
+}
+
+.hint {
+  text-align: center;
+  font-size: 12px;
+  color: #444;
+}
+</style></head><body><div class="title">ROKORDS BASILISKS</div><div class="carousel">  <div class="card left" id="leftCard">
+    <img id="leftImg">
+  </div>  <div class="card center" id="centerCard">
+    <img id="centerImg">
+  </div>  <div class="card right" id="rightCard">
+    <img id="rightImg">
+  </div></div><div class="info">
+Basilisk <span id="index">1</span> / 69
+</div><div class="hint">
+Swipe / Click / Arrow Keys
+</div><script>
+
+const total = 69;
+let current = 1;
+
+/* IMAGE PATH FUNCTION */
+function img(n){
+  return `images/rb${n}.gif`;
+}
+
+/* PRELOAD ALL 69 GIFS */
+for(let i = 1; i <= total; i++){
+  const preload = new Image();
+  preload.src = img(i);
+}
+
+/* UPDATE VIEW */
+function update(){
+
+  let left = current - 1;
+  let right = current + 1;
+
+  if(left < 1) left = total;
+  if(right > total) right = 1;
+
+  document.getElementById("centerImg").src = img(current);
+  document.getElementById("leftImg").src = img(left);
+  document.getElementById("rightImg").src = img(right);
+
+  document.getElementById("index").innerText = current;
+}
+
+/* NAVIGATION */
+function next(){
+  current++;
+  if(current > total) current = 1;
+  update();
+}
+
+function prev(){
+  current--;
+  if(current < 1) current = total;
+  update();
+}
+
+/* CLICK */
+document.getElementById("leftCard").onclick = prev;
+document.getElementById("rightCard").onclick = next;
+
+/* KEYBOARD */
+document.addEventListener("keydown", e => {
+  if(e.key === "ArrowRight") next();
+  if(e.key === "ArrowLeft") prev();
+});
+
+/* SWIPE */
+let startX = 0;
+
+document.addEventListener("touchstart", e => {
+  startX = e.touches[0].clientX;
+});
+
+document.addEventListener("touchend", e => {
+  let endX = e.changedTouches[0].clientX;
+
+  if(startX - endX > 50) next();
+  if(endX - startX > 50) prev();
+});
+
+/* INIT */
+update();
+
+</script></body>
+</html>
