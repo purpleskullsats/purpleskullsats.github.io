@@ -97,21 +97,34 @@ Basilisk <span id="index">1</span> / 69
 Swipe / Click / Arrow Keys
 </div><script>
 
+/* =========================
+   CONFIG
+========================= */
+
 const total = 69;
 let current = 1;
 
-/* IMAGE PATH FUNCTION */
+/* =========================
+   IMAGE LOADER (rb01 format)
+========================= */
+
 function img(n){
-  return `images/rb${n}.gif`;
+  return `images/rb${String(n).padStart(2, '0')}.gif`;
 }
 
-/* PRELOAD ALL 69 GIFS */
+/* =========================
+   PRELOAD ALL IMAGES
+========================= */
+
 for(let i = 1; i <= total; i++){
   const preload = new Image();
   preload.src = img(i);
 }
 
-/* UPDATE VIEW */
+/* =========================
+   RENDER FUNCTION
+========================= */
+
 function update(){
 
   let left = current - 1;
@@ -127,7 +140,10 @@ function update(){
   document.getElementById("index").innerText = current;
 }
 
-/* NAVIGATION */
+/* =========================
+   NAVIGATION
+========================= */
+
 function next(){
   current++;
   if(current > total) current = 1;
@@ -140,17 +156,17 @@ function prev(){
   update();
 }
 
-/* CLICK */
+/* click navigation */
 document.getElementById("leftCard").onclick = prev;
 document.getElementById("rightCard").onclick = next;
 
-/* KEYBOARD */
+/* keyboard */
 document.addEventListener("keydown", e => {
   if(e.key === "ArrowRight") next();
   if(e.key === "ArrowLeft") prev();
 });
 
-/* SWIPE */
+/* swipe support */
 let startX = 0;
 
 document.addEventListener("touchstart", e => {
@@ -164,7 +180,7 @@ document.addEventListener("touchend", e => {
   if(endX - startX > 50) prev();
 });
 
-/* INIT */
+/* init */
 update();
 
 </script></body>
