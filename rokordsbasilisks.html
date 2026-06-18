@@ -68,6 +68,7 @@ button {
   object-fit: cover;
   cursor: pointer;
   border: 1px solid #222;
+  transition: 0.2s;
 }
 
 .thumb:hover {
@@ -97,18 +98,14 @@ button {
 <body>
 
 <div class="topbar">
-  <button onclick="toggleGallery()">View All</button>
-  <button onclick="toggleRandom()">Back</button>
+  <button id="randomBtn" onclick="randomFlick()">Random</button>
+  <button id="viewBtn" onclick="toggleGallery()">View All</button>
+  <button id="backBtn" onclick="toggleRandom()" style="display:none;">Back</button>
 </div>
 
 <!-- RANDOM VIEW -->
 <div id="randomView">
   <img id="mainImg" />
-  <div style="margin-top:20px;">
-    <button onclick="randomFlick()">Random</button>
-    <button onclick="prev()">◀</button>
-    <button onclick="next()">▶</button>
-  </div>
 </div>
 
 <!-- GALLERY -->
@@ -124,11 +121,7 @@ button {
 const total = 69;
 let current = 1;
 
-/* =========================
-   FIXED IMAGE PATH (IMPORTANT)
-   =========================
-   Your files are rb01.gif etc in ROOT folder
-*/
+/* IMAGE PATH (rb01.gif → rb69.gif in root) */
 function img(n){
   return `rb${String(n).padStart(2,'0')}.gif`;
 }
@@ -152,8 +145,8 @@ function randomFlick(){
   const interval = setInterval(() => {
     current = Math.floor(Math.random()*total)+1;
     document.getElementById("mainImg").src = img(current);
-    count--;
 
+    count--;
     if(count <= 0){
       clearInterval(interval);
       show(current);
@@ -161,7 +154,7 @@ function randomFlick(){
   }, 50);
 }
 
-/* NAV */
+/* NAV (optional fallback) */
 function next(){
   current = (current % total) + 1;
   show(current);
@@ -200,12 +193,22 @@ function closeModal(){
 function toggleGallery(){
   document.getElementById("randomView").style.display="none";
   document.getElementById("gallery").style.display="flex";
+
+  document.getElementById("randomBtn").style.display="none";
+  document.getElementById("viewBtn").style.display="none";
+  document.getElementById("backBtn").style.display="inline-block";
+
   buildGallery();
 }
 
 function toggleRandom(){
   document.getElementById("gallery").style.display="none";
   document.getElementById("randomView").style.display="flex";
+
+  document.getElementById("randomBtn").style.display="inline-block";
+  document.getElementById("viewBtn").style.display="inline-block";
+  document.getElementById("backBtn").style.display="none";
+
   show(current);
 }
 
