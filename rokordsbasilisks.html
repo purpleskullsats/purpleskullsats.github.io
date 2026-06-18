@@ -9,76 +9,107 @@
 body {
   margin: 0;
   background: #000;
-  overflow: hidden;
   font-family: Arial;
   color: #fff;
+  overflow-x: hidden;
 }
 
-/* TITLE */
+/* HEADER */
 .title {
   text-align: center;
-  padding-top: 18px;
+  padding: 18px;
   font-size: 20px;
   color: #ff0033;
   text-shadow: 0 0 10px #ff0033;
 }
 
-/* VIEWPORT */
-.viewport {
-  position: absolute;
-  top: 60px;
-  bottom: 60px;
-  width: 100%;
+/* MAIN VIEW */
+.viewer {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  perspective: 1200px;
+  justify-content: center;
+  height: 70vh;
 }
 
-/* WHEEL */
-.wheel {
-  position: relative;
+/* MAIN IMAGE */
+.main-img {
+  max-width: 80vw;
+  max-height: 70vh;
+  border-radius: 12px;
+  box-shadow: 0 0 25px rgba(255,0,50,0.25);
+  background: #000;
+}
+
+/* BUTTONS */
+.controls {
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+}
+
+button {
+  background: #111;
+  border: 1px solid #ff0033;
+  color: #ff0033;
+  padding: 10px 16px;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+button:hover {
+  background: #ff0033;
+  color: #000;
+}
+
+/* GRID */
+.grid {
+  display: none;
+  padding: 20px;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.grid img {
+  width: 120px;
+  height: auto;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.grid img:hover {
+  transform: scale(1.1);
+}
+
+/* FULLSCREEN VIEWER */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  transform-style: preserve-3d;
+  background: rgba(0,0,0,0.95);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
-/* ITEMS */
-.item {
+.modal img {
+  max-width: 90vw;
+  max-height: 85vh;
+}
+
+.close {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform-origin: center;
-  transition: transform 0.2s linear;
-}
-
-/* IMAGE */
-.item img {
-  border-radius: 12px;
-  background: #000;
-  user-select: none;
-  pointer-events: none;
-  box-shadow: 0 0 25px rgba(255,0,50,0.15);
-}
-
-/* CENTER EMPHASIS (applied dynamically) */
-.center img {
-  filter: none;
-}
-
-/* SIDE DIMMING */
-.item img {
-  filter: brightness(0.6);
-}
-
-/* INFO */
-.info {
-  position: absolute;
-  bottom: 15px;
-  width: 100%;
-  text-align: center;
-  color: #888;
-  font-size: 14px;
+  top: 20px;
+  right: 25px;
+  font-size: 30px;
+  color: #fff;
+  cursor: pointer;
 }
 </style>
 </head>
@@ -87,128 +118,68 @@ body {
 
 <div class="title">ROKORDS BASILISKS</div>
 
-<div class="viewport">
-  <div class="wheel" id="wheel"></div>
+<div class="viewer">
+  <img id="mainImg" class="main-img">
+  
+  <div class="controls">
+    <button onclick="randomGif()">Next Random</button>
+    <button onclick="toggleGrid()">View All</button>
+  </div>
 </div>
 
-<div class="info">
-  Basilisk <span id="index">1</span> / 69 — hold + drag
+<!-- GRID VIEW -->
+<div class="grid" id="grid"></div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="close" onclick="closeModal()">✕</div>
+  <img id="modalImg">
 </div>
 
 <script>
 
 const total = 69;
+let current = 1;
 
-/* rotation state */
-let rotation = 0;
-let velocity = 0;
-let dragging = false;
-let lastX = 0;
-
-const wheel = document.getElementById("wheel");
-
-/* build circular layout */
-const radius = 600;   // distance from center
-const angleStep = 360 / total;
-
-/* create items */
-for (let i = 0; i < total; i++) {
-  const item = document.createElement("div");
-  item.className = "item";
-
-  const img = document.createElement("img");
-  img.src = `rb${String(i+1).padStart(2,'0')}.gif`;
-
-  item.appendChild(img);
-  wheel.appendChild(item);
+/* generate file name */
+function img(n){
+  return `rb${String(n).padStart(2,'0')}.gif`;
 }
 
-const items = document.querySelectorAll(".item");
-
-/* render wheel */
-function render() {
-
-  items.forEach((el, i) => {
-
-    const angle = i * angleStep + rotation;
-
-    const rad = angle * Math.PI / 180;
-
-    const x = Math.sin(rad) * radius;
-    const z = Math.cos(rad) * radius;
-
-    el.style.transform = `
-      translate(-50%, -50%)
-      translateX(${x}px)
-      translateZ(${z}px)
-      rotateY(${angle}deg)
-      scale(${z > 0 ? 1.6 : 0.6})
-    `;
-
-    /* center detection (closest to front) */
-    if (Math.abs(((angle % 360) + 360) % 360) < 8) {
-      el.classList.add("center");
-      el.style.zIndex = 999;
-    } else {
-      el.classList.remove("center");
-      el.style.zIndex = 1;
-    }
-  });
-
-  document.getElementById("index").innerText =
-    Math.abs(Math.round(rotation / angleStep) % total) + 1;
+/* RANDOM MAIN VIEW */
+function randomGif(){
+  current = Math.floor(Math.random() * total) + 1;
+  document.getElementById("mainImg").src = img(current);
 }
 
-/* animation loop (momentum) */
-function animate() {
-  if (!dragging) {
-    rotation += velocity;
-    velocity *= 0.95; // friction
-  }
+/* BUILD GRID */
+const grid = document.getElementById("grid");
 
-  render();
-  requestAnimationFrame(animate);
+for(let i=1;i<=total;i++){
+  const im = document.createElement("img");
+  im.src = img(i);
+
+  im.onclick = () => {
+    document.getElementById("modalImg").src = img(i);
+    document.getElementById("modal").style.display = "flex";
+  };
+
+  grid.appendChild(im);
 }
-animate();
 
-/* TOUCH */
-document.addEventListener("touchstart", e => {
-  dragging = true;
-  lastX = e.touches[0].clientX;
-  velocity = 0;
-});
+/* TOGGLE GRID */
+function toggleGrid(){
+  const g = document.getElementById("grid");
+  g.style.display = g.style.display === "flex" ? "none" : "flex";
+}
 
-document.addEventListener("touchmove", e => {
-  const x = e.touches[0].clientX;
-  velocity = (x - lastX) * 0.3;
-  rotation += velocity;
-  lastX = x;
-});
+/* MODAL */
+function closeModal(){
+  document.getElementById("modal").style.display = "none";
+}
 
-/* MOUSE */
-document.addEventListener("mousedown", e => {
-  dragging = true;
-  lastX = e.clientX;
-  velocity = 0;
-});
-
-document.addEventListener("mousemove", e => {
-  if (!dragging) return;
-  const x = e.clientX;
-  velocity = (x - lastX) * 0.3;
-  rotation += velocity;
-  lastX = x;
-});
-
-document.addEventListener("mouseup", () => {
-  dragging = false;
-});
-
-/* keyboard */
-document.addEventListener("keydown", e => {
-  if (e.key === "ArrowRight") velocity += 5;
-  if (e.key === "ArrowLeft") velocity -= 5;
-});
+/* INIT */
+randomGif();
 
 </script>
 
