@@ -97,8 +97,8 @@ button {
 
 <body>
 
+<!-- TOP BAR -->
 <div class="topbar">
-  <button id="randomBtn" onclick="randomFlick()">Random</button>
   <button id="viewBtn" onclick="toggleGallery()">View All</button>
   <button id="backBtn" onclick="toggleRandom()" style="display:none;">Back</button>
 </div>
@@ -106,6 +106,10 @@ button {
 <!-- RANDOM VIEW -->
 <div id="randomView">
   <img id="mainImg" />
+
+  <div style="margin-top:20px;">
+    <button onclick="randomFlick()">Random</button>
+  </div>
 </div>
 
 <!-- GALLERY -->
@@ -121,18 +125,18 @@ button {
 const total = 69;
 let current = 1;
 
-/* IMAGE PATH (rb01.gif → rb69.gif in root) */
+/* IMAGE PATH (rb01.gif → rb69.gif in ROOT) */
 function img(n){
   return `rb${String(n).padStart(2,'0')}.gif`;
 }
 
-/* preload */
+/* preload images */
 for(let i=1;i<=total;i++){
   const im = new Image();
   im.src = img(i);
 }
 
-/* SHOW */
+/* show image */
 function show(n){
   current = n;
   document.getElementById("mainImg").src = img(current);
@@ -154,7 +158,7 @@ function randomFlick(){
   }, 50);
 }
 
-/* NAV (optional fallback) */
+/* navigation (optional) */
 function next(){
   current = (current % total) + 1;
   show(current);
@@ -165,7 +169,7 @@ function prev(){
   show(current);
 }
 
-/* GALLERY */
+/* gallery */
 function buildGallery(){
   const g = document.getElementById("gallery");
   g.innerHTML = "";
@@ -179,7 +183,7 @@ function buildGallery(){
   }
 }
 
-/* MODAL */
+/* modal */
 function openModal(i){
   document.getElementById("modal").style.display="flex";
   document.getElementById("modalImg").src = img(i);
@@ -189,12 +193,11 @@ function closeModal(){
   document.getElementById("modal").style.display="none";
 }
 
-/* VIEW SWITCH */
+/* view switch */
 function toggleGallery(){
   document.getElementById("randomView").style.display="none";
   document.getElementById("gallery").style.display="flex";
 
-  document.getElementById("randomBtn").style.display="none";
   document.getElementById("viewBtn").style.display="none";
   document.getElementById("backBtn").style.display="inline-block";
 
@@ -205,14 +208,13 @@ function toggleRandom(){
   document.getElementById("gallery").style.display="none";
   document.getElementById("randomView").style.display="flex";
 
-  document.getElementById("randomBtn").style.display="inline-block";
   document.getElementById("viewBtn").style.display="inline-block";
   document.getElementById("backBtn").style.display="none";
 
   show(current);
 }
 
-/* INIT */
+/* init */
 show(Math.floor(Math.random()*total)+1);
 
 </script>
