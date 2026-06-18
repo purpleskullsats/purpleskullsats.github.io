@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rokords Basilisks</title>
 
 <style>
@@ -11,7 +11,6 @@ body {
   background: #000;
   color: #fff;
   font-family: Arial, sans-serif;
-  overflow: hidden;
 }
 
 /* TOP BAR */
@@ -44,96 +43,93 @@ button {
 }
 
 #mainImg {
-  width: min(80vw, 600px);
+  width: min(85vw, 750px);
   height: auto;
-  image-rendering: auto;
-  box-shadow: 0 0 30px rgba(255,0,51,0.4);
   border-radius: 12px;
-}
-
-.arrows {
-  margin-top: 20px;
-  display: flex;
-  gap: 20px;
+  box-shadow: 0 0 40px rgba(255,0,51,0.35);
 }
 
 /* GALLERY */
 #gallery {
   display: none;
-  height: 100vh;
-  overflow-y: auto;
-  padding: 80px 20px 40px;
+  padding: 90px 15px 40px;
   flex-wrap: wrap;
-  gap: 12px;
   justify-content: center;
+  gap: 10px;
 }
 
 .thumb {
   width: 120px;
   height: 120px;
+  object-fit: cover;
   cursor: pointer;
-  border: 1px solid #222;
   transition: 0.2s;
+  border: 1px solid #222;
 }
 
 .thumb:hover {
-  transform: scale(1.1);
+  transform: scale(1.15);
   border-color: #ff0033;
 }
 
-/* MODAL */
+/* MODAL (FULLSCREEN VIEWER) */
 #modal {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.95);
+  background: rgba(0,0,0,0.98);
   justify-content: center;
   align-items: center;
   z-index: 2000;
 }
 
 #modal img {
-  width: min(90vw, 700px);
-  height: auto;
+  width: 95vw;
+  height: 95vh;
+  object-fit: contain;
+  box-shadow: 0 0 50px rgba(255,0,51,0.25);
 }
 
-/* simple fade */
+/* fade effect */
 .fade {
-  animation: fade 0.2s ease;
+  animation: fade 0.15s ease;
 }
 
 @keyframes fade {
-  from {opacity: 0.4;}
-  to {opacity: 1;}
+  from { opacity: 0.3; }
+  to { opacity: 1; }
 }
 </style>
 </head>
 
 <body>
 
+<!-- TOP BUTTONS -->
 <div class="topbar">
   <button onclick="toggleGallery()">View All</button>
   <button onclick="toggleRandom()">Back</button>
 </div>
 
-<!-- RANDOM VIEW -->
+<!-- RANDOM MODE -->
 <div id="randomView">
-  <img id="mainImg" src="" class="fade" />
-  <div class="arrows">
+  <img id="mainImg">
+  <div style="margin-top:20px;">
     <button onclick="prev()">◀</button>
     <button onclick="next()">▶</button>
+    <button onclick="randomSpin()">Random</button>
   </div>
 </div>
 
 <!-- GALLERY -->
 <div id="gallery"></div>
 
-<!-- MODAL -->
+<!-- FULLSCREEN MODAL -->
 <div id="modal" onclick="closeModal()">
-  <img id="modalImg" />
+  <img id="modalImg">
 </div>
 
 <script>
+
 const total = 69;
 let current = 1;
 
@@ -148,26 +144,46 @@ for(let i=1;i<=total;i++){
   im.src = img(i);
 }
 
-/* RANDOM MODE */
+/* SHOW IMAGE */
 function show(n){
-  current = n;
   const el = document.getElementById("mainImg");
+
   el.classList.remove("fade");
   void el.offsetWidth;
   el.classList.add("fade");
-  el.src = img(current);
+
+  current = n;
+  el.src = img(n);
 }
 
+/* NORMAL NAV */
 function next(){
   current++;
-  if(current>total) current=1;
+  if(current > total) current = 1;
   show(current);
 }
 
 function prev(){
   current--;
-  if(current<1) current=total;
+  if(current < 1) current = total;
   show(current);
+}
+
+/* GLITCH RANDOM SPIN */
+function randomSpin(){
+  let steps = 15 + Math.floor(Math.random() * 10);
+  let speed = 40;
+
+  let interval = setInterval(() => {
+    const r = Math.floor(Math.random() * total) + 1;
+    document.getElementById("mainImg").src = img(r);
+  }, speed);
+
+  setTimeout(() => {
+    clearInterval(interval);
+    const final = Math.floor(Math.random() * total) + 1;
+    show(final);
+  }, steps * speed);
 }
 
 /* GALLERY */
@@ -184,31 +200,32 @@ function buildGallery(){
   }
 }
 
-/* MODAL */
+/* MODAL (FULLSCREEN VIEW) */
 function openModal(i){
-  document.getElementById("modal").style.display="flex";
+  document.getElementById("modal").style.display = "flex";
   document.getElementById("modalImg").src = img(i);
 }
 
 function closeModal(){
-  document.getElementById("modal").style.display="none";
+  document.getElementById("modal").style.display = "none";
 }
 
-/* VIEW TOGGLES */
+/* TOGGLES */
 function toggleGallery(){
-  document.getElementById("randomView").style.display="none";
-  document.getElementById("gallery").style.display="flex";
+  document.getElementById("randomView").style.display = "none";
+  document.getElementById("gallery").style.display = "flex";
   buildGallery();
 }
 
 function toggleRandom(){
-  document.getElementById("gallery").style.display="none";
-  document.getElementById("randomView").style.display="flex";
+  document.getElementById("gallery").style.display = "none";
+  document.getElementById("randomView").style.display = "flex";
   show(current);
 }
 
-/* init */
+/* INIT */
 show(Math.floor(Math.random()*total)+1);
+
 </script>
 
 </body>
