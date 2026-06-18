@@ -40,49 +40,56 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
 }
 
-/* 🔥 FIXED IMAGE FIT */
+/* MAIN IMAGE */
 #mainImg {
   width: 100vw;
   height: 100vh;
-  object-fit: contain;   /* key fix */
-  display: block;
-  padding: 70px 20px 80px; /* top + bottom breathing room */
+  object-fit: contain;
+  padding: 70px 20px 90px;
   box-sizing: border-box;
 }
 
-/* RANDOM BUTTON AREA */
+/* RANDOM BUTTON */
 #randomControls {
   position: fixed;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 500;
 }
 
-/* GALLERY */
+/* GALLERY FIXED FULL SCREEN */
 #gallery {
   display: none;
-  height: 100vh;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
   overflow-y: auto;
-  padding: 80px 20px 40px;
+
+  display: flex;
   flex-wrap: wrap;
-  gap: 10px;
   justify-content: center;
+  align-content: flex-start;
+
+  gap: 10px;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
-/* 🔥 STATIC THUMBNAILS (NO ANIMATION) */
+/* THUMBNAILS */
 .thumb {
-  width: 110px;
-  height: 110px;
+  width: clamp(70px, 8vw, 110px);
+  height: clamp(70px, 8vw, 110px);
   object-fit: cover;
   cursor: pointer;
   border: 1px solid #222;
   background: #000;
-
-  /* freeze frame style */
-  image-rendering: auto;
+  transition: transform 0.2s;
 }
 
 .thumb:hover {
@@ -90,7 +97,7 @@ button {
   border-color: #ff0033;
 }
 
-/* MODAL (FULL SCREEN GIF) */
+/* MODAL */
 #modal {
   display: none;
   position: fixed;
@@ -101,12 +108,11 @@ button {
   z-index: 2000;
 }
 
-/* 🔥 FULL SCREEN VIEW */
 #modal img {
   width: 100vw;
   height: 100vh;
   object-fit: contain;
-  padding: 40px;
+  padding: 30px;
   box-sizing: border-box;
 }
 </style>
@@ -125,7 +131,7 @@ button {
   <img id="mainImg" />
 </div>
 
-<!-- RANDOM BUTTON (BOTTOM CENTRE) -->
+<!-- RANDOM BUTTON -->
 <div id="randomControls">
   <button onclick="randomFlick()">Random</button>
 </div>
@@ -143,24 +149,24 @@ button {
 const total = 69;
 let current = 1;
 
-/* IMAGE PATH */
+/* IMAGE PATH (rb01.gif → rb69.gif in ROOT) */
 function img(n){
   return `rb${String(n).padStart(2,'0')}.gif`;
 }
 
-/* preload */
+/* PRELOAD */
 for(let i=1;i<=total;i++){
   const im = new Image();
   im.src = img(i);
 }
 
-/* SHOW */
+/* SHOW IMAGE */
 function show(n){
   current = n;
   document.getElementById("mainImg").src = img(current);
 }
 
-/* FAST FLICK RANDOM EFFECT */
+/* RANDOM FLICK EFFECT */
 function randomFlick(){
   let count = 10;
 
@@ -176,7 +182,7 @@ function randomFlick(){
   }, 60);
 }
 
-/* GALLERY */
+/* GALLERY BUILD */
 function buildGallery(){
   const g = document.getElementById("gallery");
   g.innerHTML = "";
@@ -185,39 +191,43 @@ function buildGallery(){
     const im = document.createElement("img");
     im.src = img(i);
     im.className = "thumb";
-
     im.onclick = () => openModal(i);
     g.appendChild(im);
   }
 }
 
-/* MODAL (FULL SIZE GIF PLAY) */
+/* MODAL */
 function openModal(i){
-  document.getElementById("modal").style.display="flex";
+  document.getElementById("modal").style.display = "flex";
   document.getElementById("modalImg").src = img(i);
 }
 
 function closeModal(){
-  document.getElementById("modal").style.display="none";
+  document.getElementById("modal").style.display = "none";
 }
 
-/* VIEW SWITCH */
+/* SWITCH TO GALLERY */
 function toggleGallery(){
-  document.getElementById("randomView").style.display="none";
-  document.getElementById("gallery").style.display="flex";
+  document.getElementById("randomView").style.display = "none";
+  document.getElementById("randomControls").style.display = "none";
 
-  document.getElementById("viewBtn").style.display="none";
-  document.getElementById("backBtn").style.display="inline-block";
+  document.getElementById("gallery").style.display = "flex";
+
+  document.getElementById("viewBtn").style.display = "none";
+  document.getElementById("backBtn").style.display = "inline-block";
 
   buildGallery();
 }
 
+/* SWITCH BACK TO RANDOM */
 function toggleRandom(){
-  document.getElementById("gallery").style.display="none";
-  document.getElementById("randomView").style.display="flex";
+  document.getElementById("gallery").style.display = "none";
 
-  document.getElementById("viewBtn").style.display="inline-block";
-  document.getElementById("backBtn").style.display="none";
+  document.getElementById("randomView").style.display = "flex";
+  document.getElementById("randomControls").style.display = "block";
+
+  document.getElementById("viewBtn").style.display = "inline-block";
+  document.getElementById("backBtn").style.display = "none";
 
   show(current);
 }
