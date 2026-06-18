@@ -14,7 +14,7 @@ body {
   overflow-x: hidden;
 }
 
-/* HEADER */
+/* TITLE */
 .title {
   text-align: center;
   padding: 18px;
@@ -23,39 +23,39 @@ body {
   text-shadow: 0 0 10px #ff0033;
 }
 
-/* MAIN VIEW */
+/* RANDOM VIEW */
 .viewer {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 70vh;
+  height: 85vh;
 }
 
-/* MAIN IMAGE */
+/* MAIN IMAGE (FULL FOCUS) */
 .main-img {
-  max-width: 80vw;
-  max-height: 70vh;
+  width: 90vw;
+  height: 80vh;
+  object-fit: contain;
   border-radius: 12px;
-  box-shadow: 0 0 25px rgba(255,0,50,0.25);
+  box-shadow: 0 0 40px rgba(255,0,50,0.35);
   background: #000;
 }
 
 /* BUTTONS */
 .controls {
-  margin-top: 20px;
+  margin-top: 15px;
   display: flex;
-  gap: 15px;
+  gap: 10px;
 }
 
 button {
   background: #111;
   border: 1px solid #ff0033;
   color: #ff0033;
-  padding: 10px 16px;
+  padding: 10px 14px;
   cursor: pointer;
   border-radius: 6px;
-  font-size: 14px;
 }
 
 button:hover {
@@ -63,10 +63,10 @@ button:hover {
   color: #000;
 }
 
-/* GRID */
+/* GRID MODE */
 .grid {
   display: none;
-  padding: 20px;
+  padding: 15px;
   gap: 10px;
   flex-wrap: wrap;
   justify-content: center;
@@ -74,42 +74,45 @@ button:hover {
 
 .grid img {
   width: 120px;
-  height: auto;
-  border-radius: 8px;
   cursor: pointer;
+  border-radius: 8px;
   transition: transform 0.2s;
 }
 
 .grid img:hover {
-  transform: scale(1.1);
+  transform: scale(1.08);
 }
 
 /* FULLSCREEN VIEWER */
 .modal {
   display: none;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: rgba(0,0,0,0.95);
   align-items: center;
   justify-content: center;
-  flex-direction: column;
 }
 
 .modal img {
-  max-width: 90vw;
-  max-height: 85vh;
+  max-width: 92vw;
+  max-height: 90vh;
 }
 
 .close {
   position: absolute;
-  top: 20px;
-  right: 25px;
-  font-size: 30px;
-  color: #fff;
+  top: 15px;
+  right: 20px;
+  font-size: 28px;
   cursor: pointer;
+}
+
+/* BACK BUTTON (GRID MODE) */
+.back-btn {
+  display: none;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 10;
 }
 </style>
 </head>
@@ -118,41 +121,45 @@ button:hover {
 
 <div class="title">ROKORDS BASILISKS</div>
 
-<div class="viewer">
+<!-- RANDOM MODE -->
+<div id="randomView" class="viewer">
   <img id="mainImg" class="main-img">
-  
+
   <div class="controls">
     <button onclick="randomGif()">Next Random</button>
-    <button onclick="toggleGrid()">View All</button>
+    <button onclick="showGrid()">View All</button>
   </div>
 </div>
 
-<!-- GRID VIEW -->
-<div class="grid" id="grid"></div>
+<!-- GRID MODE -->
+<button id="backBtn" class="back-btn" onclick="backToRandom()">⬅ Back</button>
+
+<div id="grid" class="grid"></div>
 
 <!-- MODAL -->
-<div class="modal" id="modal">
-  <div class="close" onclick="closeModal()">✕</div>
+<div id="modal" class="modal" onclick="closeModal()">
+  <span class="close">✕</span>
   <img id="modalImg">
 </div>
 
 <script>
 
 const total = 69;
-let current = 1;
 
-/* generate file name */
 function img(n){
   return `rb${String(n).padStart(2,'0')}.gif`;
 }
 
-/* RANDOM MAIN VIEW */
+/* RANDOM IMAGE */
 function randomGif(){
-  current = Math.floor(Math.random() * total) + 1;
-  document.getElementById("mainImg").src = img(current);
+  const i = Math.floor(Math.random() * total) + 1;
+  document.getElementById("mainImg").src = img(i);
 }
 
-/* BUILD GRID */
+/* INIT RANDOM */
+randomGif();
+
+/* GRID BUILD */
 const grid = document.getElementById("grid");
 
 for(let i=1;i<=total;i++){
@@ -167,19 +174,24 @@ for(let i=1;i<=total;i++){
   grid.appendChild(im);
 }
 
-/* TOGGLE GRID */
-function toggleGrid(){
-  const g = document.getElementById("grid");
-  g.style.display = g.style.display === "flex" ? "none" : "flex";
+/* SHOW GRID MODE */
+function showGrid(){
+  document.getElementById("randomView").style.display = "none";
+  document.getElementById("grid").style.display = "flex";
+  document.getElementById("backBtn").style.display = "block";
+}
+
+/* BACK TO RANDOM */
+function backToRandom(){
+  document.getElementById("randomView").style.display = "flex";
+  document.getElementById("grid").style.display = "none";
+  document.getElementById("backBtn").style.display = "none";
 }
 
 /* MODAL */
 function closeModal(){
   document.getElementById("modal").style.display = "none";
 }
-
-/* INIT */
-randomGif();
 
 </script>
 
