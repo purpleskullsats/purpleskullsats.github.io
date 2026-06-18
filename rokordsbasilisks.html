@@ -23,7 +23,7 @@ body {
   text-shadow: 0 0 10px #ff0033;
 }
 
-/* MAIN VIEWPORT */
+/* VIEWPORT */
 .viewport {
   position: absolute;
   top: 60px;
@@ -32,51 +32,42 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
+  perspective: 1200px;
 }
 
-/* TRACK */
-.track {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-  will-change: transform;
-  transition: transform 0.25s ease;
+/* WHEEL */
+.wheel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
 }
 
-/* ITEM */
+/* ITEMS */
 .item {
-  flex: 0 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  transform: scale(0.55);
-  opacity: 0.35;
-  transition: transform 0.35s ease, opacity 0.35s ease;
-}
-
-/* CENTER ITEM */
-.item.active {
-  transform: scale(1);
-  opacity: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center;
+  transition: transform 0.2s linear;
 }
 
 /* IMAGE */
 .item img {
-  max-width: 70vw;
-  max-height: 70vh;
-  object-fit: contain;
-  border-radius: 10px;
+  border-radius: 12px;
   background: #000;
   user-select: none;
   pointer-events: none;
+  box-shadow: 0 0 25px rgba(255,0,50,0.15);
 }
 
-/* SIDE IMAGES SMALLER FEEL */
-.item:not(.active) img {
-  max-width: 25vw;
-  max-height: 25vh;
+/* CENTER EMPHASIS (applied dynamically) */
+.center img {
+  filter: none;
+}
+
+/* SIDE DIMMING */
+.item img {
   filter: brightness(0.6);
 }
 
@@ -97,123 +88,127 @@ body {
 <div class="title">ROKORDS BASILISKS</div>
 
 <div class="viewport">
-  <div class="track" id="track"></div>
+  <div class="wheel" id="wheel"></div>
 </div>
 
 <div class="info">
-  Basilisk <span id="index">1</span> / 69 — swipe / drag
+  Basilisk <span id="index">1</span> / 69 — hold + drag
 </div>
 
 <script>
 
 const total = 69;
-let current = 1;
 
-/* momentum variables */
+/* rotation state */
+let rotation = 0;
 let velocity = 0;
-let lastX = 0;
 let dragging = false;
+let lastX = 0;
 
-const track = document.getElementById("track");
+const wheel = document.getElementById("wheel");
 
-/* build images */
-for (let i = 1; i <= total; i++) {
+/* build circular layout */
+const radius = 600;   // distance from center
+const angleStep = 360 / total;
+
+/* create items */
+for (let i = 0; i < total; i++) {
   const item = document.createElement("div");
   item.className = "item";
 
   const img = document.createElement("img");
-  img.src = `rb${String(i).padStart(2,'0')}.gif`;
+  img.src = `rb${String(i+1).padStart(2,'0')}.gif`;
 
   item.appendChild(img);
-  track.appendChild(item);
+  wheel.appendChild(item);
 }
 
 const items = document.querySelectorAll(".item");
 
-/* render */
+/* render wheel */
 function render() {
 
   items.forEach((el, i) => {
-    el.classList.toggle("active", i === current - 1);
+
+    const angle = i * angleStep + rotation;
+
+    const rad = angle * Math.PI / 180;
+
+    const x = Math.sin(rad) * radius;
+    const z = Math.cos(rad) * radius;
+
+    el.style.transform = `
+      translate(-50%, -50%)
+      translateX(${x}px)
+      translateZ(${z}px)
+      rotateY(${angle}deg)
+      scale(${z > 0 ? 1.6 : 0.6})
+    `;
+
+    /* center detection (closest to front) */
+    if (Math.abs(((angle % 360) + 360) % 360) < 8) {
+      el.classList.add("center");
+      el.style.zIndex = 999;
+    } else {
+      el.classList.remove("center");
+      el.style.zIndex = 1;
+    }
   });
 
-  document.getElementById("index").innerText = current;
-
-  const centerOffset = window.innerWidth / 2 - (current - 1) * 300;
-  track.style.transform = `translateX(${centerOffset}px)`;
+  document.getElementById("index").innerText =
+    Math.abs(Math.round(rotation / angleStep) % total) + 1;
 }
 
-/* navigation */
-function next() {
-  current = current % total + 1;
-  render();
-}
-
-function prev() {
-  current = (current - 2 + total) % total + 1;
-  render();
-}
-
-/* momentum loop */
-function momentum() {
-  if (Math.abs(velocity) > 0.5 && !dragging) {
-    if (velocity < 0) next();
-    else prev();
-
-    velocity *= 0.85;
+/* animation loop (momentum) */
+function animate() {
+  if (!dragging) {
+    rotation += velocity;
+    velocity *= 0.95; // friction
   }
-  requestAnimationFrame(momentum);
+
+  render();
+  requestAnimationFrame(animate);
 }
-momentum();
+animate();
 
 /* TOUCH */
 document.addEventListener("touchstart", e => {
+  dragging = true;
   lastX = e.touches[0].clientX;
   velocity = 0;
-  dragging = true;
 });
 
 document.addEventListener("touchmove", e => {
   const x = e.touches[0].clientX;
-  velocity = x - lastX;
+  velocity = (x - lastX) * 0.3;
+  rotation += velocity;
   lastX = x;
-});
-
-document.addEventListener("touchend", () => {
-  dragging = false;
-
-  if (velocity < -10) next();
-  if (velocity > 10) prev();
 });
 
 /* MOUSE */
 document.addEventListener("mousedown", e => {
+  dragging = true;
   lastX = e.clientX;
   velocity = 0;
-  dragging = true;
 });
 
 document.addEventListener("mousemove", e => {
   if (!dragging) return;
-  velocity = e.clientX - lastX;
-  lastX = e.clientX;
+  const x = e.clientX;
+  velocity = (x - lastX) * 0.3;
+  rotation += velocity;
+  lastX = x;
 });
 
 document.addEventListener("mouseup", () => {
   dragging = false;
-
-  if (velocity < -10) next();
-  if (velocity > 10) prev();
 });
 
 /* keyboard */
 document.addEventListener("keydown", e => {
-  if (e.key === "ArrowRight") next();
-  if (e.key === "ArrowLeft") prev();
+  if (e.key === "ArrowRight") velocity += 5;
+  if (e.key === "ArrowLeft") velocity -= 5;
 });
-
-/* init */
-render();
 
 </script>
 
