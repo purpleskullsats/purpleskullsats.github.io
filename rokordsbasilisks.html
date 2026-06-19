@@ -113,9 +113,29 @@ button:active {
 }
 
 #randomControls button {
-  padding: 9px 28px;
-  font-size: 14px;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  padding: 0;
+  font-size: 11px;
+  font-weight: 700;
   letter-spacing: 0.12em;
+  background: #ff0033;
+  color: #fff;
+  border: none;
+  box-shadow: 0 0 18px rgba(255,0,51,0.5), 0 0 4px rgba(255,0,51,0.8);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+#randomControls button:hover {
+  background: #ff0033;
+  transform: scale(1.08);
+  box-shadow: 0 0 28px rgba(255,0,51,0.7), 0 0 6px rgba(255,0,51,1);
+}
+
+#randomControls button:active {
+  transform: scale(0.94);
+  box-shadow: 0 0 10px rgba(255,0,51,0.4);
 }
 
 /* GALLERY */
@@ -250,7 +270,7 @@ button:active {
 
 <!-- RANDOM BUTTON -->
 <div id="randomControls">
-  <button onclick="randomFlick()">&#9654; Random</button>
+  <button onclick="randomFlick()">RND</button>
 </div>
 
 <!-- GALLERY -->
@@ -285,16 +305,41 @@ function show(n){
 
 /* RANDOM FLICK EFFECT */
 function randomFlick(){
-  let count = 12;
-  let delay = 40;
+  const el = document.getElementById("mainImg");
+  const btn = document.querySelector("#randomControls button");
+  btn.disabled = true;
+
+  const FRAMES = 30;
+  let count = 0;
+
+  // rapid-fire phase: frames 0-22 at 20-30ms (chaotic)
+  // slow-down phase: frames 23-29 easing out
+  const delays = [];
+  for(let i = 0; i < FRAMES; i++){
+    if(i < 22)      delays.push(18 + Math.random() * 14);
+    else            delays.push(60 + (i - 22) * 55);
+  }
 
   function tick(){
-    current = Math.floor(Math.random()*total)+1;
-    document.getElementById("mainImg").src = img(current);
-    count--;
-    if(count > 0){
-      delay += 8;
-      setTimeout(tick, delay);
+    // glitch: brief white/red flash overlay
+    if(count < 22 && Math.random() < 0.4){
+      el.style.filter = Math.random() < 0.5
+        ? "brightness(3) saturate(0)"
+        : "hue-rotate(180deg) saturate(8) brightness(1.5)";
+      setTimeout(() => el.style.filter = "", delays[count] * 0.4);
+    } else {
+      el.style.filter = "";
+    }
+
+    current = Math.floor(Math.random() * total) + 1;
+    el.src = img(current);
+    count++;
+
+    if(count < FRAMES){
+      setTimeout(tick, delays[count]);
+    } else {
+      el.style.filter = "";
+      btn.disabled = false;
     }
   }
   tick();
