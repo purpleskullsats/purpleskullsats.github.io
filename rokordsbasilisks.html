@@ -65,47 +65,30 @@ button:active {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding-top: 52px;
+  padding-bottom: 70px;
 }
 
 /* LOGO ON RANDOM VIEW */
 #randomLogo {
-  margin-top: 52px;
-  margin-bottom: 6px;
   user-select: none;
-  position: relative;
   display: inline-block;
   flex-shrink: 0;
+  margin-bottom: 10px;
 }
 
 #randomLogo img {
-  height: clamp(36px, 5vw, 60px);
+  height: clamp(44px, 6vw, 70px);
   width: auto;
   display: block;
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
+  animation: logoPulse 3s ease-in-out infinite;
 }
 
-#randomLogo::before,
-#randomLogo::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: url('logo.png') no-repeat center/contain;
-  height: clamp(36px, 5vw, 60px);
-  width: 100%;
-  opacity: 0;
-}
-
-#randomLogo::before {
-  animation: glitch-r 4s infinite steps(1);
-  mix-blend-mode: screen;
-  filter: hue-rotate(0deg) saturate(5);
-}
-
-#randomLogo::after {
-  animation: glitch-b 4s infinite steps(1);
-  mix-blend-mode: screen;
-  filter: hue-rotate(180deg) saturate(5);
+@keyframes logoPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.35; }
 }
 
 /* MAIN IMAGE */
@@ -114,7 +97,7 @@ button:active {
   flex: 1;
   min-height: 0;
   object-fit: contain;
-  padding: 0 20px 80px;
+  padding: 0 20px;
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
   image-rendering: pixelated;
@@ -189,14 +172,13 @@ button:active {
 
 /* LOGO IN MODAL */
 #modalLogo {
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   user-select: none;
-  position: relative;
   display: inline-block;
 }
 
 #modalLogo img {
-  height: clamp(36px, 5vw, 60px);
+  height: clamp(44px, 6vw, 70px);
   width: auto;
   display: block;
   image-rendering: -webkit-optimize-contrast;
@@ -205,30 +187,7 @@ button:active {
   flex: none;
   max-height: none;
   object-fit: unset;
-}
-
-/* GLITCH LAYERS */
-#modalLogo::before,
-#modalLogo::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: url('logo.png') no-repeat center/contain;
-  height: clamp(36px, 5vw, 60px);
-  width: 100%;
-  opacity: 0;
-}
-
-#modalLogo::before {
-  animation: glitch-r 4s infinite steps(1);
-  mix-blend-mode: screen;
-  filter: hue-rotate(0deg) saturate(5);
-}
-
-#modalLogo::after {
-  animation: glitch-b 4s infinite steps(1);
-  mix-blend-mode: screen;
-  filter: hue-rotate(180deg) saturate(5);
+  animation: logoPulse 3s ease-in-out infinite;
 }
 
 @keyframes glitch-r {
