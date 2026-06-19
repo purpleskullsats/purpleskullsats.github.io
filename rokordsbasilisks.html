@@ -62,16 +62,59 @@ button:active {
 #randomView {
   height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+/* LOGO ON RANDOM VIEW */
+#randomLogo {
+  margin-top: 52px;
+  margin-bottom: 6px;
+  user-select: none;
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+#randomLogo img {
+  height: clamp(36px, 5vw, 60px);
+  width: auto;
+  display: block;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+#randomLogo::before,
+#randomLogo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('logo.png') no-repeat center/contain;
+  height: clamp(36px, 5vw, 60px);
+  width: 100%;
+  opacity: 0;
+}
+
+#randomLogo::before {
+  animation: glitch-r 4s infinite steps(1);
+  mix-blend-mode: screen;
+  filter: hue-rotate(0deg) saturate(5);
+}
+
+#randomLogo::after {
+  animation: glitch-b 4s infinite steps(1);
+  mix-blend-mode: screen;
+  filter: hue-rotate(180deg) saturate(5);
 }
 
 /* MAIN IMAGE */
 #mainImg {
   width: 100vw;
-  height: 100vh;
+  flex: 1;
+  min-height: 0;
   object-fit: contain;
-  padding: 70px 20px 90px;
+  padding: 0 20px 80px;
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
   image-rendering: pixelated;
@@ -236,12 +279,13 @@ button:active {
 <!-- TOP BAR -->
 <div class="topbar">
   <button id="viewBtn" onclick="toggleGallery()">View All</button>
-  <div class="topbar-title">Rokords <span style="opacity:0.4">·</span> Basilisks</div>
+  <div class="topbar-title" style="font-size:15px; font-weight:900; letter-spacing:0.3em; opacity:1;">R B</div>
   <button id="backBtn" onclick="toggleRandom()" style="display:none;">← Back</button>
 </div>
 
 <!-- RANDOM VIEW -->
 <div id="randomView">
+  <div id="randomLogo"><img src="logo.png" alt="Rokords Basilisks" /></div>
   <img id="mainImg" />
 </div>
 
