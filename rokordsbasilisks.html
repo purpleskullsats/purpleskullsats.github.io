@@ -4,8 +4,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Rokords Basilisks</title>
-
 <style>
+* { box-sizing: border-box; }
+
 body {
   margin: 0;
   background: #000;
@@ -21,17 +22,40 @@ body {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 12px;
+  align-items: center;
+  padding: 10px 14px;
   z-index: 1000;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, transparent 100%);
+}
+
+.topbar-title {
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  color: #ff0033;
+  text-transform: uppercase;
+  opacity: 0.7;
+  user-select: none;
 }
 
 button {
-  background: #111;
+  background: transparent;
   color: #ff0033;
   border: 1px solid #ff0033;
-  padding: 8px 12px;
+  padding: 7px 16px;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: 4px;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  transition: background 0.15s, box-shadow 0.15s;
+}
+
+button:hover {
+  background: rgba(255, 0, 51, 0.12);
+  box-shadow: 0 0 8px rgba(255, 0, 51, 0.35);
+}
+
+button:active {
+  background: rgba(255, 0, 51, 0.22);
 }
 
 /* RANDOM VIEW */
@@ -48,38 +72,46 @@ button {
   height: 100vh;
   object-fit: contain;
   padding: 70px 20px 90px;
-  box-sizing: border-box;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
 }
 
 /* RANDOM BUTTON */
 #randomControls {
   position: fixed;
-  bottom: 20px;
+  bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 500;
 }
 
-/* GALLERY FIXED FULL SCREEN */
+#randomControls button {
+  padding: 9px 28px;
+  font-size: 14px;
+  letter-spacing: 0.12em;
+}
+
+/* GALLERY */
 #gallery {
   display: none;
   position: fixed;
-  top: 60px;
+  top: 52px;
   left: 0;
   right: 0;
   bottom: 0;
-
   overflow-y: auto;
-
-  display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-content: flex-start;
-
-  gap: 10px;
-  padding: 10px;
-  box-sizing: border-box;
+  gap: 8px;
+  padding: 12px;
 }
+
+/* custom scrollbar */
+#gallery::-webkit-scrollbar { width: 6px; }
+#gallery::-webkit-scrollbar-track { background: #111; }
+#gallery::-webkit-scrollbar-thumb { background: #ff0033; border-radius: 3px; }
 
 /* THUMBNAILS */
 .thumb {
@@ -89,31 +121,67 @@ button {
   cursor: pointer;
   border: 1px solid #222;
   background: #000;
-  transition: transform 0.2s;
+  transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
 .thumb:hover {
-  transform: scale(1.08);
+  transform: scale(1.1);
   border-color: #ff0033;
+  box-shadow: 0 0 10px rgba(255, 0, 51, 0.4);
 }
 
-/* MODAL */
+/* MODAL OVERLAY */
 #modal {
   display: none;
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.97);
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   z-index: 2000;
 }
 
+/* LOGO IN MODAL */
+#modalLogo {
+  font-size: clamp(18px, 3vw, 28px);
+  font-weight: 900;
+  letter-spacing: 0.25em;
+  color: #ff0033;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  user-select: none;
+  opacity: 0.85;
+}
+
+#modalLogo span {
+  color: #fff;
+  opacity: 0.6;
+}
+
+/* MODAL IMAGE */
 #modal img {
+  flex: 1;
   width: 100vw;
-  height: 100vh;
+  max-height: calc(100vh - 80px);
   object-fit: contain;
-  padding: 30px;
-  box-sizing: border-box;
+  padding: 10px 30px 30px;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}
+
+/* click hint */
+#modalHint {
+  position: fixed;
+  bottom: 14px;
+  font-size: 11px;
+  color: #444;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  pointer-events: none;
 }
 </style>
 </head>
@@ -123,7 +191,8 @@ button {
 <!-- TOP BAR -->
 <div class="topbar">
   <button id="viewBtn" onclick="toggleGallery()">View All</button>
-  <button id="backBtn" onclick="toggleRandom()" style="display:none;">Back</button>
+  <div class="topbar-title">Rokords <span style="opacity:0.4">·</span> Basilisks</div>
+  <button id="backBtn" onclick="toggleRandom()" style="display:none;">← Back</button>
 </div>
 
 <!-- RANDOM VIEW -->
@@ -133,7 +202,7 @@ button {
 
 <!-- RANDOM BUTTON -->
 <div id="randomControls">
-  <button onclick="randomFlick()">Random</button>
+  <button onclick="randomFlick()">&#9654; Random</button>
 </div>
 
 <!-- GALLERY -->
@@ -141,7 +210,9 @@ button {
 
 <!-- MODAL -->
 <div id="modal" onclick="closeModal()">
+  <div id="modalLogo">Rokords <span>Basilisks</span></div>
   <img id="modalImg" />
+  <div id="modalHint">click anywhere to close</div>
 </div>
 
 <script>
@@ -149,7 +220,6 @@ button {
 const total = 69;
 let current = 1;
 
-/* IMAGE PATH (rb01.gif → rb69.gif in ROOT) */
 function img(n){
   return `rb${String(n).padStart(2,'0')}.gif`;
 }
@@ -160,7 +230,6 @@ for(let i=1;i<=total;i++){
   im.src = img(i);
 }
 
-/* SHOW IMAGE */
 function show(n){
   current = n;
   document.getElementById("mainImg").src = img(current);
@@ -168,30 +237,30 @@ function show(n){
 
 /* RANDOM FLICK EFFECT */
 function randomFlick(){
-  let count = 10;
+  let count = 12;
+  let delay = 40;
 
-  const interval = setInterval(() => {
+  function tick(){
     current = Math.floor(Math.random()*total)+1;
     document.getElementById("mainImg").src = img(current);
-
     count--;
-    if(count <= 0){
-      clearInterval(interval);
-      show(current);
+    if(count > 0){
+      delay += 8;
+      setTimeout(tick, delay);
     }
-  }, 60);
+  }
+  tick();
 }
 
 /* GALLERY BUILD */
 function buildGallery(){
   const g = document.getElementById("gallery");
   g.innerHTML = "";
-
   for(let i=1;i<=total;i++){
     const im = document.createElement("img");
     im.src = img(i);
     im.className = "thumb";
-    im.onclick = () => openModal(i);
+    im.onclick = (e) => { e.stopPropagation(); openModal(i); };
     g.appendChild(im);
   }
 }
@@ -210,32 +279,29 @@ function closeModal(){
 function toggleGallery(){
   document.getElementById("randomView").style.display = "none";
   document.getElementById("randomControls").style.display = "none";
-
   document.getElementById("gallery").style.display = "flex";
-
   document.getElementById("viewBtn").style.display = "none";
   document.getElementById("backBtn").style.display = "inline-block";
-
   buildGallery();
 }
 
 /* SWITCH BACK TO RANDOM */
 function toggleRandom(){
   document.getElementById("gallery").style.display = "none";
-
   document.getElementById("randomView").style.display = "flex";
   document.getElementById("randomControls").style.display = "block";
-
   document.getElementById("viewBtn").style.display = "inline-block";
   document.getElementById("backBtn").style.display = "none";
-
   show(current);
 }
 
-/* INIT */
+/* KEYBOARD: ESC closes modal */
+document.addEventListener("keydown", (e) => {
+  if(e.key === "Escape") closeModal();
+});
+
 show(Math.floor(Math.random()*total)+1);
 
 </script>
-
 </body>
 </html>
