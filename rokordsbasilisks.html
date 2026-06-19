@@ -112,30 +112,61 @@ button:active {
   z-index: 500;
 }
 
+/* outer ring / bezel */
+#randomControls {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 500;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #444, #111);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.8), 0 1px 0 #555 inset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 #randomControls button {
-  width: 64px;
-  height: 64px;
+  width: 58px;
+  height: 58px;
   border-radius: 50%;
   padding: 0;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.12em;
-  background: #ff0033;
   color: #fff;
   border: none;
-  box-shadow: 0 0 18px rgba(255,0,51,0.5), 0 0 4px rgba(255,0,51,0.8);
-  transition: transform 0.1s, box-shadow 0.1s;
+  cursor: pointer;
+  position: relative;
+  /* 3D raised look */
+  background: radial-gradient(circle at 38% 32%, #ff4455, #cc0022);
+  box-shadow:
+    0 5px 0 #880015,
+    0 6px 8px rgba(0,0,0,0.6),
+    0 1px 3px rgba(255,100,120,0.4) inset;
+  transform: translateY(0);
+  transition: transform 0.06s ease, box-shadow 0.06s ease;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
 }
 
 #randomControls button:hover {
-  background: #ff0033;
-  transform: scale(1.08);
-  box-shadow: 0 0 28px rgba(255,0,51,0.7), 0 0 6px rgba(255,0,51,1);
+  background: radial-gradient(circle at 38% 32%, #ff5566, #dd0025);
 }
 
-#randomControls button:active {
-  transform: scale(0.94);
-  box-shadow: 0 0 10px rgba(255,0,51,0.4);
+#randomControls button:active,
+#randomControls button.pressed {
+  transform: translateY(4px);
+  box-shadow:
+    0 1px 0 #880015,
+    0 2px 4px rgba(0,0,0,0.5),
+    0 1px 2px rgba(0,0,0,0.3) inset;
+}
+
+#randomControls button:disabled {
+  cursor: default;
 }
 
 /* GALLERY */
@@ -308,25 +339,17 @@ function randomFlick(){
   const el = document.getElementById("mainImg");
   const btn = document.querySelector("#randomControls button");
   btn.disabled = true;
+  btn.classList.add("pressed");
 
-  const FRAMES = 30;
+  const FRAMES = 28;
   let count = 0;
 
-  // rapid-fire phase: frames 0-22 at 20-30ms (chaotic)
-  // slow-down phase: frames 23-29 easing out
-  const delays = [];
-  for(let i = 0; i < FRAMES; i++){
-    if(i < 22)      delays.push(18 + Math.random() * 14);
-    else            delays.push(60 + (i - 22) * 55);
-  }
-
   function tick(){
-    // glitch: brief white/red flash overlay
-    if(count < 22 && Math.random() < 0.4){
+    if(Math.random() < 0.4){
       el.style.filter = Math.random() < 0.5
         ? "brightness(3) saturate(0)"
         : "hue-rotate(180deg) saturate(8) brightness(1.5)";
-      setTimeout(() => el.style.filter = "", delays[count] * 0.4);
+      setTimeout(() => el.style.filter = "", 8);
     } else {
       el.style.filter = "";
     }
@@ -336,10 +359,13 @@ function randomFlick(){
     count++;
 
     if(count < FRAMES){
-      setTimeout(tick, delays[count]);
+      setTimeout(tick, 18 + Math.random() * 14);
     } else {
       el.style.filter = "";
-      btn.disabled = false;
+      setTimeout(() => {
+        btn.classList.remove("pressed");
+        btn.disabled = false;
+      }, 120);
     }
   }
   tick();
